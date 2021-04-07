@@ -47,6 +47,7 @@ public class AlgoShape extends JComponent
     
     private Term term;
     private Color color;
+    private Dimension dim;
 
     /**
      * Constructor for objects of class ShapeCtrl
@@ -55,7 +56,19 @@ public class AlgoShape extends JComponent
     {
         term = s;
         color = c;
+        dim = new Dimension(800,800);
     }
+    
+    /**
+     * Constructor for objects of class ShapeCtrl
+     */
+    public AlgoShape(Term s, Color c, Dimension d)
+    {
+        term = s;
+        color = c;
+        dim = d;
+    }
+
 
     public void paintComponent(Graphics g)
     {   
@@ -66,7 +79,6 @@ public class AlgoShape extends JComponent
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(4));
         g2.setColor(color);
-        Dimension dim = new Dimension(200,200);
         
         Polygon p = constructShape(term,w,h,dim);
         g2.drawPolyline(p.xpoints, p.ypoints, p.npoints);

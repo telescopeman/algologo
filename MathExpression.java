@@ -1,5 +1,3 @@
-import java.util.function.Function;
-
 /**
  * Write a description of class GraphingFunction here.
  *
@@ -22,10 +20,6 @@ public class MathExpression implements Term
         term2=t2;
         //x = 0;
     }
-    
-    
-
-    
 
     public double get(double x)
     {

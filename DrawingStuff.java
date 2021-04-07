@@ -37,16 +37,17 @@ public class DrawingStuff extends JComponent {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
+        EasyFrame frame = new EasyFrame("AlgoLogo");
         frame.setSize(800, 800);
-        frame.setTitle("Graphs");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);  
         DrawingStuff draw = new DrawingStuff();
         frame.add(draw);
         
         Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
-        frame.add(new AlgoShape(testTerm,Color.red));
+        Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(2));
+        
+        frame.add(new AlgoShape(testTerm2,Color.red,frame.getSize()));
         
         frame.setVisible(true);
         

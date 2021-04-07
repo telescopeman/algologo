@@ -1,5 +1,5 @@
 /**
- * @author Jon Skeet
+ * @author Jon Skeet, Caleb Copeland
  */
 
 public enum Operator
@@ -14,7 +14,7 @@ public enum Operator
                 return x1 - x2;
             }
         },
-        POWER("^") {
+        POWER ("^"){
             @Override public double apply(double x1, double x2) {
                 return Math.pow(x1,x2);
             }
