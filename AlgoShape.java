@@ -10,18 +10,20 @@ import javax.swing.JFrame;
  * @author Caleb Copeland, Ozymandias
  * @version 4/7/21
  */
-public class AlgoShape extends JComponent
+public class AlgoShape extends Polygon
 {
     // instance variables - replace the example below with your own
     //private int x;
-    private Polygon shape = new Polygon();
-
+    //private Polygon shape = new Polygon();
+    private Term term;
+    public Color color;
     
     /**
      * Constructor for objects of class Shape
      */
-    public Polygon constructShape(Term func, int xpos, int ypos,Dimension bounds)
+    public AlgoShape(Term func, Color col, Dimension bounds)
     {
+        color = col;
         Polygon p = new Polygon();
         final int lowBoundX = - bounds.width / 2;
         final int highBoundX = bounds.width / 2;
@@ -31,56 +33,20 @@ public class AlgoShape extends JComponent
 
         //System.out.println(lowBoundY);
         for (double x = lowBoundX; x <= highBoundX; x = x + 1) {
-            int myX = (int) x + (int) xpos;
+            int myX = (int) x;
             int y = (int) func.get(x);
-            int myY = ypos - y;
-            //System.out.println("Go " + x + " in bounds " + lowBoundX + " to " + highBoundX + ".");
+            int myY = + highBoundY*2 - (int) y;
+            System.out.println("Go " + myX + ", " + myY);
             if (y < highBoundY && y > lowBoundY)
             {
-                p.addPoint(myX,myY);
-                //System.out.println("g");
+                p.addPoint((int)myX,(int)myY);
+                System.out.println("g");
             }
         }
-        return p;
-    }
-    
-    
-    private Term term;
-    private Color color;
-    private Dimension dim;
-
-    /**
-     * Constructor for objects of class ShapeCtrl
-     */
-    public AlgoShape(Term s, Color c)
-    {
-        term = s;
-        color = c;
-        dim = new Dimension(800,800);
-    }
-    
-    /**
-     * Constructor for objects of class ShapeCtrl
-     */
-    public AlgoShape(Term s, Color c, Dimension d)
-    {
-        term = s;
-        color = c;
-        dim = d;
-    }
-
-
-    public void paintComponent(Graphics g)
-    {   
-
-        final int w = this.getWidth()/2;
-        final int h = this.getHeight()/2;
-
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setStroke(new BasicStroke(4));
-        g2.setColor(color);
         
-        Polygon p = constructShape(term,w,h,dim);
-        g2.drawPolyline(p.xpoints, p.ypoints, p.npoints);
     }
+    
+    
+   
+
 }
