@@ -10,13 +10,16 @@ public class Tester
 {
     // instance variables - replace the example below with your own
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(800, 600);
-        frame.setTitle("Graphs");
+        EasyFrame frame = new EasyFrame("AlgoLogo",EasyFrame.MAIN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);  
         DrawingStuff draw = new DrawingStuff();
+        //draw.paintComponent();
         frame.add(draw);
         frame.setVisible(true);
+    }
+    
+    public static void testTerm() {
+        //Term ex = new MathExpression()
     }
 }

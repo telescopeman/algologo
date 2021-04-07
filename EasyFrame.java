@@ -12,13 +12,13 @@ import java.awt.event.ActionEvent;
 public class EasyFrame extends JFrame implements ActionListener
 {
     // size presets
-    public final Dimension STANDARD = new Dimension(350,100);
-    public final Dimension SUPERSTANDARD = new Dimension(550,150);
-    public final Dimension SMALL = new Dimension(200,200);
-    public final Dimension ROUNDISH = new Dimension(350,250);
-    public final Dimension LONG = new Dimension(900,250);
-    public final Dimension LONG2 = new Dimension(900,150);
-    public final Dimension MAIN = new Dimension(850,1000);
+    public static final Dimension STANDARD = new Dimension(350,100);
+    public static final Dimension SUPERSTANDARD = new Dimension(550,150);
+    public static final Dimension SMALL = new Dimension(200,200);
+    public static final Dimension ROUNDISH = new Dimension(350,250);
+    public static final Dimension LONG = new Dimension(900,250);
+    public static final Dimension LONG2 = new Dimension(900,150);
+    public static final Dimension MAIN = new Dimension(800,800);
 
 
     /**
@@ -48,6 +48,13 @@ public class EasyFrame extends JFrame implements ActionListener
     {
         // initialise instance variables
         setTitle(name);
+    }
+    
+    public EasyFrame(String name, Dimension dim)
+    {
+        // initialise instance variables
+        setTitle(name);
+        setSize(dim);
     }
 
     public void addButton(String name, ActionListener trig)
@@ -96,6 +103,7 @@ public class EasyFrame extends JFrame implements ActionListener
     {
         show();
         requestFocusInWindow();
+        
         setSize(dim);
     }
 
