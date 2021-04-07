@@ -11,6 +11,4 @@ public interface Term
      * Returns the value of the Term.
      */
     public double get(double x);
-    
-    
 }
