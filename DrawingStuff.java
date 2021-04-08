@@ -17,8 +17,8 @@ public class DrawingStuff extends JComponent {
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);  
-        World draw = new World();
-        frame.add(draw);
+        World w = new World();
+        frame.add(w);
         
         frame.setVisible(true);
         

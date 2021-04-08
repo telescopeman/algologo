@@ -35,7 +35,7 @@ public class World extends JComponent
         g.setColor(Color.black);
         g.drawLine(0,h,w*2,h);
         g.drawLine(w,0,w,h*2); 
-        //g.drawString("0", w - 7, h + 13);
+        g.drawString("0", w - 7, h + 13);
         
     }
     
@@ -48,23 +48,31 @@ public class World extends JComponent
         updateDim();
         
         drawAxes(g); //maybe removed in later versions?
+        Graphics2D g2 = (Graphics2D) g;
 
-        Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
-        Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(2));
-        AlgoShape alg = new AlgoShape(testTerm,Color.red,new Dimension(w,h));
-        drawPoly((Graphics2D) g,alg);
+        //Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
+        //Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(0));
+        Term testTerm2 = new Term(null);
         AlgoShape alg2 = new AlgoShape(testTerm2,Color.red,new Dimension(w,h));
-        drawPoly((Graphics2D) g,alg2);
+        drawPoly(g2,alg2);
+        
+        
+        // Graphics2D g1 = (Graphics2D) g;
+        // AlgoShape alg = new AlgoShape(testTerm,Color.red,new Dimension(w,h));
+        // drawPoly(g1,alg);
+        // //
+        
         
 
     }
     
     private void drawPoly(Graphics2D g, AlgoShape p)
     {
-        g.setStroke(new BasicStroke(4));
-        g.setColor(p.color);
+        System.out.println("add");
+        g.setStroke(new BasicStroke(7));
+        g.setColor(Color.black);
         //g.drawLine(0,400,700,300);
-        g.fillPolygon(p.xpoints, p.ypoints, p.npoints);
+        g.drawPolyline(p.xpoints, p.ypoints, p.npoints);
     }
     
     private AlgoShape constructShape(Term t)
@@ -77,5 +85,6 @@ public class World extends JComponent
     {
         w = this.getWidth()/2;
         h = this.getHeight()/2;
+        System.out.println(w + "/" + h);
     }
 }

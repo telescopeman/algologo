@@ -24,7 +24,7 @@ public class AlgoShape extends Polygon
     public AlgoShape(Term func, Color col, Dimension bounds)
     {
         color = col;
-        Polygon p = new Polygon();
+        //Polygon p = new Polygon();
         final int lowBoundX = - bounds.width / 2;
         final int highBoundX = bounds.width / 2;
 
@@ -33,13 +33,13 @@ public class AlgoShape extends Polygon
 
         //System.out.println(lowBoundY);
         for (double x = lowBoundX; x <= highBoundX; x = x + 1) {
-            int myX = (int) x;
+            int myX = (int) x + highBoundX;
             int y = (int) func.get(x);
-            int myY = + highBoundY*2 - (int) y;
+            int myY = 2 * highBoundY - (int) y;
             System.out.println("Go " + myX + ", " + myY);
             if (y < highBoundY && y > lowBoundY)
             {
-                p.addPoint((int)myX,(int)myY);
+                addPoint((int)myX,myY);
                 System.out.println("g");
             }
         }

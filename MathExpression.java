@@ -4,17 +4,17 @@
  * @author Caleb Copeland
  * @version 4/7/21
  */
-public class MathExpression implements Term
+public class MathExpression extends Term
 {
     private Operator myOperator;
     private Term term1,term2;
     
-
     /**
      * Constructor for objects of class GraphingFunction
      */
     public MathExpression(Term t1, Operator op, Term t2)
     {
+        super(null);
         myOperator = op;
         term1=t1;
         term2=t2;

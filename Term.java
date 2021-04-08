@@ -5,10 +5,28 @@
  * @author Caleb Copeland
  * @version 4/7/21
  */
-public interface Term
+public class Term
 {
+    // instance variables - replace the example below with your own
+    private Double myVal;
+
     /**
-     * Returns the value of the Term.
+     * Constructor for objects of class Constant
      */
-    public double get(double x);
+    public Term(Double i)
+    {
+        // initialise instance variables
+        myVal = i;
+    }
+
+    
+    public double get(double x)
+    {
+        if (myVal == null)
+        {
+            return x;
+        }
+        // put your code here
+        return myVal;
+    }
 }
