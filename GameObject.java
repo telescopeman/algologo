@@ -63,7 +63,7 @@ public abstract class GameObject
     
     public void takeDamage(int n)
     {
-        health = health - n;
+        health -= n;
     }
     
     public int getDamage()
@@ -159,8 +159,6 @@ public abstract class GameObject
         isOnGround = d;
         
     }
-    
-    
     
     public void accelerate(double x1, double y1)
     {
