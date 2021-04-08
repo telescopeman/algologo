@@ -20,6 +20,7 @@ public abstract class GameObject
     
     protected double maxSpeedH,maxSpeedV,baseJump,velJumpMultiplier,K;
     protected int health;
+    protected int damage;
     
     public final double GRAVITY = 0.4;
     
@@ -58,11 +59,16 @@ public abstract class GameObject
     
     public abstract Shape getBounds();
     
-    public abstract boolean intersects(Polygon poly, Rectangle rect);
+    public abstract boolean intersects(Rectangle rect);
     
     public void takeDamage(int n)
     {
         health = health - n;
+    }
+    
+    public int getDamage()
+    {
+        return damage;
     }
     
     public void jump()

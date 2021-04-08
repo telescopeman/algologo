@@ -1,5 +1,5 @@
 import java.awt.Canvas;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 
 import java.awt.Dimension;
 import java.awt.Canvas;
@@ -18,7 +18,7 @@ public class Window extends Canvas
     {
         EasyFrame frame = new EasyFrame(title,new Dimension(width,height));
         //frame.setSize();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.add(game);

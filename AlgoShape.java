@@ -58,9 +58,9 @@ public class AlgoShape extends GameObject
         return poly;
     }
     
-    public boolean intersects(Polygon p, Rectangle rect)
+    public boolean intersects(Rectangle rect)
     {
-        return style.drawer.intersects(p,rect);
+        return style.drawer.intersects(poly,rect);
     }
     
     public void tick()
