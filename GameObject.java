@@ -29,7 +29,7 @@ public abstract class GameObject
         this.x = x;
         this.y = y;
         this.id = id;
-        
+        setSoughtVelocityY(maxSpeedV);
     }
     
     public void process()
@@ -37,11 +37,11 @@ public abstract class GameObject
         x += velX;
         y += velY;
 
-        if (velX < getSoughtVelocityX())
+        if (velX < this.getSoughtVelocityX())
         {
             velX += K;
         }
-        else if (velX > getSoughtVelocityX())
+        else if (velX > this.getSoughtVelocityX())
         {
             velX -= K;
         }

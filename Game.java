@@ -24,6 +24,7 @@ public class Game extends Canvas implements Runnable
     
     private Handler handler;
     private HUD hud;
+    private Player player;
 
     public synchronized void start()
     {
@@ -60,11 +61,15 @@ public class Game extends Canvas implements Runnable
         new Window(WIDTH, HEIGHT, "Algologo", this);
         
         hud = new HUD();
+        player =new Player(WIDTH/2,HEIGHT/2,handler);
         
-        handler.addObject(new Player(WIDTH/2,HEIGHT/2,handler));
+        handler.addObject(player);
         Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
         Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
-        handler.addObject(new AlgoShape(myTerm2,new Style(),-WIDTH/2,HEIGHT/2));
+        //handler.addObject(new AlgoShape(myTerm2,new Style(DrawType.OUTLINE_OPEN),-WIDTH/2,HEIGHT/2));
+        Term myTerm3 = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(0.1));
+        handler.addObject(new AlgoShape(myTerm3,new Style(DrawType.FILL_BELOW),-WIDTH/2,-HEIGHT/2));
+        
     }
     
     
@@ -125,7 +130,9 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0,0,WIDTH,HEIGHT);
         
         handler.render(g);
-        hud.render(g);
+        
+        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y";
+        hud.render(g,disp);
         
         g.dispose();
         bs.show();

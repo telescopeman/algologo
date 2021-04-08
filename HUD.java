@@ -17,10 +17,11 @@ public class HUD
     }
     
     
-    public void render(Graphics g)
+    public void render(Graphics g, String s1)
     {
         g.setColor(Color.gray);
 
         g.fillRect(15,15,200,32);
+        g.drawString(s1,15,15);
     }
 }

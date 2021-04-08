@@ -43,5 +43,17 @@ public class Style
     }
     
 
+    /**
+     * Default Style
+     */
+    public Style(DrawType drawer) 
+    {
+        // initialise instance variables
+        color = Color.white;
+        this.thickness = 3;
+        bounds = new Dimension(800,800);
+        this.drawer = drawer;
+        
+    }
     
 }

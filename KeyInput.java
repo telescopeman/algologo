@@ -35,7 +35,7 @@ public class KeyInput extends KeyAdapter
                 }
                 else if (key == KeyEvent.VK_RIGHT)
                     tempObject.setSoughtVelocityX(tempObject.maxSpeedH);
-                else if (key == KeyEvent.VK_UP ) //&& tempObject.isGrounded()
+                else if (key == KeyEvent.VK_UP && tempObject.isGrounded())
                     tempObject.jump(); //
 
             }

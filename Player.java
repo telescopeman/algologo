@@ -20,6 +20,8 @@ public class Player extends GameObject
 
     private Handler handler;
 
+    private GameObject currentSurface;
+
     //private final double AIRACCEL = 1;
     /**
      * Constructor for objects of class Player
@@ -30,7 +32,8 @@ public class Player extends GameObject
 
         this.handler = handler;
         setSoughtVelocityX(0);
-        setSoughtVelocityY(0);
+        setSoughtVelocityY(maxSpeedV);
+        
         maxSpeedH = 8.0;
         maxSpeedV = 10.0;
         velJumpMultiplier = 0.3;
@@ -38,7 +41,7 @@ public class Player extends GameObject
         health = 10;
         damage = 0;
         K = 0.5;
-        setGrounded(true);
+        setGrounded(false);
         setVelocityX(0);
         setVelocityY(0);
         shape = new Rectangle(SIZE);
@@ -66,8 +69,15 @@ public class Player extends GameObject
 
     public void tick()
     {
+        updateRect();
+        // if (currentSurface != null)
+        // {
+            // setGrounded(currentSurface.intersects( (Rectangle) getBounds()));
+        // }
         collision();
+        
 
+        updateRect();
         process();
 
     }
@@ -77,13 +87,13 @@ public class Player extends GameObject
         for(int i = 0; i < handler.object.size();i++)
         {
             GameObject tempObject = handler.object.get(i);
-            if (tempObject.intersects( shape ))
+            if (tempObject.intersects(  (Rectangle) getBounds()  ))
             {
                 switch( tempObject.getID() )
                 {
                     case Platform:
                     {
-                        setGrounded(true);
+                        land(tempObject);
                         break;
                     }
                     case Enemy:
@@ -102,6 +112,26 @@ public class Player extends GameObject
         }
 
     }
+
+    public void land(GameObject surface)
+    {
+        currentSurface = surface;
+        setGrounded(true);
+        //setSoughtVelocityY(0);
+        setVelocityY(0);
+        //if surface is below this code works.
+        while(surface.intersects( (Rectangle) getBounds() ))
+        {
+            y--;
+            updateRect();
+        }
+        y++;
+
+        updateRect();
+        
+        //setGrounded(false);
+    }
+
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
