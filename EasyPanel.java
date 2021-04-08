@@ -27,7 +27,15 @@ public class EasyPanel extends JPanel implements ActionListener
         addHeader(name);
     }
     
+    public EasyPanel(Dimension dim)
+    {
+        setSize(dim);
+    }
     
+    public EasyPanel(int x, int y)
+    {
+        setSize(getDim(x,y));
+    }
 
     public void addButton(String name, ActionListener trig)
     {

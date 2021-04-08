@@ -27,7 +27,7 @@ public class World extends JComponent
     {
         drawAxes((Graphics2D) g);
     }
-  
+
     private void drawAxes(Graphics2D g)
     {
         updateDim();
@@ -36,9 +36,9 @@ public class World extends JComponent
         g.drawLine(0,h,w*2,h);
         g.drawLine(w,0,w,h*2); 
         g.drawString("0", w - 7, h + 13);
-        
+
     }
-    
+
     /**
      * Draws EVERYTHING to the screen
      */
@@ -46,45 +46,50 @@ public class World extends JComponent
     {   
         //w is x, and h is y (as in x/y values in a graph)
         updateDim();
-        
+
         drawAxes(g); //maybe removed in later versions?
         Graphics2D g2 = (Graphics2D) g;
 
         //Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
         //Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(0));
-        Term testTerm2 = new Term(null);
-        AlgoShape alg2 = new AlgoShape(testTerm2,Color.red,new Dimension(w,h));
-        drawPoly(g2,alg2);
-        
-        
+        MathExpression t = new MathExpression((Double) null,Operator.POWER,2.0);
+        MathExpression t2 = new MathExpression(-0.2,Operator.MULTIPLY,t);
+        AlgoShape alg2 = constructShape(t2);
+        drawPoly(g2,alg2,true);
+
         // Graphics2D g1 = (Graphics2D) g;
         // AlgoShape alg = new AlgoShape(testTerm,Color.red,new Dimension(w,h));
         // drawPoly(g1,alg);
         // //
-        
-        
+
 
     }
-    
-    private void drawPoly(Graphics2D g, AlgoShape p)
+
+    private void drawPoly(Graphics2D g, AlgoShape p,boolean isFull)
     {
-        System.out.println("add");
-        g.setStroke(new BasicStroke(7));
-        g.setColor(Color.black);
-        //g.drawLine(0,400,700,300);
-        g.drawPolyline(p.xpoints, p.ypoints, p.npoints);
+        //System.out.println("add");
+        g.setStroke(new BasicStroke(3));
+        g.setColor(p.color);
+        if (isFull)
+        {
+            g.fillPolygon(p.xpoints, p.ypoints, p.npoints);
+        }
+        else
+        {
+            g.drawPolyline(p.xpoints, p.ypoints, p.npoints);
+        }
     }
-    
+
     private AlgoShape constructShape(Term t)
     {
-        return new AlgoShape(t,Color.red,this.getSize());
-        
+        return new AlgoShape(t,new Style(Color.black, new Dimension(w,h), true, true));
+
     }
-    
+
     private void updateDim()
     {
         w = this.getWidth()/2;
         h = this.getHeight()/2;
-        System.out.println(w + "/" + h);
+        //System.out.println(w + "/" + h);
     }
 }
