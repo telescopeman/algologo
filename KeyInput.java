@@ -53,12 +53,18 @@ public class KeyInput extends KeyAdapter
             {
                 if (key == KeyEvent.VK_LEFT)
                 {
-                    //System.out.println(tempObject.maxSpeedH);
-                    tempObject.setSoughtVelocityX(0);
+                    if (tempObject.getSoughtVelocityX() < 0)
+                    {
+                        tempObject.setSoughtVelocityX(0);
+                    }
                 }
                 else if (key == KeyEvent.VK_RIGHT)
-                    tempObject.setSoughtVelocityX(0);
-               
+                {
+                    if (tempObject.getSoughtVelocityX() > 0)
+                    {
+                        tempObject.setSoughtVelocityX(0);
+                    }
+                }
 
             }
         }}

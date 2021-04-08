@@ -13,10 +13,10 @@ public abstract class GameObject
     
     protected double x, y;
     protected ID id;
-    protected double velX, velY,seekVelX,seekVelY,maxSpeedH,maxSpeedV;
+    protected double velX, velY,seekVelX,seekVelY;
     
-    
-    public final double CUTOFF = 0.01;
+    protected double maxSpeedH,maxSpeedV,baseJump,velJumpMultiplier;
+    public final double GRAVITY = 0.4;
     
     public GameObject(double x, double y, ID id)
     {
@@ -26,11 +26,18 @@ public abstract class GameObject
         
     }
     
+    
+    
     public abstract void tick();
     
     public abstract void render(Graphics g);
     
-    public abstract void jump();
+    public void jump()
+    {
+        setGrounded(false);
+        setVelocityY(- (baseJump + getVelocityY() * velJumpMultiplier));
+        setSoughtVelocityY(maxSpeedV);
+    }
     
     public void setX(double x)
     {

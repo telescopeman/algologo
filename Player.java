@@ -18,18 +18,17 @@ public class Player extends GameObject
 {
     // instance variables - replace the example below with your own
     private Rectangle shape;
-
     private final Dimension SIZE = new Dimension(40,40);
 
     
-    private final double JUMPVEL = 9;
+    private final double JUMPVEL = 5;
     
     
-    public final double K = 0.1;
+    public final double K = 0.5;
     
     
     private final double AIRACCEL = 1;
-    private final double GRAVITY = -0.098;
+    
     /**
      * Constructor for objects of class Player
      */
@@ -38,8 +37,10 @@ public class Player extends GameObject
         super(xInit,yInit,ID.Player);
         setSoughtVelocityX(0);
         setSoughtVelocityY(0);
-        maxSpeedH = 3.0;
+        maxSpeedH = 8.0;
         maxSpeedV = 10.0;
+        velJumpMultiplier = 0.3;
+        baseJump = 6;
         // initialise instance variables
         setGrounded(true);
         //setVelocityX(1);
@@ -69,21 +70,14 @@ public class Player extends GameObject
         }
         else if (velX > getSoughtVelocityX())
         {
-            
             velX -= K;
-            
         }
         
-        if (velY < getSoughtVelocityX())
+        if (velY < getSoughtVelocityY())
         {
-            velX += K;
+            velY += GRAVITY;
         }
-        else if (velX > getSoughtVelocityX())
-        {
-            
-            velX -= K;
-            
-        }
+        
     }
 
     public void render(Graphics g)
@@ -95,11 +89,6 @@ public class Player extends GameObject
     }
 
 
-    public void jump()
-    {
-        velY = - JUMPVEL;
-        setSoughtVelocityY(maxSpeedV);
-        setGrounded(false);
-    }
+    
 
 }
