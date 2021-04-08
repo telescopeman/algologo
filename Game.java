@@ -2,12 +2,12 @@ import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
-import java.util.Random;
+import java.awt.Dimension;
 
 /**
  * Write a description of class Game here.
  *
- * @author RealTutsGML
+ * @author RealTutsGML, Caleb Copeland
  * @version 4/8/21
  * @since 4/8/21
  */
@@ -22,8 +22,8 @@ public class Game extends Canvas implements Runnable
     private Thread thread;
     private boolean running = false;
     
-    private Random r;
     private Handler handler;
+    private HUD hud;
 
     public synchronized void start()
     {
@@ -59,7 +59,12 @@ public class Game extends Canvas implements Runnable
         
         new Window(WIDTH, HEIGHT, "Algologo", this);
         
-        handler.addObject(new Player(WIDTH/2,HEIGHT/2));
+        hud = new HUD();
+        
+        handler.addObject(new Player(WIDTH/2,HEIGHT/2,handler));
+        Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
+        Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
+        handler.addObject(new AlgoShape(myTerm2,new Style(),-WIDTH/2,HEIGHT/2));
     }
     
     
@@ -100,10 +105,12 @@ public class Game extends Canvas implements Runnable
         }
     }
     
+    
+    
     private void tick()
     {
-        
         handler.tick();
+        hud.tick();
     }
     
     private void render()
@@ -118,6 +125,7 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0,0,WIDTH,HEIGHT);
         
         handler.render(g);
+        hud.render(g);
         
         g.dispose();
         bs.show();

@@ -1,10 +1,13 @@
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Polygon;
 
 /**
  * Abstract class GameObject - write a description of the class here
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author RealTutsGML, Caleb Copeland
+ * @version 4/8/21
  */
 public abstract class GameObject
 {
@@ -15,7 +18,9 @@ public abstract class GameObject
     protected ID id;
     protected double velX, velY,seekVelX,seekVelY;
     
-    protected double maxSpeedH,maxSpeedV,baseJump,velJumpMultiplier;
+    protected double maxSpeedH,maxSpeedV,baseJump,velJumpMultiplier,K;
+    protected int health;
+    
     public final double GRAVITY = 0.4;
     
     public GameObject(double x, double y, ID id)
@@ -26,11 +31,39 @@ public abstract class GameObject
         
     }
     
-    
+    public void process()
+    {
+        x += velX;
+        y += velY;
+
+        if (velX < getSoughtVelocityX())
+        {
+            velX += K;
+        }
+        else if (velX > getSoughtVelocityX())
+        {
+            velX -= K;
+        }
+        if (velY < getSoughtVelocityY() && !isGrounded())
+        {
+            velY += GRAVITY;
+        }
+        
+    }
     
     public abstract void tick();
     
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics g,int offsetX, int offsetY);
+    
+    
+    public abstract Shape getBounds();
+    
+    public abstract boolean intersects(Polygon poly, Rectangle rect);
+    
+    public void takeDamage(int n)
+    {
+        health = health - n;
+    }
     
     public void jump()
     {

@@ -12,22 +12,35 @@ public class Style
     // instance variables - replace the example below with your own
     public Color color;
     public Dimension bounds;
-    public boolean isClosed;
-    public boolean filled;
+    public DrawType drawer;
+    public boolean isFilled;
+    public float thickness;
     
     /**
      * Constructor for objects of class Style
      */
-    public Style(Color col, Dimension b, boolean close, boolean fill) 
+    public Style(Color col, Dimension b, float thickness, DrawType drawer) 
     {
         // initialise instance variables
         color = col;
+        this.thickness = thickness;
         bounds = b;
-        isClosed = close;
-        filled = fill;
+        this.drawer = drawer;
         
     }
     
+    /**
+     * Default Style
+     */
+    public Style() 
+    {
+        // initialise instance variables
+        color = Color.white;
+        this.thickness = 3;
+        bounds = new Dimension(800,800);
+        drawer = DrawType.FILL;
+        
+    }
     
 
     

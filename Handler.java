@@ -12,14 +12,17 @@ public class Handler
 {
     // instance variables - replace the example below with your own
     LinkedList<GameObject> object = new LinkedList<GameObject>();
+    
+    int offsetX;
+    int offsetY;
 
     /**
      * Constructor for objects of class Handler
      */
     public Handler()
     {
-        // initialise instance variables
-        //x = 0;
+        offsetX = 0;
+        offsetY = 0;
     }
 
     public void tick()
@@ -37,7 +40,7 @@ public class Handler
         for (int i = 0; i < object.size(); i++)
         {
             GameObject tempObject = object.get(i);
-            tempObject.render(g);
+            tempObject.render(g,offsetX,offsetY);
         }
     }
     

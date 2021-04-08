@@ -1,31 +1,29 @@
 import java.awt.Dimension;
 import java.awt.Polygon;
 import java.awt.*;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 /**
  * Write a description of class Shape here.
  *
  * @author Caleb Copeland, Ozymandias from StackOverflow, Joop Eggen [RectangleToPolygon() method only]
  * @version 4/7/21
  */
-public class AlgoShape extends Polygon
+public class AlgoShape extends GameObject
 {
-    // instance variables - replace the example below with your own
-    //private int x;
-    //private Polygon shape = new Polygon();
     private Term term;
     public Color color;
     public boolean isFull;
     public boolean isClosed;
+    private Polygon poly;
+    private Style style;
     
     /**
      * Constructor for objects of class Shape
      */
-    public AlgoShape(Term func, Style style)
+    public AlgoShape(Term func, Style style,int xpos, int ypos)
     {
-        setStyle(style);
-        //Polygon p = new Polygon();
+        super(xpos,ypos,ID.Platform);
+        this.style = style;
+        poly = new Polygon();
         final int lowBoundX = - style.bounds.width;
         final int highBoundX = style.bounds.width;
 
@@ -37,36 +35,41 @@ public class AlgoShape extends Polygon
             int myX = (int) x + highBoundX;
             int y = (int) func.get(x);
             int myY =  highBoundY - (int) y;
-            System.out.println("Go " + myX + ", " + myY);
-            // if (y < highBoundY * 2 && y > lowBoundY  * 2)
-            // {
-                addPoint(myX,myY);
-                System.out.println("g");
-            //}
+            //System.out.println("Go " + myX + ", " + myY);
+            if (y < highBoundY * 2 && y > lowBoundY  * 2)
+            {
+                poly.addPoint(myX + xpos,myY + ypos);
+                //System.out.println("g");
+            }
         }
         
     }
     
-    /**
-     * Constructor for objects of class Shape
-     */
-    public AlgoShape(Rectangle r, Style style)
+    public void render(Graphics g, int offsetX, int offsetY)
     {
-        setStyle(style);
-        Polygon poly = rectangleToPolygon(r);
-        for (int i = 0; i < poly.npoints; i++){
-            addPoint(poly.xpoints[i],poly.ypoints[i]);
-        }
+        g.setColor(style.color);  
+        ((Graphics2D) g).setStroke(new BasicStroke(style.thickness));  
+        style.drawer.draw(g,poly);
+
+    }
+    
+    public Shape getBounds()
+    {
+        return poly;
+    }
+    
+    public boolean intersects(Polygon p, Rectangle rect)
+    {
+        return style.drawer.intersects(p,rect);
+    }
+    
+    public void tick()
+    {
+        
         
     }
     
-    private void setStyle(Style style)
-    {
-        color = style.color;
-        isFull = style.filled;
-        isClosed = style.isClosed;
-        
-    }
+    
    
 
     public static Polygon rectangleToPolygon(Rectangle rect) {

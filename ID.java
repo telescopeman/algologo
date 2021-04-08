@@ -1,8 +1,8 @@
 
 /**
- * Enumeration class ID - write a description of the enum class here
+ * Types of GameObjects
  *
- * @author (your name here)
+ * @author Caleb Copeland
  * @version (version number or date here)
  */
 public enum ID
