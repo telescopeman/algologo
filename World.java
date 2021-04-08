@@ -49,18 +49,16 @@ public class World extends JComponent
 
         drawAxes(g); //maybe removed in later versions?
         Graphics2D g2 = (Graphics2D) g;
+        Player player = new Player(w,h);
 
         //Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
         //Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(0));
         MathExpression t = new MathExpression((Double) null,Operator.POWER,2.0);
-        MathExpression t2 = new MathExpression(-0.2,Operator.MULTIPLY,t);
+        MathExpression t2 = new MathExpression(-0.005,Operator.MULTIPLY,t);
         AlgoShape alg2 = constructShape(t2);
         drawPoly(g2,alg2,true);
 
-        // Graphics2D g1 = (Graphics2D) g;
-        // AlgoShape alg = new AlgoShape(testTerm,Color.red,new Dimension(w,h));
-        // drawPoly(g1,alg);
-        // //
+        drawPoly(g2,player.getShape(),true);
 
 
     }
@@ -72,7 +70,7 @@ public class World extends JComponent
         g.setColor(p.color);
         if (isFull)
         {
-            g.fillPolygon(p.xpoints, p.ypoints, p.npoints);
+            g.fillPolygon(p);
         }
         else
         {

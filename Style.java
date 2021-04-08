@@ -27,18 +27,7 @@ public class Style
         
     }
     
-     /**
-     * Constructor for objects of class Style
-     */
-    public Style() 
-    {
-        // initialise instance variables
-        color = Color.black;
-        bounds = new Dimension(800,800);
-        isClosed = true;
-        filled = true;
-        
-    }
+    
 
     
 }

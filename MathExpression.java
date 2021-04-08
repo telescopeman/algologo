@@ -47,10 +47,17 @@ public class MathExpression extends Term
      */
     public MathExpression(Term t1, Operator op, Double t2)
     {
-        super(null);
+        super(1.0);
         myOperator = op;
         term1= t1;
         term2= new Term(t2);;
+    }
+    
+    
+    
+    public String toString()
+    {
+        return "(" + term1.toString() + " " + myOperator.toString() + " " +  term2.toString() + ")";
     }
 
     public double get(double x)

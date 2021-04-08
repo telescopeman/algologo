@@ -18,7 +18,20 @@ public class Term
         // initialise instance variables
         myVal = i;
     }
+    
+    
 
+    public String toString()
+    {
+        if (myVal == null)
+        {
+            return "x";
+        }
+        else
+        {
+            return String.valueOf(myVal);
+        }
+    }
     
     public double get(double x)
     {

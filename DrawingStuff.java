@@ -1,24 +1,18 @@
-import java.awt.*;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-
 /**
- * @author Ozymandias, Caleb Copeland
+ * @author "Ozymandias", Caleb Copeland
+ * @version 4/8/21
+ * @since 4/7/21
  */
-public class DrawingStuff extends JComponent {
-    
-    
-    
-    
+public class DrawingStuff {
     
 
     public static void main(String[] args) {
         EasyFrame frame = new EasyFrame("Algologo");
-        frame.setSize(800, 800);
+        frame.setSize(Defaults.WINDOWSIZE);
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);  
-        EasyPanel gameScreen = new EasyPanel(800,600);
+        //EasyPanel gameScreen = new EasyPanel(Defaults.WINDOWSIZE);
         //frame.add(gameScreen);
         World w = new World();
         frame.add(w);
