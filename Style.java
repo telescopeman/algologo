@@ -4,7 +4,8 @@ import java.awt.*;
  * Write a description of class Style here.
  *
  * @author Caleb Copeland
- * @version (a version number or a date)
+ * @version 4/8/21
+ * @since 4/8/21
  */
 public class Style
 {

@@ -15,10 +15,12 @@ public class DrawingStuff {
         //EasyPanel gameScreen = new EasyPanel(Defaults.WINDOWSIZE);
         //frame.add(gameScreen);
         World w = new World();
+        //w.createObjs(frame);
+        frame.setVisible(true);
         frame.add(w);
         
         
-        frame.setVisible(true);
+        
         
     }
 

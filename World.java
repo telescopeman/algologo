@@ -1,12 +1,16 @@
 import javax.swing.JComponent;
-import java.awt.*;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+
 /**
  * Write a description of class World here.
  *
- * @author (your name)
- * @version 4/7/21
+ * @author Caleb Copeland, "Ozymandias"
+ * @version 4/8/21
+ * @since 4/7/21
  */
 public class World extends JComponent
 {
@@ -14,13 +18,16 @@ public class World extends JComponent
     private int w;
     private int h;
 
+    Player player;
+    AlgoShape alg2;
+    
+    private boolean started;
     /**
      * Constructor for objects of class World
      */
     public World()
     {
-        // initialise instance variables
-        //x = 0;
+        started = false;
     }
 
     private void drawAxes(Graphics g)
@@ -39,28 +46,44 @@ public class World extends JComponent
 
     }
 
+    public void createObjs(Graphics g)
+    {
+        if (started)
+        {
+            return;
+        }
+        started = true;
+        updateDim();
+        player = new Player(w,h);
+        MathExpression t = new MathExpression((Double) null,Operator.POWER,2.0);
+        MathExpression t2 = new MathExpression(-0.005,Operator.MULTIPLY,t);
+        alg2 = constructShape(t2);
+    }
+    
     /**
      * Draws EVERYTHING to the screen
      */
     public void paintComponent(Graphics g)
     {   
         //w is x, and h is y (as in x/y values in a graph)
+        createObjs(g);
         updateDim();
+        
+        
 
+        
+
+
+    }
+    
+    private void render(Graphics g)
+    {
         drawAxes(g); //maybe removed in later versions?
         Graphics2D g2 = (Graphics2D) g;
-        Player player = new Player(w,h);
-
-        //Term testTerm = new MathExpression(new Variable(),Operator.POWER,new Constant(2));
-        //Term testTerm2 = new MathExpression(new Variable(),Operator.ADDITION,new Constant(0));
-        MathExpression t = new MathExpression((Double) null,Operator.POWER,2.0);
-        MathExpression t2 = new MathExpression(-0.005,Operator.MULTIPLY,t);
-        AlgoShape alg2 = constructShape(t2);
+        
         drawPoly(g2,alg2,true);
 
-        drawPoly(g2,player.getShape(),true);
-
-
+        //drawPoly(g2,player.getShape(),true);
     }
 
     private void drawPoly(Graphics2D g, AlgoShape p,boolean isFull)
