@@ -12,12 +12,12 @@ public abstract class PhysicsObject
     protected double x, y;
     protected double velX, velY,seekVelX,seekVelY;
     protected double maxSpeedH,maxSpeedV,K;
-    public final double GRAVITY = 0.4;
-    protected boolean isOnGround;
+    public final double K2 = 0.4; //gravity
+    
 
     public void tick()
     {
-        process();
+         process();
     }
     
 
@@ -42,10 +42,16 @@ public abstract class PhysicsObject
         {
             velX -= K;
         }
-        if (velY < getSoughtVelocityY() && !isGrounded())
+        
+        if (getVelocityY() < getSoughtVelocityY())
         {
-            velY += GRAVITY;
+            velY += K2;
         }
+        else if (getVelocityY() > getSoughtVelocityY())
+        {
+            velY -= K2;
+        }
+        
     }
 
     public void setX(double x)
@@ -108,13 +114,6 @@ public abstract class PhysicsObject
          seekVelY = n;
     }
     
-    public boolean isGrounded()
-    {
-        return isOnGround;
-    }
     
-    public void setGrounded(boolean d)
-    {
-        isOnGround = d;
-    }
+    
 }

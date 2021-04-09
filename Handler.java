@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.awt.Graphics;
+import java.awt.Dimension;
 
 /**
  * Write a description of class Handler here.
@@ -55,6 +56,13 @@ public class Handler
     {
         this.object.add(object);
         
+    }
+    
+    public void addObject(GameObject object, int x, int y)
+    {
+        this.object.add(object);
+        object.setX(x);
+        object.setY(y);
     }
     
     public void removeObject(GameObject object)

@@ -25,15 +25,38 @@ public abstract class GameObject extends PhysicsObject
     public GameObject currentSurface;
     
     
+    protected boolean isOnGround;
+    
     
     public GameObject(double x, double y, ID id)
     {
         super(x,y);
         this.id = id;
-        
+        setGrounded(false);
     }
     
+    public void fall()
+    {
+        if (isGrounded())
+        {
+            setSoughtVelocityY(0);
+        }
+        else
+        {
+            setSoughtVelocityY(maxSpeedV);
+        }
+    }
     
+     public void tick()
+    {
+        doPhysics();
+    }
+    
+    public void doPhysics()
+    {
+        process();
+        fall();
+    }
     
     public abstract void render(Graphics g,int offsetX, int offsetY);
         
@@ -60,7 +83,15 @@ public abstract class GameObject extends PhysicsObject
     }
     
     
+    public boolean isGrounded()
+    {
+        return isOnGround;
+    }
     
+    public void setGrounded(boolean d)
+    {
+        isOnGround = d;
+    }
     
     
     public void setID(ID id)

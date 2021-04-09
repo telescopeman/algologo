@@ -89,8 +89,7 @@ public class Player extends GameObject
         
 
         updateRect();
-        process();
-        //fall();
+        doPhysics();
 
     }
 

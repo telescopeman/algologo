@@ -42,7 +42,8 @@ public enum DrawType
         @Override public void draw(Graphics g, Polygon poly) 
         {
             g.drawPolygon(poly.xpoints, poly.ypoints, poly.npoints);
-            g.drawLine(poly.xpoints[0],poly.ypoints[0],poly.xpoints[poly.npoints],poly.ypoints[poly.npoints]);
+            g.drawLine(poly.xpoints[0],poly.ypoints[0],
+                poly.xpoints[poly.npoints],poly.ypoints[poly.npoints]);
         }
 
         @Override public boolean intersects(Polygon poly, Rectangle rect) 

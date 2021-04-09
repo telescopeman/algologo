@@ -25,6 +25,7 @@ public class Game extends Canvas implements Runnable
     private Handler handler;
     private HUD hud;
     private Player player;
+    private AlgoShapeHelper ash;
 
     public synchronized void start()
     {
@@ -68,8 +69,8 @@ public class Game extends Canvas implements Runnable
         Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
         //handler.addObject(new AlgoShape(myTerm2,new Style(DrawType.OUTLINE_OPEN),-WIDTH/2,HEIGHT/2));
         
-        handler.addObject(AlgoShapeHelper.LINEAR_SLOPE.get(new double[]{0.1}));
-        //handler.addObject(AlgoShapeHelper.PARABOLA.get(new double[]{0.1,1,0}));
+        handler.addObject(ash.LINEAR_SLOPE.get(new double[]{0.1},-WIDTH/2,-HEIGHT/2));
+        //handler.addObject(ash.PARABOLA.get(new double[]{0.1,0,0},new Dimension(500,80),300,-HEIGHT/2));
         
     }
     
@@ -140,7 +141,7 @@ public class Game extends Canvas implements Runnable
         {
             str= " (Not Grounded)";
         }
-        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y" + str;
+        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y";
         hud.render(g,disp);
         
         g.dispose();

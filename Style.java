@@ -37,7 +37,7 @@ public class Style
         // initialise instance variables
         color = Color.white;
         this.thickness = 3;
-        bounds = new Dimension(800,800);
+        bounds = new Dimension(Game.WIDTH,Game.HEIGHT);
         drawer = DrawType.FILL;
         
     }
@@ -51,7 +51,20 @@ public class Style
         // initialise instance variables
         color = Color.white;
         this.thickness = 3;
-        bounds = new Dimension(800,800);
+        bounds = new Dimension(Game.WIDTH*4,Game.HEIGHT*4);
+        this.drawer = drawer;
+        
+    }
+    
+    /**
+     * Default Style
+     */
+    public Style(DrawType drawer, Dimension dim) 
+    {
+        // initialise instance variables
+        color = Color.white;
+        this.thickness = 3;
+        bounds = dim;
         this.drawer = drawer;
         
     }
