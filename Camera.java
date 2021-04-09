@@ -11,9 +11,11 @@ public class Camera extends PhysicsObject
     //private final double 
     private final int room = 200;
 
-    private final double mult = 1;
+    private final double multX = 1;
+    private final double multY = 0.1;
     
-    private final double base = 2;
+    private final double baseX = 2;
+    private final double baseY = 10;
     /**
      * Constructor for objects of class Camera
      */
@@ -41,7 +43,7 @@ public class Camera extends PhysicsObject
         if (tooRight || tooLeft)
         {
             double v = Math.signum(obj.getX()-getX() - Game.WIDTH/2) * maxSpeedH;
-            setSoughtVelocityX(v * Math.abs(obj.getVelocityX()*mult) + v * base);
+            setSoughtVelocityX(v * (Math.abs(obj.getVelocityX()*multX) + baseX));
             //System.out.println(getSoughtVelocityX());
 
         }
@@ -54,8 +56,8 @@ public class Camera extends PhysicsObject
         if (tooHigh || tooLow)
         {
             int v = (int) Math.signum(obj.getY()-getY() + Game.HEIGHT/2) * 1;
-            setSoughtVelocityY(v * Math.abs(obj.getVelocityY()*mult) + v * base);
-            System.out.println(getSoughtVelocityY());
+            setSoughtVelocityY(v * (Math.abs(obj.getVelocityY()*multY) + baseY));
+            //System.out.println(getSoughtVelocityY());
 
         }
         else

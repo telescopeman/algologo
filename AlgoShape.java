@@ -55,31 +55,7 @@ public class AlgoShape extends GameObject
 
     }
     
-    public AlgoShape(Term func, Style style)
-    {
-        super(0,0,ID.Platform);
-        this.style = style;
-        poly = new Polygon();
-        final int lowBoundX = - style.bounds.width;
-        final int highBoundX = style.bounds.width;
-
-        final int lowBoundY = - style.bounds.height;
-        final int highBoundY = style.bounds.height;
-
-        //System.out.println(lowBoundY);
-        for (double x = lowBoundX; x <= highBoundX; x = x + 1) {
-            int myX = (int) x + highBoundX;
-            int y = (int) func.get(x);
-            int myY =  highBoundY - (int) y;
-            //System.out.println("Go " + myX + ", " + myY);
-            if (y < highBoundY * 2 && y > lowBoundY  * 2)
-            {
-                poly.addPoint(myX + 0,myY + 0);
-                //System.out.println("g");
-            }
-        }
-        
-    }
+    
 
     public void render(Graphics g, int offsetX, int offsetY)
     {

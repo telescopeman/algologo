@@ -65,8 +65,8 @@ public class Game extends Canvas implements Runnable
         player =new Player(WIDTH/2,HEIGHT/2,handler);
         
         handler.addObject(player);
-        Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
-        Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
+        //Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
+        //Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
         //handler.addObject(new AlgoShape(myTerm2,new Style(DrawType.OUTLINE_OPEN),-WIDTH/2,HEIGHT/2));
         
         handler.addObject(ash.LINEAR_SLOPE.get(new double[]{0.1},-WIDTH/2,-HEIGHT/2));

@@ -36,8 +36,6 @@ public class Handler
             if (tempObject.getID()==ID.Player)
             {
                 camera.watch(tempObject);
-                
-                
             }
         }
         camera.tick();

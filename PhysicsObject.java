@@ -34,14 +34,10 @@ public abstract class PhysicsObject
         x += velX;
         y += velY;
 
-        if (getVelocityX() < getSoughtVelocityX())
-        {
-            velX += K;
-        }
-        else if (getVelocityX() > getSoughtVelocityX())
-        {
-            velX -= K;
-        }
+        double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
+        if (getVelocityX() != getSoughtVelocityX());
+            velX += v*K;
+       
         
         if (getVelocityY() < getSoughtVelocityY())
         {
