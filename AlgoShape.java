@@ -1,30 +1,17 @@
-import java.awt.Dimension;
-import java.awt.Polygon;
+
 import java.awt.*;
 /**
- * Write a description of class Shape here.
  *
  * @author Caleb Copeland, Ozymandias from StackOverflow, Joop Eggen [RectangleToPolygon() method only]
- * @version 4/7/21
+ * @version 4/9/21
+ * @since 4/7/21
  */
 public class AlgoShape extends GameObject
 {
-    private Term term;
-    public Color color;
-    public boolean isFull;
-    public boolean isClosed;
-    private Polygon poly;
-    private Style style;
+    private final Polygon poly;
+    private final Style style;
 
 
-    public enum COMMON
-    {
-        Player(),
-        Player2(),
-        Enemy(),
-        Platform();
-
-    }
 
     /**
      * Constructor for objects of class Shape
@@ -44,8 +31,7 @@ public class AlgoShape extends GameObject
         for (double x = lowBoundX; x <= highBoundX; x = x + 1) {
             int myX = (int) x + highBoundX;
             int y = (int) func.get(x);
-            int myY =  highBoundY - (int) y;
-            //System.out.println("Go " + myX + ", " + myY);
+            int myY =  highBoundY - y;
             if (y < highBoundY * 2 && y > lowBoundY  * 2)
             {
                 poly.addPoint(myX + xpos,myY + ypos);
@@ -65,15 +51,14 @@ public class AlgoShape extends GameObject
         style.drawer.draw(g,adjust(poly,offsetX,offsetY));
 
     }
-    
+
     public Polygon adjust(Polygon poly,int offsetX, int offsetY)
     {
-        
         Polygon altered = new Polygon();
         for(int i = 0; i < poly.npoints; i++)
         {
             altered.addPoint(poly.xpoints[i] + offsetX,poly.ypoints[i] + offsetY);
-            
+
         }
         return altered;
     }
@@ -88,11 +73,7 @@ public class AlgoShape extends GameObject
         return style.drawer.intersects(poly,rect);
     }
 
-    public void tick()
-    {
 
-    }
-    
 
     public static Polygon rectangleToPolygon(Rectangle rect) {
         int[] xpoints = {rect.x, rect.x + rect.width, rect.x + rect.width, rect.x};

@@ -5,7 +5,8 @@ import java.awt.event.KeyEvent;
  * Write a description of class KeyInput here.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version (a version number or a date)
+ * @version 4/8/21
+ * @since 4/8/21
  */
 public class KeyInput extends KeyAdapter
 {

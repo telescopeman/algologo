@@ -1,9 +1,8 @@
-import java.awt.Graphics;
 
 /**
  * Write a description of class PhysicsObject here.
  *
- * @author (your name)
+ * @author Caleb Copeland
  * @version (a version number or a date)
  */
 public abstract class PhysicsObject
@@ -12,7 +11,7 @@ public abstract class PhysicsObject
     protected double x, y;
     protected double velX, velY,seekVelX,seekVelY;
     protected double maxSpeedH,maxSpeedV,K;
-    public final double K2 = 0.4; //gravity
+    public double K2 = 0.4; //gravity
     
 
     public void tick()

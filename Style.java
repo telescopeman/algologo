@@ -4,7 +4,7 @@ import java.awt.*;
  * Write a description of class Style here.
  *
  * @author Caleb Copeland
- * @version 4/8/21
+ * @version 4/9/21
  * @since 4/8/21
  */
 public class Style

@@ -7,8 +7,9 @@ import java.awt.Rectangle;
 /**
  * Enumeration class DrawType - write a description of the enum class here
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author Caleb Copeland
+ * @version 4/9/21
+ * @since 4/8/21
  */
 public enum DrawType
 {
@@ -33,8 +34,7 @@ public enum DrawType
 
         @Override public boolean intersects(Polygon poly, Rectangle rect) 
         {
-            return false;
-            //new Path2D.Float(poly.npoints).intersects(rect);
+            return false; // DO NOT LEAVE THIS IN
         }
     },
     OUTLINE_CLOSED
@@ -75,14 +75,16 @@ public abstract boolean intersects(Polygon poly, Rectangle rect);
 
 private static Polygon extendBelow(Polygon p)
 {
-Polygon p2 = new Polygon();
-p2.addPoint(p.xpoints[0],9999);
-for(int i = 0; i < p.npoints;i++)
-{
-p2.addPoint(p.xpoints[i],p.ypoints[i]);
-}
-p2.addPoint(p.xpoints[p.npoints],9999);
-return p2;
+    final int down = 2000;
+    Polygon p2 = new Polygon();
+    p2.addPoint(p.xpoints[0],down);
+    for(int i = 0; i < p.npoints;i++)
+    {
+        p2.addPoint(p.xpoints[i],p.ypoints[i]);
+    }
+    p2.addPoint(p.xpoints[p.npoints],down);
+    //p2.addPoint(p.xpoints[0],down);
+    return p2;
 }
 
 };

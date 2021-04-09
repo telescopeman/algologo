@@ -9,7 +9,7 @@ import java.awt.Graphics;
  * Write a description of class Player here.
  *
  * @author Caleb Copeland, Rob Camick [motion only]
- * @version 4/8/21
+ * @version 4/9/21
  * @since 4/8/21
  */
 public class Player extends GameObject 
@@ -128,8 +128,6 @@ public class Player extends GameObject
     {
         currentSurface = surface;
         setGrounded(true);
-        //System.out.println("land");
-        //setSoughtVelocityY(0);
         setVelocityY(0);
         //if surface is below this code works.
         while(surface.intersects( (Rectangle) getBounds() ))

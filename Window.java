@@ -7,7 +7,7 @@ import java.awt.Canvas;
  * Write a description of class Window here.
  *
  * @author (your name)
- * @version (a version number or a date)
+ * @since 4/7/21
  */
 public class Window extends Canvas
 {

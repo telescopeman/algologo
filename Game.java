@@ -8,7 +8,7 @@ import java.awt.Dimension;
  * Write a description of class Game here.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/8/21
+ * @version 4/9/21
  * @since 4/8/21
  */
 public class Game extends Canvas implements Runnable
@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable
     private Thread thread;
     private boolean running = false;
     
-    private Handler handler;
+    private final Handler handler;
     private HUD hud;
     private Player player;
     private AlgoShapeHelper ash;
@@ -65,16 +65,17 @@ public class Game extends Canvas implements Runnable
         player =new Player(WIDTH/2,HEIGHT/2,handler);
         
         handler.addObject(player);
-        //Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
-        //Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
-        //handler.addObject(new AlgoShape(myTerm2,new Style(DrawType.OUTLINE_OPEN),-WIDTH/2,HEIGHT/2));
-        
-        handler.addObject(ash.LINEAR_SLOPE.get(new double[]{0.1},-WIDTH/2,-HEIGHT/2));
-        //handler.addObject(ash.PARABOLA.get(new double[]{0.1,0,0},new Dimension(500,80),300,-HEIGHT/2));
-        
+        handler.addObject(makeShape("0+0",0,0));
+        handler.addObject(makeShape("x*0.1",600,0));
+
+        //handler.addObject
     }
     
-    
+    private AlgoShape makeShape(String s, int x, int y)
+    {
+        return new AlgoShape(AlgoShapeHelper.parse(s),new Style(DrawType.FILL),x,y);
+
+    }
 
     public void run()
     {

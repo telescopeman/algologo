@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Jon Skeet, Caleb Copeland
  */
@@ -36,11 +39,17 @@ private final String text;
 private Operator(String text) {
     this.text = text;
 }
+    static Map<String, Operator> map = new HashMap<>();
 
-// private Operator get(String t)
-// {
-// return Operator(t);
-// }
+    static {
+        for (Operator operator : Operator.values()) {
+            map.put(operator.text, operator);
+        }
+    }
+public static Operator get(String t)
+{
+    return map.get(t);
+}
 
 // Yes, enums *can* have abstract methods. This code compiles...
 public abstract double apply(double x1, double x2);
