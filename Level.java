@@ -12,5 +12,11 @@ public class Level
     public AlgoShape[] shapes;
     public GameObject[] entities;
     
-    public Level 
+    public Level(AlgoShape[] theShapes, GameObject[] theEntities)
+    {
+        this.shapes = theShapes;
+        this.entities = theEntities;
+
+
+    }
 }

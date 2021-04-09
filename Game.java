@@ -76,12 +76,6 @@ public class Game extends Canvas implements Runnable
     
     
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
     public void run()
     {
         //boolean running = true;
@@ -132,15 +126,8 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0,0,WIDTH,HEIGHT);
         
         handler.render(g);
-        String str;
-        if (player.isGrounded())
-        {
-            str= " (Grounded)";
-        }
-        else
-        {
-            str= " (Not Grounded)";
-        }
+
+
         String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y";
         hud.render(g,disp);
         

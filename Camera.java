@@ -1,4 +1,4 @@
-
+//import java.math;
 /**
  * Write a description of class Camera here.
  *
@@ -9,7 +9,7 @@ public class Camera extends PhysicsObject
 {
     // instance variables - replace the example below with your own
     //private final double 
-    private final int room = 200;
+
 
     private final double multX = 1;
     private final double multY = 0.1;
@@ -32,6 +32,8 @@ public class Camera extends PhysicsObject
 
     public void watch(GameObject obj)
     {
+
+        final int room = 200;
         double xAdj =  obj.getX() - getX();
         double yAdj =  obj.getY() - getY();
         

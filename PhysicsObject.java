@@ -41,7 +41,7 @@ public abstract class PhysicsObject
             velX += v*K;
         }
         
-        if (getVelocityY() != getSoughtVelocityY());
+        if (getVelocityY() != getSoughtVelocityY())
         {
             double v = - Math.signum(getVelocityY() - getSoughtVelocityY()) * 1;
             velY += v*K2;
