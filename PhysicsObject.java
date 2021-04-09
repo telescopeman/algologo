@@ -34,19 +34,20 @@ public abstract class PhysicsObject
         x += velX;
         y += velY;
 
-        double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
-        if (getVelocityX() != getSoughtVelocityX());
-            velX += v*K;
-       
         
-        if (getVelocityY() < getSoughtVelocityY())
+        if (getVelocityX() != getSoughtVelocityX())
         {
-            velY += K2;
+            double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
+            velX += v*K;
         }
-        else if (getVelocityY() > getSoughtVelocityY())
+        
+        if (getVelocityY() != getSoughtVelocityY());
         {
-            velY -= K2;
+            double v = - Math.signum(getVelocityY() - getSoughtVelocityY()) * 1;
+            velY += v*K2;
         }
+            
+        
         
     }
 
