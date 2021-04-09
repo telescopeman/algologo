@@ -7,9 +7,9 @@
  */
 public enum ID
 {
-    Player(),
-    Player2(),
-    Enemy(),
-    Platform();
+    Player,
+    Player2,
+    Enemy,
+    Platform;
     
 }

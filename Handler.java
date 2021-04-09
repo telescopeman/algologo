@@ -13,16 +13,15 @@ public class Handler
     // instance variables - replace the example below with your own
     LinkedList<GameObject> object = new LinkedList<GameObject>();
     
-    int offsetX;
-    int offsetY;
+    private Camera camera;
 
     /**
      * Constructor for objects of class Handler
      */
     public Handler()
     {
-        offsetX = 0;
-        offsetY = 0;
+        camera = new Camera(0,0);
+        //addObject(camera);
     }
 
     public void tick()
@@ -31,8 +30,16 @@ public class Handler
         {
             GameObject tempObject = object.get(i);
             tempObject.tick();
+            
+            // camera motion
+            if (tempObject.getID()==ID.Player)
+            {
+                camera.watch(tempObject);
+                
+                
+            }
         }
-        
+        camera.tick();
     }
     
     public void render(Graphics g)
@@ -40,7 +47,7 @@ public class Handler
         for (int i = 0; i < object.size(); i++)
         {
             GameObject tempObject = object.get(i);
-            tempObject.render(g,offsetX,offsetY);
+            tempObject.render(g, - (int)camera.getX(), - (int)camera.getY());
         }
     }
     

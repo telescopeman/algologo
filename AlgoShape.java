@@ -15,7 +15,16 @@ public class AlgoShape extends GameObject
     public boolean isClosed;
     private Polygon poly;
     private Style style;
-    
+
+    public enum COMMON
+    {
+        Player(),
+        Player2(),
+        Enemy(),
+        Platform();
+
+    }
+
     /**
      * Constructor for objects of class Shape
      */
@@ -42,35 +51,39 @@ public class AlgoShape extends GameObject
                 //System.out.println("g");
             }
         }
-        
+
     }
-    
+
     public void render(Graphics g, int offsetX, int offsetY)
     {
         g.setColor(style.color);  
         ((Graphics2D) g).setStroke(new BasicStroke(style.thickness));  
-        style.drawer.draw(g,poly);
+        
+        Polygon altered = new Polygon();
+        for(int i = 0; i < poly.npoints; i++)
+        {
+            altered.addPoint(poly.xpoints[i] + offsetX,poly.ypoints[i] + offsetY);
+            
+        }
+        style.drawer.draw(g,altered);
 
     }
-    
+
     public Shape getBounds()
     {
         return poly;
     }
-    
+
     public boolean intersects(Rectangle rect)
     {
         return style.drawer.intersects(poly,rect);
     }
-    
+
     public void tick()
     {
-        
-        
+
     }
     
-    
-   
 
     public static Polygon rectangleToPolygon(Rectangle rect) {
         int[] xpoints = {rect.x, rect.x + rect.width, rect.x + rect.width, rect.x};

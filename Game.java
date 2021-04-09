@@ -67,8 +67,9 @@ public class Game extends Canvas implements Runnable
         Term myTerm = new MathExpression(new Term(null),Operator.POWER,new Term(2.0));
         Term myTerm2 = new MathExpression(myTerm,Operator.MULTIPLY,new Term(0.1));
         //handler.addObject(new AlgoShape(myTerm2,new Style(DrawType.OUTLINE_OPEN),-WIDTH/2,HEIGHT/2));
-        Term myTerm3 = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(0.1));
-        handler.addObject(new AlgoShape(myTerm3,new Style(DrawType.FILL_BELOW),-WIDTH/2,-HEIGHT/2));
+        
+        handler.addObject(AlgoShapeHelper.LINEAR_SLOPE.get(new double[]{0.1}));
+        //handler.addObject(AlgoShapeHelper.PARABOLA.get(new double[]{0.1,1,0}));
         
     }
     
@@ -130,8 +131,16 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0,0,WIDTH,HEIGHT);
         
         handler.render(g);
-        
-        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y";
+        String str;
+        if (player.isGrounded())
+        {
+            str= " (Grounded)";
+        }
+        else
+        {
+            str= " (Not Grounded)";
+        }
+        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y" + str;
         hud.render(g,disp);
         
         g.dispose();

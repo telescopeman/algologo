@@ -9,54 +9,34 @@ import java.awt.Polygon;
  * @author RealTutsGML, Caleb Copeland
  * @version 4/8/21
  */
-public abstract class GameObject
+public abstract class GameObject extends PhysicsObject
 {
     // instance variables - replace the example below with your own
-    public boolean isOnGround;
     
-    protected double x, y;
+    
+    
     protected ID id;
-    protected double velX, velY,seekVelX,seekVelY;
     
-    protected double maxSpeedH,maxSpeedV,baseJump,velJumpMultiplier,K;
-    protected int health;
-    protected int damage;
     
-    public final double GRAVITY = 0.4;
+    protected double baseJump,velJumpMultiplier;
+    
+    protected int health,damage;
+    
+    public GameObject currentSurface;
+    
+    
     
     public GameObject(double x, double y, ID id)
     {
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.id = id;
-        setSoughtVelocityY(maxSpeedV);
-    }
-    
-    public void process()
-    {
-        x += velX;
-        y += velY;
-
-        if (velX < this.getSoughtVelocityX())
-        {
-            velX += K;
-        }
-        else if (velX > this.getSoughtVelocityX())
-        {
-            velX -= K;
-        }
-        if (velY < getSoughtVelocityY() && !isGrounded())
-        {
-            velY += GRAVITY;
-        }
         
     }
     
-    public abstract void tick();
+    
     
     public abstract void render(Graphics g,int offsetX, int offsetY);
-    
-    
+        
     public abstract Shape getBounds();
     
     public abstract boolean intersects(Rectangle rect);
@@ -74,29 +54,14 @@ public abstract class GameObject
     public void jump()
     {
         setGrounded(false);
-        setVelocityY(- (baseJump + getVelocityY() * velJumpMultiplier));
-        setSoughtVelocityY(maxSpeedV);
+        setVelocityY(- (baseJump + ( Math.abs(getVelocityY()) * velJumpMultiplier)));
+        setY(y-3);
+        
     }
     
-    public void setX(double x)
-    {
-        this.x = x;
-    }
     
-    public double getX()
-    {
-        return x;
-    }
     
-    public void setY(double y)
-    {
-        this.y = y;
-    }
     
-    public double getY()
-    {
-        return y;
-    }
     
     public void setID(ID id)
     {
@@ -108,61 +73,8 @@ public abstract class GameObject
         return id;
     }
     
-    public void setVelocityX(double v)
-    {
-        velX = v;
-    }
-    
-    public void setVelocityY(double v)
-    {
-        velY = v;
-    }
-    
-    public double getVelocityX()
-    {
-        return velX;
-    }
-    
-    public double getVelocityY()
-    {
-        return velY;
-    }
-    
-    public double getSoughtVelocityX()
-    {
-        return seekVelX;
-    }
-    
-    public double getSoughtVelocityY()
-    {
-        return seekVelY;
-    }
-    
-    public void setSoughtVelocityX(double n)
-    {
-         seekVelX = n;
-    }
-    
-    public void setSoughtVelocityY(double n)
-    {
-         seekVelY = n;
-    }
     
     
-    public boolean isGrounded()
-    {
-        return isOnGround;
-    }
     
-    public void setGrounded(boolean d)
-    {
-        isOnGround = d;
-        
-    }
     
-    public void accelerate(double x1, double y1)
-    {
-        velX += x1;
-        velY += y1;
-    }
 }

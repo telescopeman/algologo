@@ -20,7 +20,7 @@ public class Player extends GameObject
 
     private Handler handler;
 
-    private GameObject currentSurface;
+    //private GameObject currentSurface;
 
     //private final double AIRACCEL = 1;
     /**
@@ -59,7 +59,6 @@ public class Player extends GameObject
 
     public Shape getBounds(){
         return shape;
-        //snfsns
     }
 
     public boolean intersects(Rectangle rect)
@@ -70,15 +69,28 @@ public class Player extends GameObject
     public void tick()
     {
         updateRect();
-        // if (currentSurface != null)
-        // {
-            // setGrounded(currentSurface.intersects( (Rectangle) getBounds()));
-        // }
         collision();
+        if (currentSurface != null)
+        {
+            
+            if (currentSurface.intersects( (Rectangle) getBounds()))
+            {
+                setGrounded(true);
+                
+            }
+            else
+            {
+                setGrounded(false);
+                currentSurface = null;
+            }
+            
+        }
+        
         
 
         updateRect();
         process();
+        //fall();
 
     }
 
@@ -117,6 +129,7 @@ public class Player extends GameObject
     {
         currentSurface = surface;
         setGrounded(true);
+        //System.out.println("land");
         //setSoughtVelocityY(0);
         setVelocityY(0);
         //if surface is below this code works.

@@ -22,6 +22,7 @@ public class HUD
         g.setColor(Color.gray);
 
         g.fillRect(15,15,200,32);
-        g.drawString(s1,15,15);
+        g.setColor(Color.white);
+        g.drawString(s1,15,31);
     }
 }

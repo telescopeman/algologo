@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 /**
  * Write a description of class KeyInput here.
  *
- * @author RealTutsGML
+ * @author RealTutsGML, Caleb Copeland
  * @version (a version number or a date)
  */
 public class KeyInput extends KeyAdapter
@@ -21,7 +21,7 @@ public class KeyInput extends KeyAdapter
     public void keyPressed(KeyEvent e)
     {
         int key = e.getKeyCode();
-        System.out.println("a");
+        //System.out.println("a");
 
         for(int i = 0; i < handler.object.size(); i++)
         {
@@ -35,7 +35,7 @@ public class KeyInput extends KeyAdapter
                 }
                 else if (key == KeyEvent.VK_RIGHT)
                     tempObject.setSoughtVelocityX(tempObject.maxSpeedH);
-                else if (key == KeyEvent.VK_UP && tempObject.isGrounded())
+                else if (key == KeyEvent.VK_UP && tempObject.currentSurface != null)
                     tempObject.jump(); //
 
             }
