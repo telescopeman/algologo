@@ -12,7 +12,7 @@ import java.awt.Graphics;
  */
 public class Player extends LivingObject
 {
-    private final Dimension SIZE = new Dimension(40,40);
+    private final Dimension PLAYER_SIZE = new Dimension(40,40);
     private final Color PLAYER_COLOR = Color.red;
 
     /**
@@ -28,7 +28,7 @@ public class Player extends LivingObject
         setMaxHealth(10);
         fullHeal();
 
-        shape = new Rectangle(SIZE);
+        setBounds(PLAYER_SIZE);
         updateForm();
 
     }
@@ -38,8 +38,8 @@ public class Player extends LivingObject
         // clarification: the position of the Player is at the bottom-center of its sprite.
         assert(shape instanceof Rectangle);
         Rectangle rect = (Rectangle) shape;
-        rect.x = (int) getX() - SIZE.width/2;
-        rect.y = (int) getY() - SIZE.height;
+        rect.x = (int) getX() - PLAYER_SIZE.width/2;
+        rect.y = (int) getY() - PLAYER_SIZE.height;
     }
 
 
@@ -65,8 +65,7 @@ public class Player extends LivingObject
         g.setColor(PLAYER_COLOR);
         assert(shape instanceof Rectangle);
         Rectangle rect = (Rectangle) shape;
-        g.fillRect(rect.x + offsetX,rect.y + offsetY,SIZE.width,SIZE.height);
-
+        g.fillPolygon(adjust(rect,offsetX,offsetY));
     }
 
 }

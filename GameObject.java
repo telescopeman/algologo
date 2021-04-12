@@ -1,15 +1,19 @@
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Graphics;
-
+import java.awt.Dimension;
+import java.awt.Polygon;
 /**
  * Any object in the game.
+ * @author RealTutsGML, Caleb Copeland, Joop Eggen [rectangleToPolygon() only]
  */
 public abstract class GameObject {
 
     protected ID id;
     protected double x, y;
     protected int damage = 0;
+
+    protected Shape shape;
 
     public GameObject(double x, double y, ID id)
     {
@@ -37,7 +41,20 @@ public abstract class GameObject {
 
     public abstract void render(Graphics g, int offsetX, int offsetY);
 
-    public abstract Shape getBounds();
+    public Shape getBounds()
+    {
+        return shape;
+    }
+
+    public void setBounds(Shape sh)
+    {
+        shape = sh;
+    }
+
+    public void setBounds(Dimension dim)
+    {
+        shape = new Rectangle(dim);
+    }
 
     public void setX(double x)
     {
@@ -75,4 +92,28 @@ public abstract class GameObject {
     public void setID(ID id) { this.id = id; }
 
     public ID getID() { return id; }
+
+    public static Polygon rectangleToPolygon(Rectangle rect)
+    {
+        final int[] x_points = {rect.x,rect.x + rect.width,rect.x + rect.width, rect.x};
+        final int[] y_points = {rect.y,rect.y, rect.y + rect.height, rect.y + rect.height};
+        return new Polygon(x_points, y_points, 4);
+
+    }
+
+    public static Polygon adjust(Polygon poly, int offsetX, int offsetY)
+    {
+        Polygon altered = new Polygon();
+        for(int i = 0; i < poly.npoints; i++)
+        {
+            altered.addPoint(poly.xpoints[i] + offsetX,poly.ypoints[i] + offsetY);
+        }
+        return altered;
+    }
+
+    public static Polygon adjust(Rectangle rect, int offsetX, int offsetY)
+    {
+        final Polygon POLY = rectangleToPolygon(rect);
+        return adjust(POLY,offsetX,offsetY);
+    }
 }

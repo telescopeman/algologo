@@ -17,6 +17,7 @@ public class Camera extends PhysicsObject
     {
         super(x,y,ID.Camera);
         init();
+
     }
 
     private void init()
@@ -25,6 +26,7 @@ public class Camera extends PhysicsObject
         maxSpeedV = 11;
         K = 1;
         K2 = 1;
+        setBounds(new Rectangle(-9999,-9998,-9999,-9998));
     }
 
     /**
@@ -41,10 +43,7 @@ public class Camera extends PhysicsObject
         // do nothing lmao
     }
 
-    public Shape getBounds()
-    {
-        return new Rectangle(-9999,-9998,-9999,-9998);
-    }
+
 
     public boolean intersects(Rectangle rect)
     {

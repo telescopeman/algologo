@@ -17,8 +17,6 @@ public abstract class LivingObject extends PhysicsObject {
     protected String[] damageSources;
     protected final double slopeCutoffX = 20, slopeCutoffY = 3;
 
-    protected Shape shape;
-
     public LivingObject(double x, double y, ID id, Handler handler) {
         super(x, y, id);
 
@@ -58,10 +56,6 @@ public abstract class LivingObject extends PhysicsObject {
         }
         updateForm();
 
-    }
-
-    public Shape getBounds(){
-        return shape;
     }
 
     public void setLastX(double n) {
