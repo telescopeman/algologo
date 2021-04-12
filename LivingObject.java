@@ -1,4 +1,4 @@
-import java.awt.Shape;
+import java.awt.*;
 
 /**
  * Abstract class GameObject - write a description of the class here
@@ -39,8 +39,20 @@ public abstract class LivingObject extends PhysicsObject
             setSoughtVelocityY(maxSpeedV);
         }
     }
-    
-     public void tick()
+
+    public void checkContact() {
+        if (currentSurface != null) {
+            if (currentSurface.intersects((Rectangle) getBounds())) {
+                setGrounded(true);
+
+            } else {
+                setGrounded(false);
+                currentSurface = null;
+            }
+        }
+    }
+
+    public void tick()
     {
         doPhysics();
     }

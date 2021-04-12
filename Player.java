@@ -66,24 +66,7 @@ public class Player extends LivingObject
     {
         updateRect();
         collision();
-        if (currentSurface != null)
-        {
-            
-            if (currentSurface.intersects( (Rectangle) getBounds()))
-            {
-                setGrounded(true);
-                
-            }
-            else
-            {
-                setGrounded(false);
-                currentSurface = null;
-            }
-            
-        }
-        
-        
-
+        checkContact();
         updateRect();
         doPhysics();
 

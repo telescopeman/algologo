@@ -20,8 +20,7 @@ public class Handler
      */
     public Handler()
     {
-        camera = new Camera(0,0);
-        //addObject(camera);
+        camera = new Camera();
     }
 
     public void tick()
@@ -46,15 +45,11 @@ public class Handler
         for (int i = 0; i < object.size(); i++)
         {
             GameObject tempObject = object.get(i);
-            tempObject.render(g, - (int)camera.getX(), - (int)camera.getY());
+            tempObject.render(g, - (int) camera.getX(), - (int) camera.getY());
         }
     }
     
-    public void addObject(GameObject object)
-    {
-        this.object.add(object);
-        
-    }
+    public void addObject(GameObject object) { this.object.add(object); }
     
     public void addObject(GameObject object, int x, int y)
     {
