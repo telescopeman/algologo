@@ -39,7 +39,7 @@ private final String text;
 Operator(String text) {
     this.text = text;
 }
-    static Map<String, Operator> map = new HashMap<>();
+    static final Map<String, Operator> map = new HashMap<>();
 
     static {
         for (Operator operator : Operator.values()) {

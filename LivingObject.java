@@ -1,5 +1,4 @@
-
-import java.awt.*;
+import java.awt.Shape;
 import java.util.Arrays;
 import java.util.List;
 
@@ -89,13 +88,13 @@ public abstract class LivingObject extends PhysicsObject {
         saveX();
     }
 
-    public double getLastY() {
-        return lastY;
-    }
+    public double getLastY() { return lastY; }
 
-    public double getLastX() {
-        return lastX;
-    }
+    public double getLastX() { return lastX; }
+
+    public void recoverX() { setX(getLastX()); }
+    public void recoverY() { setY(getLastY()); }
+    public void recoverPos() { recoverX(); recoverY(); }
 
     public int getHealth() { return health; }
 
@@ -144,7 +143,7 @@ public abstract class LivingObject extends PhysicsObject {
                 }
                 else {
                     loseContact();
-                    setY(getLastY());
+                    recoverY();
                 }
             } else {
                 loseContact();
@@ -199,10 +198,8 @@ public abstract class LivingObject extends PhysicsObject {
     public void jump() {
         if (getFlightAbility() || getCurrentGround() != null) {
             setGrounded(false);
-            setY(getY() - 3);
+            inchY(-3);
             setVelocityY(-Math.abs(baseJump + Math.abs(getVelocityY() * velJumpMultiplier)));
-            System.out.println(getVelocityY());
-
         }
     }
 

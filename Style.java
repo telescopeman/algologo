@@ -1,4 +1,6 @@
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.BasicStroke;
 /**
  * Write a description of class Style here.
  *
@@ -8,12 +10,10 @@ import java.awt.*;
  */
 public class Style
 {
-    // instance variables - replace the example below with your own
-    public Color color;
-    public Dimension bounds;
-    public DrawType drawer;
-    public boolean isFilled;
-    public float thickness;
+    public final Color color;
+    public final Dimension bounds;
+    public final DrawType drawer;
+    public final float thickness;
     
     /**
      * Constructor for objects of class Style
