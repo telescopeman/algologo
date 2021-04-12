@@ -36,7 +36,7 @@ return x1/x2;
 
 private final String text;
 
-private Operator(String text) {
+Operator(String text) {
     this.text = text;
 }
     static Map<String, Operator> map = new HashMap<>();

@@ -40,8 +40,12 @@ public class AlgoShape extends GameObject
         }
 
     }
-    
-    
+
+    public void tick()
+    {
+        // do nothing
+
+    }
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
@@ -49,7 +53,6 @@ public class AlgoShape extends GameObject
         ((Graphics2D) g).setStroke(new BasicStroke(style.thickness));  
         
         style.drawer.draw(g,adjust(poly,offsetX,offsetY));
-
     }
 
     public Polygon adjust(Polygon poly,int offsetX, int offsetY)

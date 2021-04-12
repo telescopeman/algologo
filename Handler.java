@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 import java.awt.Graphics;
-import java.awt.Dimension;
 
 /**
  * Write a description of class Handler here.
@@ -33,9 +32,10 @@ public class Handler
             tempObject.tick();
             
             // camera motion
-            if (tempObject.getID()==ID.Player)
+            if (tempObject.getID() == ID.Player)
             {
-                camera.watch(tempObject);
+                assert(tempObject instanceof Player);
+                camera.watch((LivingObject) tempObject);
             }
         }
         camera.tick();

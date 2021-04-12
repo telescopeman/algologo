@@ -3,16 +3,19 @@
  * Write a description of class PhysicsObject here.
  *
  * @author Caleb Copeland
- * @version (a version number or a date)
+ * @since 4/9/21 (?)
+ * @version 4/12/21
  */
-public abstract class PhysicsObject
+public abstract class PhysicsObject extends GameObject
 {
     // instance variables - replace the example below with your own
-    protected double x, y;
+
     protected double velX, velY,seekVelX,seekVelY;
     protected double maxSpeedH,maxSpeedV,K;
     public double K2 = 0.4; //gravity
-    
+    protected boolean isOnGround;
+
+    public GameObject currentSurface;
 
     public void tick()
     {
@@ -20,14 +23,16 @@ public abstract class PhysicsObject
     }
     
 
-    public PhysicsObject(double x, double y)
+    public PhysicsObject(double x, double y, ID id)
     {
-        this.x = x;
-        this.y = y;
+        super(x,y,id);
+        setGrounded(false);
         this.maxSpeedV = 10;
         setSoughtVelocityY(maxSpeedV);
     }
-    
+
+
+
     public void process()
     {
         x += velX;
@@ -50,25 +55,9 @@ public abstract class PhysicsObject
         
     }
 
-    public void setX(double x)
-    {
-        this.x = x;
-    }
-    
-    public double getX()
-    {
-        return x;
-    }
-    
-    public void setY(double y)
-    {
-        this.y = y;
-    }
-    
-    public double getY()
-    {
-        return y;
-    }
+
+
+
     
     public void setVelocityX(double v)
     {
@@ -109,7 +98,30 @@ public abstract class PhysicsObject
     {
          seekVelY = n;
     }
-    
-    
+
+    public GameObject getCurrentGround()
+    {
+        return currentSurface;
+    }
+
+    public void setCurrentGround(GameObject sur)
+    {
+        currentSurface = sur;
+    }
+
+    public boolean isGrounded()
+    {
+        return isOnGround;
+    }
+
+    public void setGrounded(boolean d)
+    {
+        isOnGround = d;
+    }
+
+
+
+
+
     
 }

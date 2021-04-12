@@ -2,7 +2,7 @@ import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.io.Serial;
 
 /**
  * Write a description of class Game here.
@@ -11,9 +11,11 @@ import java.awt.Dimension;
  * @version 4/9/21
  * @since 4/8/21
  */
+@SuppressWarnings("SuspiciousNameCombination")
 public class Game extends Canvas implements Runnable
 {
     // instance variables - replace the example below with your own
+    @Serial
     private static final long serialVersionUID = 1852555291L;
     
     public static final int WIDTH = 800;
@@ -23,9 +25,8 @@ public class Game extends Canvas implements Runnable
     private boolean running = false;
     
     private final Handler handler;
-    private HUD hud;
-    private Player player;
-    private AlgoShapeHelper ash;
+    private final HUD hud;
+    private final Player player;
 
     public synchronized void start()
     {
@@ -34,6 +35,7 @@ public class Game extends Canvas implements Runnable
         running = true;
     }
     
+     @SuppressWarnings("unused")
      public synchronized void stop()
     {
         try{
@@ -46,7 +48,7 @@ public class Game extends Canvas implements Runnable
         }
     }
     
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         new Game();
     }
@@ -65,15 +67,15 @@ public class Game extends Canvas implements Runnable
         player =new Player(WIDTH/2,HEIGHT/2,handler);
         
         handler.addObject(player);
-        handler.addObject(makeShape("0+0",0,0));
-        handler.addObject(makeShape("x*0.1",600,0));
+        handler.addObject(makeShape("1+1",0,-3000, DrawType.FILL_BELOW)); //find a way to avoid needing the -3000
+        handler.addObject(makeShape("x/10",-600,-3000,DrawType.FILL));
 
         //handler.addObject
     }
     
-    private AlgoShape makeShape(String s, int x, int y)
+    private AlgoShape makeShape(String s, int x, int y, DrawType drw)
     {
-        return new AlgoShape(AlgoShapeHelper.parse(s),new Style(DrawType.FILL),x,y);
+        return new AlgoShape(AlgoShapeHelper.parse(s),new Style(drw),x,y);
 
     }
 
@@ -129,7 +131,7 @@ public class Game extends Canvas implements Runnable
         handler.render(g);
 
 
-        String disp = player.getVelocityX() + "X, " + player.getVelocityY() + "Y";
+        String disp = player.getVelocityX() + " spX, " + player.getVelocityY() + "spY" + player.getX() + " X, " + player.getY() + "Y";
         hud.render(g,disp);
         
         g.dispose();

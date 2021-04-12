@@ -78,15 +78,11 @@ public class EasyFrame extends JFrame implements ActionListener
          setSize(new Dimension(x,getSize().height));
     }
     
+    @SuppressWarnings("SuspiciousNameCombination")
     public void setHeight(int x)
     {
          setSize(new Dimension(getSize().width,x));
     }
-
-    // public GridLayout getGrid(int x, int y)
-    // {
-    // return new GridLayout(x,y);
-    // }
 
     public void setGrid(int x, int y)
     {
@@ -95,15 +91,13 @@ public class EasyFrame extends JFrame implements ActionListener
 
     public void appear()
     {
-        show();
+        setVisible(true);
         requestFocusInWindow();
     }
 
     public void appear(Dimension dim)
     {
-        show();
-        requestFocusInWindow();
-        
+        appear();
         setSize(dim);
     }
 

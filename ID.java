@@ -10,6 +10,7 @@ public enum ID
     Player,
     Player2,
     Enemy,
-    Platform;
+    Platform,
+    Camera;
     
 }

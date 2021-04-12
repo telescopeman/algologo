@@ -1,6 +1,5 @@
 import java.awt.Graphics;
 import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.awt.Rectangle;
 
@@ -55,9 +54,8 @@ public enum DrawType
     {
         @Override public void draw(Graphics g, Polygon poly) 
         {
-
-        g.fillPolygon(extendBelow(poly));
-        //g.fillRect(poly.xpoints[0],poly.ypoints[0],poly.xpoints[poly.npoints],9999);
+            g.fillPolygon(extendBelow(poly));
+            //g.fillRect(poly.xpoints[0],poly.ypoints[0],poly.xpoints[poly.npoints],9999);
     }
     @Override public boolean intersects(Polygon poly, Rectangle rect) 
     {
@@ -65,7 +63,7 @@ public enum DrawType
     }
 };
 
-private DrawType() {
+    DrawType() {
 }
 
 // Yes, enums *can* have abstract methods. This code compiles...

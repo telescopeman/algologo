@@ -1,5 +1,4 @@
 import java.awt.Dimension;
-import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.Shape;
@@ -12,7 +11,7 @@ import java.awt.Graphics;
  * @version 4/9/21
  * @since 4/8/21
  */
-public class Player extends GameObject 
+public class Player extends LivingObject
 {
     // instance variables - replace the example below with your own
     private Rectangle shape;
@@ -20,9 +19,6 @@ public class Player extends GameObject
 
     private Handler handler;
 
-    //private GameObject currentSurface;
-
-    //private final double AIRACCEL = 1;
     /**
      * Constructor for objects of class Player
      */

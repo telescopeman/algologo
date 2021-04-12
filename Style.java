@@ -1,4 +1,3 @@
-import java.awt.Dimension;
 import java.awt.*;
 /**
  * Write a description of class Style here.

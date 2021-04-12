@@ -1,17 +1,17 @@
-import java.awt.Canvas;
-//import javax.swing.JFrame;
-
 import java.awt.Dimension;
 import java.awt.Canvas;
+import java.io.Serial;
+
 /**
- * Write a description of class Window here.
+ * The game window.
  *
- * @author (your name)
+ * @author RealTutsGML
  * @since 4/7/21
  */
 public class Window extends Canvas
 {
 
+    @Serial
     private static final long serialVersionUID = 185258291L;
     
     public Window(int width, int height, String title, Game game)
