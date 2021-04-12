@@ -1,9 +1,13 @@
+import java.awt.Rectangle;
+import java.awt.Polygon;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
-import java.awt.*;
 /**
  *
  * @author Caleb Copeland, Ozymandias from StackOverflow, Joop Eggen [RectangleToPolygon() method only]
- * @version 4/9/21
+ * @version 4/12/21
  * @since 4/7/21
  */
 public class AlgoShape extends GameObject
@@ -13,39 +17,32 @@ public class AlgoShape extends GameObject
 
 
 
-    /**
-     * Constructor for objects of class Shape
-     */
+
     public AlgoShape(Term func, Style style,int xpos, int ypos)
     {
         super(xpos,ypos,ID.Platform);
         this.style = style;
         poly = new Polygon();
-        final int lowBoundX = - style.bounds.width;
+        final int lowBoundX = 0;
         final int highBoundX = style.bounds.width;
 
         final int lowBoundY = - style.bounds.height;
         final int highBoundY = style.bounds.height;
 
-        //System.out.println(lowBoundY);
-        for (double x = lowBoundX; x <= highBoundX; x = x + 1) {
+        for (int x = 0; x <= highBoundX; x++) {
             int myX = (int) x + highBoundX;
             int y = (int) func.get(x);
-            int myY =  highBoundY - y;
-            if (y < highBoundY * 2 && y > lowBoundY  * 2)
+            int myY =  ypos - y;
+            if (y < highBoundY && y > lowBoundY )
             {
-                poly.addPoint(myX + xpos,myY + ypos);
+                poly.addPoint(x + xpos, myY);
                 //System.out.println("g");
             }
         }
 
     }
 
-    public void tick()
-    {
-        // do nothing
 
-    }
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
@@ -66,7 +63,7 @@ public class AlgoShape extends GameObject
         return altered;
     }
 
-    public Shape getBounds()
+    public Polygon getBounds()
     {
         return poly;
     }

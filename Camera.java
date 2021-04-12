@@ -11,15 +11,29 @@ public class Camera extends PhysicsObject
 {
     
     /**
-     * Constructor for objects of class Camera
+     * Makes a camera at a certain position.
      */
     public Camera(double x, double y)
     {
         super(x,y,ID.Camera);
+        init();
+    }
+
+    private void init()
+    {
         maxSpeedH = 11;
         maxSpeedV = 11;
         K = 1;
         K2 = 1;
+    }
+
+    /**
+     * Makes a camera at the origin.
+     */
+    public Camera()
+    {
+        super(0,0,ID.Camera);
+        init();
     }
 
     public void render(Graphics g, int offsetX, int offsetY)
@@ -31,7 +45,7 @@ public class Camera extends PhysicsObject
     public boolean intersects(Rectangle rect)
     {
         return false;
-        // a camera is not a physical object
+        // a camera is not a physical object so it can't collide with anything.
     }
 
     public void watch(LivingObject obj)

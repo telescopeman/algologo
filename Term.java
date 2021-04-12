@@ -8,7 +8,7 @@
 public class Term
 {
     // instance variables - replace the example below with your own
-    private Double myVal;
+    private final Double myVal;
 
     /**
      * Constructor for objects of class Constant

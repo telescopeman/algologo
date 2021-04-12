@@ -38,9 +38,7 @@ public class Style
         this.thickness = 3;
         bounds = new Dimension(Game.WIDTH,Game.HEIGHT);
         drawer = DrawType.FILL;
-        
     }
-    
 
     /**
      * Default Style
@@ -52,7 +50,6 @@ public class Style
         this.thickness = 3;
         bounds = new Dimension(Game.WIDTH*4,Game.HEIGHT*4);
         this.drawer = drawer;
-        
     }
     
     /**

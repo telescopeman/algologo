@@ -21,7 +21,10 @@ public abstract class GameObject {
 
     public abstract boolean intersects(Rectangle rect);
 
-    public abstract void tick();
+    public void tick()
+    {
+        // do nothing (for now)
+    }
 
     public abstract void render(Graphics g, int offsetX, int offsetY);
 

@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.Serial;
 
 /**
@@ -67,8 +68,8 @@ public class Game extends Canvas implements Runnable
         player =new Player(WIDTH/2,HEIGHT/2,handler);
         
         handler.addObject(player);
-        handler.addObject(makeShape("1+1",0,-3000, DrawType.FILL_BELOW)); //find a way to avoid needing the -3000
-        handler.addObject(makeShape("x/10",-600,-3000,DrawType.FILL));
+        handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); //find a way to avoid needing the -3000
+        handler.addObject(makeShape("x/10",-600,0,new Style(DrawType.FILL_BELOW, new Dimension(WIDTH,HEIGHT))));
 
         //handler.addObject
     }
@@ -76,7 +77,11 @@ public class Game extends Canvas implements Runnable
     private AlgoShape makeShape(String s, int x, int y, DrawType drw)
     {
         return new AlgoShape(AlgoShapeHelper.parse(s),new Style(drw),x,y);
+    }
 
+    private AlgoShape makeShape(String s, int x, int y, Style style)
+    {
+        return new AlgoShape(AlgoShapeHelper.parse(s),style,x,y);
     }
 
     public void run()

@@ -57,4 +57,4 @@ public abstract double apply(double x1, double x2);
 @Override public String toString() {
     return text;
 }
-};
+}

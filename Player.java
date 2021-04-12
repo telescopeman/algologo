@@ -14,10 +14,10 @@ import java.awt.Graphics;
 public class Player extends LivingObject
 {
     // instance variables - replace the example below with your own
-    private Rectangle shape;
+    private final Rectangle shape;
     private final Dimension SIZE = new Dimension(40,40);
 
-    private Handler handler;
+    private final Handler handler;
 
     /**
      * Constructor for objects of class Player

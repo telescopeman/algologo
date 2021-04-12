@@ -6,8 +6,9 @@
  */
 public class MathExpression extends Term
 {
-    private Operator myOperator;
-    private Term term1,term2;
+    private final Operator myOperator;
+    private final Term term1;
+    private final Term term2;
     
     /**
      * Constructor for objects of class GraphingFunction
@@ -28,7 +29,7 @@ public class MathExpression extends Term
         super(null);
         myOperator = op;
         term1= new Term(t1);
-        term2= new Term(t2);;
+        term2= new Term(t2);
     }
     
     /**
@@ -39,7 +40,7 @@ public class MathExpression extends Term
         super(null);
         myOperator = op;
         term1= new Term(t1);
-        term2= t2;;
+        term2= t2;
     }
     
     /**
@@ -50,7 +51,7 @@ public class MathExpression extends Term
         super(1.0);
         myOperator = op;
         term1= t1;
-        term2= new Term(t2);;
+        term2= new Term(t2);
     }
     
     

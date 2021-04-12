@@ -5,7 +5,7 @@ import java.awt.Graphics;
  * Write a description of class Handler here.
  *
  * @author RealTutsGML
- * @version 4/8/21
+ * @version 4/12/21
  * @since 4/8/21
  */
 public class Handler
@@ -13,7 +13,7 @@ public class Handler
     // instance variables - replace the example below with your own
     LinkedList<GameObject> object = new LinkedList<GameObject>();
     
-    private Camera camera;
+    private final Camera camera;
 
     /**
      * Constructor for objects of class Handler
