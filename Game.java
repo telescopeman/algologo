@@ -8,7 +8,7 @@ import java.io.Serial;
  * Write a description of class Game here.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/9/21
+ * @version 4/12/21
  * @since 4/8/21
  */
 @SuppressWarnings("SuspiciousNameCombination")
@@ -16,7 +16,7 @@ public class Game extends Canvas implements Runnable
 {
     // instance variables - replace the example below with your own
     @Serial
-    private static final long serialVersionUID = 1852555291L;
+    private static final long serialVersionUID = -3944939127227443376L;
     
     public static final int WIDTH = 800;
     public static final int HEIGHT = WIDTH;
@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable
     }
     
     /**
-     * Constructor for objects of class Game
+     * Starts a game.
      */
     public Game()
     {
