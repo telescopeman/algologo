@@ -140,6 +140,7 @@ public abstract class LivingObject extends PhysicsObject {
                 }
                 if (i < 50) {
                     setGrounded(true);
+                    saveY();
                 }
                 else {
                     loseContact();

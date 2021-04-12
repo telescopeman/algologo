@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 /**
- * @author Caleb Copeland, Ozymandias from StackOverflow, Joop Eggen [RectangleToPolygon() method only]
+ * @author Caleb Copeland, Ozymandias from StackOverflow
  * @version 4/12/21
  * @since 4/7/21
  */
@@ -62,9 +62,4 @@ public class AlgoShape extends GameObject
 
 
 
-    public static Polygon rectangleToPolygon(Rectangle rect) {
-        int[] xpoints = {rect.x, rect.x + rect.width, rect.x + rect.width, rect.x};
-        int[] ypoints = {rect.y, rect.y, rect.y + rect.height, rect.y + rect.height};
-        return new Polygon(xpoints, ypoints, 4); 
-    }
 }
