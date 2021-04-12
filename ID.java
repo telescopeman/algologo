@@ -11,7 +11,8 @@ public enum ID
     Player,
     Enemy,
     Platform,
-    Camera
+    Camera,
+    Item
 }
 
 

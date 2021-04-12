@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,12 +11,14 @@ import java.util.List;
  */
 public abstract class LivingObject extends PhysicsObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3, lastX, lastY;
-    protected int health;
+    protected int health, maxHealth;
     protected boolean isOnGround = false, canFly = false;
     protected GameObject currentSurface;
-    protected Handler handler;
+    protected final Handler handler;
     protected String[] damageSources;
     protected final double slopeCutoffX = 20, slopeCutoffY = 3;
+
+    protected Shape shape;
 
     public LivingObject(double x, double y, ID id, Handler handler) {
         super(x, y, id);
@@ -31,8 +34,7 @@ public abstract class LivingObject extends PhysicsObject {
 
     public void fall() {
         if (isGrounded()) {
-            setLastX(getX());
-            setLastY(getY());
+            savePos();
             setSoughtVelocityY(0);
         } else {
             // sets sought velocity to terminal velocity
@@ -59,12 +61,32 @@ public abstract class LivingObject extends PhysicsObject {
 
     }
 
+    public Shape getBounds(){
+        return shape;
+    }
+
     public void setLastX(double n) {
         lastX = n;
     }
 
     public void setLastY(double n) {
         lastY = n;
+    }
+
+    public void saveY()
+    {
+        setLastY(getY());
+    }
+
+    public void saveX()
+    {
+        setLastX(getX());
+    }
+
+    public void savePos()
+    {
+        saveY();
+        saveX();
     }
 
     public double getLastY() {
@@ -74,6 +96,16 @@ public abstract class LivingObject extends PhysicsObject {
     public double getLastX() {
         return lastX;
     }
+
+    public int getHealth() { return health; }
+
+    public void setHealth(int n) { health = n; }
+
+    public int getMaxHealth() { return maxHealth; }
+
+    public void setMaxHealth(int n) { maxHealth = n; }
+
+    public void fullHeal() { setHealth(maxHealth); }
 
     public abstract void updateForm();
 
@@ -101,7 +133,7 @@ public abstract class LivingObject extends PhysicsObject {
 
             } else if (Math.abs(getY() - getLastY()) < slopeCutoffY && Math.abs(getX() - getLastX()) < slopeCutoffX) {
                 int i = 0;
-                setLastY(getY());
+                saveY();
                 while ((!currentSurface.intersects(getBounds()) ) && i < 50) {
                     inchY(1);
                     i++;

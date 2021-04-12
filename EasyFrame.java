@@ -9,15 +9,9 @@ import java.awt.event.ActionEvent;
  * @author Caleb Copeland
  * @version 4/6/21
  */
-public class EasyFrame extends JFrame implements ActionListener
+public class EasyFrame extends JFrame
 {
-    // size presets
-    public static final Dimension STANDARD = new Dimension(350,100);
-    public static final Dimension SUPERSTANDARD = new Dimension(550,150);
-    public static final Dimension SMALL = new Dimension(200,200);
-    public static final Dimension ROUNDISH = new Dimension(350,250);
-    public static final Dimension LONG = new Dimension(900,250);
-    public static final Dimension LONG2 = new Dimension(900,150);
+
     public static final Dimension MAIN = new Dimension(800,800);
 
 
@@ -117,22 +111,5 @@ public class EasyFrame extends JFrame implements ActionListener
         getContentPane().removeAll();
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-        act(e.getActionCommand());
-    }
 
-    /**
-     * If not overridden, assumes no-arg method should be used.
-     */
-    public void act(String id)
-    {
-        act();
-    }
-    
-    
-    public void act()
-    {
-        
-    }
 }

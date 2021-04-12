@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class PhysicsObject here.
  *
@@ -8,7 +7,7 @@
  */
 public abstract class PhysicsObject extends GameObject
 {
-    protected double velX = 0, velY = 0,seekVelX = 0,seekVelY = 10,maxSpeedH,maxSpeedV = 10,K,K2 = 0.4; //gravity
+    protected double velX = 0, velY = 0,seekVelX = 0,seekVelY = 10,maxSpeedH = 8,maxSpeedV = 10,K = 0.5,K2 = 0.4; //gravity
 
 
     public void tick()
