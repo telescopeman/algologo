@@ -41,6 +41,10 @@ public class Camera extends PhysicsObject
         // do nothing lmao
     }
 
+    public Shape getBounds()
+    {
+        return new Rectangle(-9999,-9998,-9999,-9998);
+    }
 
     public boolean intersects(Rectangle rect)
     {

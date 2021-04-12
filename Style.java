@@ -3,7 +3,7 @@ import java.awt.*;
  * Write a description of class Style here.
  *
  * @author Caleb Copeland
- * @version 4/9/21
+ * @version 4/12/21
  * @since 4/8/21
  */
 public class Style
@@ -62,7 +62,11 @@ public class Style
         this.thickness = 3;
         bounds = dim;
         this.drawer = drawer;
-        
     }
-    
+
+    public BasicStroke getStroke()
+    {
+        return new BasicStroke(thickness);
+
+    }
 }

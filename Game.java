@@ -136,8 +136,9 @@ public class Game extends Canvas implements Runnable
         handler.render(g);
 
 
-        String disp = player.getVelocityX() + " spX, " + player.getVelocityY() + "spY" + player.getX() + " X, " + player.getY() + "Y";
-        hud.render(g,disp);
+        String debugDisp = player.getVelocityX() + " spX, " + player.getVelocityY() + "spY" + player.getX() + " X, " + player.getY() + "Y";
+        //String debugDisp = player.currentSurface.getID().toString();
+        hud.render(g,debugDisp);
         
         g.dispose();
         bs.show();

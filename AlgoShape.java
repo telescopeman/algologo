@@ -2,10 +2,8 @@ import java.awt.Rectangle;
 import java.awt.Polygon;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.BasicStroke;
 
 /**
- *
  * @author Caleb Copeland, Ozymandias from StackOverflow, Joop Eggen [RectangleToPolygon() method only]
  * @version 4/12/21
  * @since 4/7/21
@@ -15,39 +13,28 @@ public class AlgoShape extends GameObject
     private final Polygon poly;
     private final Style style;
 
-
-
-
     public AlgoShape(Term func, Style style,int xpos, int ypos)
     {
         super(xpos,ypos,ID.Platform);
         this.style = style;
         poly = new Polygon();
-        final int lowBoundX = 0;
         final int highBoundX = style.bounds.width;
 
-        final int lowBoundY = - style.bounds.height;
         final int highBoundY = style.bounds.height;
 
         for (int x = 0; x <= highBoundX; x++) {
-            int myX = (int) x + highBoundX;
             int y = (int) func.get(x);
-            int myY =  ypos - y;
-            if (y < highBoundY && y > lowBoundY )
+            if (y < highBoundY)
             {
-                poly.addPoint(x + xpos, myY);
-                //System.out.println("g");
+                poly.addPoint(x + xpos, ypos - y);
             }
         }
-
     }
-
-
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
         g.setColor(style.color);  
-        ((Graphics2D) g).setStroke(new BasicStroke(style.thickness));  
+        ((Graphics2D) g).setStroke(style.getStroke());
         
         style.drawer.draw(g,adjust(poly,offsetX,offsetY));
     }

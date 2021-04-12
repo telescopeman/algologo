@@ -1,16 +1,17 @@
 
 /**
- * Types of GameObjects
+ * Types of GameObject
  *
- * @author Caleb Copeland
- * @version (version number or date here)
+ * @author Caleb Copeland, RealTutsGML
+ * @version 4/12/21
+ * @since 4/8/21
  */
 public enum ID
 {
     Player,
-    Player2,
     Enemy,
     Platform,
     Camera
-
 }
+
+

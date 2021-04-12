@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.Graphics;
 
 /**
@@ -7,8 +8,8 @@ import java.awt.Graphics;
 public abstract class GameObject {
 
     protected ID id;
-
     protected double x, y;
+    protected int damage = 0;
 
     public GameObject(double x, double y, ID id)
     {
@@ -19,12 +20,24 @@ public abstract class GameObject {
 
     public abstract boolean intersects(Rectangle rect);
 
+    public boolean intersects(GameObject obj)
+    {
+        return intersects(obj.getBounds());
+    }
+
+    public boolean intersects(Shape rect)
+    {
+        return intersects((Rectangle) rect);
+    }
+
     public void tick()
     {
         // do nothing (for now)
     }
 
     public abstract void render(Graphics g, int offsetX, int offsetY);
+
+    public abstract Shape getBounds();
 
     public void setX(double x)
     {
@@ -44,6 +57,19 @@ public abstract class GameObject {
     public double getY()
     {
         return y;
+    }
+
+    /**
+     * Gets the amount of damage this object can deal.
+     */
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public void setDamage(int dmg)
+    {
+        damage = dmg;
     }
 
     public void setID(ID id) { this.id = id; }
