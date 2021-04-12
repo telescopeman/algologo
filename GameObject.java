@@ -98,7 +98,6 @@ public abstract class GameObject {
         final int[] x_points = {rect.x,rect.x + rect.width,rect.x + rect.width, rect.x};
         final int[] y_points = {rect.y,rect.y, rect.y + rect.height, rect.y + rect.height};
         return new Polygon(x_points, y_points, 4);
-
     }
 
     public static Polygon adjust(Polygon poly, int offsetX, int offsetY)
