@@ -21,16 +21,4 @@ public class AlgoShape extends ShapeObject
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
