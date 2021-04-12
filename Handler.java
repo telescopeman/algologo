@@ -11,7 +11,7 @@ import java.awt.Graphics;
 public class Handler
 {
     // instance variables - replace the example below with your own
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+    LinkedList<GameObject> object = new LinkedList<>();
     
     private final Camera camera;
 
@@ -25,15 +25,12 @@ public class Handler
 
     public void tick()
     {
-        for (int i = 0; i < object.size(); i++)
-        {
-            GameObject tempObject = object.get(i);
+        for (GameObject tempObject : object) {
             tempObject.tick();
-            
+
             // camera motion
-            if (tempObject.getID() == ID.Player)
-            {
-                assert(tempObject instanceof Player);
+            if (tempObject.getID() == ID.Player) {
+                assert (tempObject instanceof Player);
                 camera.watch((LivingObject) tempObject);
             }
         }
@@ -42,10 +39,8 @@ public class Handler
     
     public void render(Graphics g)
     {
-        for (int i = 0; i < object.size(); i++)
-        {
-            GameObject tempObject = object.get(i);
-            tempObject.render(g, - (int) camera.getX(), - (int) camera.getY());
+        for (GameObject tempObject : object) {
+            tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
         }
     }
     

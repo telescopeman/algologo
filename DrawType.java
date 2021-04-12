@@ -19,7 +19,7 @@ public enum DrawType
             g.fillPolygon(poly);
         }
 
-        @Override public boolean intersects(Polygon poly, Rectangle rect) 
+        @Override public boolean intersects(Polygon poly, Rectangle rect)
         {
             return poly.intersects(rect);
         }
@@ -55,7 +55,6 @@ public enum DrawType
         @Override public void draw(Graphics g, Polygon poly) 
         {
             g.fillPolygon(extendBelow(poly));
-            //g.fillRect(poly.xpoints[0],poly.ypoints[0],poly.xpoints[poly.npoints],9999);
     }
     @Override public boolean intersects(Polygon poly, Rectangle rect) 
     {
@@ -81,7 +80,6 @@ private static Polygon extendBelow(Polygon p)
         p2.addPoint(p.xpoints[i],p.ypoints[i]);
     }
     p2.addPoint(p.xpoints[p.npoints],down);
-    //p2.addPoint(p.xpoints[0],down);
     return p2;
 }
 

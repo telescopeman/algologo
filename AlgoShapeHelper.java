@@ -8,12 +8,12 @@ public enum AlgoShapeHelper
     LINEAR_SLOPE() 
     {
         @Override public AlgoShape get(double[] factors,int x, int y){
-            checkLength(factors,1);
+            DataHelper.checkLength(factors,1);
             Term myTerm3 = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(0.1));
             return (new AlgoShape(myTerm3,new Style(DrawType.FILL_BELOW),x,y));
         }
         @Override public AlgoShape get(double[] factors, Dimension d, int x, int y){
-            checkLength(factors,1);
+            DataHelper.checkLength(factors,1);
             Term myTerm3 = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(0.1));
             return (new AlgoShape(myTerm3,new Style(DrawType.FILL_BELOW,d),x,y));
         }
@@ -22,7 +22,7 @@ public enum AlgoShapeHelper
     {
         @Override
         public AlgoShape get(double[] factors, int x, int y) {
-            checkLength(factors,3);
+            DataHelper.checkLength(factors,3);
             Term xSquared = new MathExpression(new Term(null),Operator.POWER,new Term(2.0)); //
             Term firstTerm = new MathExpression(xSquared,Operator.MULTIPLY,new Term(factors[0])); // "a"
             Term secondTerm = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(factors[1]));
@@ -33,7 +33,7 @@ public enum AlgoShapeHelper
         }
         @Override
         public AlgoShape get(double[] factors, Dimension d,int x, int y) {
-            checkLength(factors,3);
+            DataHelper.checkLength(factors,3);
             Term xSquared = new MathExpression(new Term(null),Operator.POWER,new Term(2.0)); //
             Term firstTerm = new MathExpression(xSquared,Operator.MULTIPLY,new Term(factors[0])); // "a"
             Term secondTerm = new MathExpression(new Term(null),Operator.MULTIPLY,new Term(factors[1]));
@@ -65,13 +65,13 @@ public static Term parse(String str)
     }
     else
     {
-        int opint = -1;
+        int operator_index = -1;
         op = Operator.ADD;
         for(Operator o : Operator.values()) {
             int n = str.indexOf(o.toString());
-            if (n > opint)
+            if (n > operator_index)
             {
-                opint = n;
+                operator_index = n;
                 op = o;
             }
         }
@@ -79,14 +79,14 @@ public static Term parse(String str)
             t1 = new Term(null);
         }
         else {
-            t1 = new Term(Double.valueOf(str.substring(0,opint)));
+            t1 = new Term(Double.valueOf(str.substring(0,operator_index)));
         }
 
-        if(str.charAt(opint+1) == 'x') {
+        if(str.charAt(operator_index+1) == 'x') {
             t2 = new Term(null);
         }
         else {
-            t2 = new Term(Double.valueOf(str.substring(opint+1)));
+            t2 = new Term(Double.valueOf(str.substring(operator_index+1)));
         }
 
     }
@@ -97,12 +97,5 @@ public static Term parse(String str)
 
 
 
-public void checkLength(double[] arr, int i)
-{
-    if (arr.length < i)
-        {
-            throw new IllegalArgumentException("Must have length of " + i);
-        }
-}
 
 }

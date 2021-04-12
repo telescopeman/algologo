@@ -13,8 +13,8 @@ public class ShapeObject extends GameObject{
         super(xpos,ypos,ID.Platform);
         this.shape = shape;
         this.style = style;
-
     }
+
     public void render(Graphics g, int offsetX, int offsetY)
     {
         g.setColor(style.color);
@@ -26,4 +26,5 @@ public class ShapeObject extends GameObject{
     {
         return style.drawer.intersects( (Polygon) shape,rect);
     }
+
 }

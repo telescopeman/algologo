@@ -65,6 +65,7 @@ public class Player extends LivingObject
         g.setColor(PLAYER_COLOR);
         assert(shape instanceof Rectangle);
         Rectangle rect = (Rectangle) shape;
+
         g.fillPolygon(adjust(rect,offsetX,offsetY));
     }
 

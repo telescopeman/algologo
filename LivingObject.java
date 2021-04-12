@@ -1,9 +1,8 @@
-import java.awt.Shape;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Abstract class GameObject - write a description of the class here
+ * An object that acts like a creature (player, enemy, etc)
  *
  * @author RealTutsGML, Caleb Copeland
  * @version 4/12/21
@@ -19,13 +18,14 @@ public abstract class LivingObject extends PhysicsObject {
 
     public LivingObject(double x, double y, ID id, Handler handler) {
         super(x, y, id);
-
+        savePos();
         this.handler = handler;
     }
 
     public LivingObject(double x, double y, ID id, Handler handler, boolean canFly) {
         super(x, y, id);
         this.handler = handler;
+        savePos();
         setFlightAbility(canFly);
     }
 
@@ -148,8 +148,6 @@ public abstract class LivingObject extends PhysicsObject {
     }
 
 
-
-
     public void loseContact() {
         setGrounded(false);
         currentSurface = null;
@@ -210,7 +208,6 @@ public abstract class LivingObject extends PhysicsObject {
     public void setFlightAbility(boolean f) { canFly = f; }
 
     public boolean isDamagedBy(GameObject obj) {
-
         List<String> list = Arrays.asList(damageSources);
 
         return list.contains(obj.getID().toString());

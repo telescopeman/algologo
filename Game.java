@@ -16,6 +16,7 @@ import java.io.Serial;
 public class Game extends Canvas implements Runnable
 {
     // instance variables - replace the example below with your own
+    private final String TITLE = "Algologo";
     @Serial
     private static final long serialVersionUID = -3944939127227443376L;
     
@@ -62,7 +63,7 @@ public class Game extends Canvas implements Runnable
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
         
-        new Window(WIDTH, HEIGHT, "Algologo", this);
+        new Window(WIDTH, HEIGHT, TITLE, this);
         
         hud = new HUD();
         player =new Player(WIDTH/2,HEIGHT/2,handler);
@@ -70,8 +71,6 @@ public class Game extends Canvas implements Runnable
         handler.addObject(player);
         handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); //find a way to avoid needing the -3000
         handler.addObject(makeShape("x/10",-600,0,new Style(DrawType.FILL_BELOW, new Dimension(WIDTH,HEIGHT))));
-
-        //handler.addObject
     }
     
     private AlgoShape makeShape(String s, int x, int y, DrawType drw)
@@ -135,10 +134,11 @@ public class Game extends Canvas implements Runnable
         
         handler.render(g);
 
-
-        String debugDisp = player.getVelocityX() + " spX, " + player.getVelocityY() + "spY" + player.getX() + " X, " + player.getY() + "Y";
-        //String debugDisp = player.currentSurface.getID().toString();
-        hud.render(g,debugDisp);
+        String debugDisplay = player.getVelocityX() + " spX, "
+                + player.getVelocityY() + "spY"
+                + player.getX() + " X, "
+                + player.getY() + "Y";
+        hud.render(g,debugDisplay);
         
         g.dispose();
         bs.show();
