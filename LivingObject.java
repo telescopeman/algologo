@@ -46,7 +46,7 @@ public abstract class LivingObject extends PhysicsObject {
     public void collision() {
         for (int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if (tempObject.intersects(getBounds())) {
+            if (tempObject.intersects(this)) {
                 if (isDamagedBy(tempObject)) {
                     takeDamage(tempObject.getDamage());
                 }
@@ -114,7 +114,7 @@ public abstract class LivingObject extends PhysicsObject {
         setGrounded(true);
         setVelocityY(0);
 
-        while (surface.intersects(getBounds())) {
+        while (surface.intersects( this )) {
             inchY(-1);
         }
         inchY(1);
@@ -128,19 +128,18 @@ public abstract class LivingObject extends PhysicsObject {
 
     public void checkContact() {
         if (currentSurface != null) {
-            if (currentSurface.intersects(getBounds())) {
+            if (currentSurface.intersects( this )) {
                 setGrounded(true);
 
             } else if (Math.abs(getY() - getLastY()) < slopeCutoffY && Math.abs(getX() - getLastX()) < slopeCutoffX) {
                 int i = 0;
                 saveY();
-                while ((!currentSurface.intersects(getBounds()) ) && i < 50) {
+                while ((!currentSurface.intersects( this ) ) && i < 50) {
                     inchY(1);
                     i++;
                 }
                 if (i < 50) {
                     setGrounded(true);
-                    return;
                 }
                 else {
                     loseContact();
@@ -216,9 +215,7 @@ public abstract class LivingObject extends PhysicsObject {
     /**
      * Sets if the object can fly.
      */
-    public void setFlightAbility(boolean f) {
-        canFly = f;
-    }
+    public void setFlightAbility(boolean f) { canFly = f; }
 
     public boolean isDamagedBy(GameObject obj) {
 

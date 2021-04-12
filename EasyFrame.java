@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
- * Inherited class that has a few methods I like to have handy in frames.
+ * Inherited class that has a few methods I like to have handy in JFrames.
  *
  * @author Caleb Copeland
- * @version 4/6/21
+ * @version 4/12/21
  */
 public class EasyFrame extends JFrame
 {
