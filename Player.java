@@ -13,14 +13,14 @@ import java.awt.Graphics;
 public class Player extends LivingObject
 {
     private final Dimension PLAYER_SIZE = new Dimension(40,40);
-    private final Color PLAYER_COLOR = Color.red;
+    private final Color PLAYER_COLOR = Color.green;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player(int xInit, int yInit, Handler handler)
+    public Player(int xInit, int yInit)
     {
-        super(xInit,yInit,ID.Player,handler);
+        super(xInit,yInit,ID.Player);
 
         damageSources = new String[]{ID.Enemy.name()};
         velJumpMultiplier = 0.3;
@@ -58,6 +58,14 @@ public class Player extends LivingObject
         doPhysics();
 
     }
+
+    @Override
+    public void die()
+    {
+        Handler.removeObject(this);
+    }
+
+
 
     public void render(Graphics g, int offsetX, int offsetY)
     {

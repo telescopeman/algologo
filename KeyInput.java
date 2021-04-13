@@ -11,21 +11,15 @@ public class KeyInput extends KeyAdapter
 {
     // instance variables - replace the example below with your own
 
-    private final Handler handler;
-
-    public KeyInput(Handler handler)
-    {
-        this.handler = handler;
-    }
 
     public void keyPressed(KeyEvent e)
     {
         int key = e.getKeyCode();
         //System.out.println("a");
 
-        for(int i = 0; i < handler.object.size(); i++)
+        for(int i = 0; i < Handler.object.size(); i++)
         {
-            GameObject tempObject0 = handler.object.get(i);
+            GameObject tempObject0 = Handler.object.get(i);
 
             if (tempObject0.getID() == ID.Player)
             {
@@ -33,7 +27,6 @@ public class KeyInput extends KeyAdapter
                 Player tempObject = (Player) tempObject0;
                 if (key == KeyEvent.VK_LEFT)
                 {
-                    //System.out.println(tempObject.maxSpeedH);
                     tempObject.setSoughtVelocityX(- tempObject.maxSpeedH);
                 }
                 else if (key == KeyEvent.VK_RIGHT)
@@ -47,14 +40,13 @@ public class KeyInput extends KeyAdapter
     public void keyReleased(KeyEvent e)
     {
         int key = e.getKeyCode();
-
-        for(int i = 0; i < handler.object.size(); i++)
+        for(int i = 0; i < Handler.object.size(); i++)
         {
-            GameObject tempObject0 = handler.object.get(i);
+            GameObject tempObject0 = Handler.object.get(i);
             if (tempObject0.getID() == ID.Player)
             {
                 Player tempObject = (Player) tempObject0;
-                //assert(tempObject instanceof Player);
+
                 if (key == KeyEvent.VK_LEFT)
                 {
                     if (tempObject.getSoughtVelocityX() < 0)

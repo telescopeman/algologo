@@ -3,11 +3,10 @@
  * Write a description of class Term here.
  *
  * @author Caleb Copeland
- * @version 4/7/21
+ * @version 4/12/21
  */
 public class Term
 {
-    // instance variables - replace the example below with your own
     private final Double myVal;
 
     /**
@@ -15,7 +14,6 @@ public class Term
      */
     public Term(Double i)
     {
-        // initialise instance variables
         myVal = i;
     }
     
@@ -39,7 +37,6 @@ public class Term
         {
             return x;
         }
-        // put your code here
         return myVal;
     }
 }

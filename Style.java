@@ -34,7 +34,7 @@ public class Style
     public Style() 
     {
         // initialise instance variables
-        color = Color.white;
+        color = Game.TERRAIN_COLOR;
         this.thickness = 3;
         bounds = new Dimension(Game.WIDTH,Game.HEIGHT);
         drawer = DrawType.FILL;

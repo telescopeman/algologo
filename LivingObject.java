@@ -12,19 +12,16 @@ public abstract class LivingObject extends PhysicsObject {
     protected int health, maxHealth;
     protected boolean isOnGround = false, canFly = false;
     protected GameObject currentSurface;
-    protected final Handler handler;
     protected String[] damageSources;
     protected final double slopeCutoffX = 20, slopeCutoffY = 3;
 
-    public LivingObject(double x, double y, ID id, Handler handler) {
+    public LivingObject(double x, double y, ID id) {
         super(x, y, id);
         savePos();
-        this.handler = handler;
     }
 
-    public LivingObject(double x, double y, ID id, Handler handler, boolean canFly) {
+    public LivingObject(double x, double y, ID id, boolean canFly) {
         super(x, y, id);
-        this.handler = handler;
         savePos();
         setFlightAbility(canFly);
     }
@@ -41,8 +38,8 @@ public abstract class LivingObject extends PhysicsObject {
 
 
     public void collision() {
-        for (int i = 0; i < handler.object.size(); i++) {
-            GameObject tempObject = handler.object.get(i);
+        for (int i = 0; i < Handler.object.size(); i++) {
+            GameObject tempObject = Handler.object.get(i);
             if (tempObject.intersects(this)) {
                 if (isDamagedBy(tempObject)) {
                     takeDamage(tempObject.getDamage());
@@ -92,7 +89,14 @@ public abstract class LivingObject extends PhysicsObject {
 
     public int getHealth() { return health; }
 
-    public void setHealth(int n) { health = n; }
+    public void setHealth(int n) {
+        health = n;
+        if (n <= 0)
+        {
+            die();
+        }
+    }
+    public abstract void die();
 
     public int getMaxHealth() { return maxHealth; }
 
@@ -106,10 +110,7 @@ public abstract class LivingObject extends PhysicsObject {
         setCurrentGround(surface);
         setGrounded(true);
         setVelocityY(0);
-
-        while (surface.intersects( this )) {
-            inchY(-1);
-        }
+        while (surface.intersects( this )) { inchY(-1); }
         inchY(1);
     }
 
@@ -156,7 +157,6 @@ public abstract class LivingObject extends PhysicsObject {
     public void tick() {
         doPhysics();
     }
-
     public void doPhysics() {
         process();
         fall();
@@ -165,7 +165,6 @@ public abstract class LivingObject extends PhysicsObject {
     public GameObject getCurrentGround() {
         return currentSurface;
     }
-
     public void setCurrentGround(GameObject sur) {
         currentSurface = sur;
     }
@@ -173,14 +172,12 @@ public abstract class LivingObject extends PhysicsObject {
     public boolean isGrounded() {
         return isOnGround;
     }
-
     public void setGrounded(boolean d) {
         isOnGround = d;
     }
 
-
     public void takeDamage(int n) {
-        health -= n;
+        setHealth(getHealth() - n);
     }
 
 

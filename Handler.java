@@ -2,59 +2,62 @@ import java.util.LinkedList;
 import java.awt.Graphics;
 
 /**
- * Write a description of class Handler here.
+ * Handles objects.
  *
- * @author RealTutsGML
+ * @author RealTutsGML, Caleb Copeland
  * @version 4/12/21
  * @since 4/8/21
  */
 public class Handler
 {
-    // instance variables - replace the example below with your own
-    LinkedList<GameObject> object = new LinkedList<>();
+    public static LinkedList<GameObject> object = new LinkedList<>();
     
-    private final Camera camera;
+    private static Camera camera;
 
-    /**
-     * Constructor for objects of class Handler
-     */
-    public Handler()
-    {
-        camera = new Camera();
-    }
-
-    public void tick()
+    public static void tick()
     {
         for (GameObject tempObject : object) {
             tempObject.tick();
 
             // camera motion
             if (tempObject.getID() == ID.Player) {
-                assert (tempObject instanceof Player);
-                camera.watch((LivingObject) tempObject);
+                camera.watch( (LivingObject) tempObject);
             }
         }
-        camera.tick();
     }
     
-    public void render(Graphics g)
+    public static void render(Graphics g)
     {
         for (GameObject tempObject : object) {
             tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
         }
     }
     
-    public void addObject(GameObject object) { this.object.add(object); }
-    
-    public void addObject(GameObject object, int x, int y)
-    {
-        this.object.add(object);
-        object.setX(x);
-        object.setY(y);
+    public static void addObject(GameObject obj) {
+        if (obj.getID() == ID.Camera)
+        {
+            camera = (Camera) obj;
+        }
+        object.add(obj);
     }
     
-    public void removeObject(GameObject object)
+    public static void addObject(GameObject obj, int x, int y)
     {
-        this.object.remove(object);
+        addObject(obj);
+        obj.setX(x);
+        obj.setY(y);
+    }
+
+    public static void addObjects(GameObject[] objs)
+    {
+        for (GameObject obj : objs)
+        {
+            addObject(obj);
+        }
+    }
+    
+    public static void removeObject(GameObject obj)
+    {
+        object.remove(obj);
     }
 }

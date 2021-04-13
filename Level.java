@@ -3,20 +3,17 @@
  * Write a description of class Level here.
  *
  * @author Caleb Copeland
- * @version 4/9/21
+ * @version 4/12/21
  * @since 4/9/21
  */
 public class Level
 {
-    // instance variables - replace the example below with your own
-    public AlgoShape[] shapes;
-    public GameObject[] entities;
+    public final AlgoShape[] shapes;
+    public final GameObject[] entities;
     
     public Level(AlgoShape[] theShapes, GameObject[] theEntities)
     {
         this.shapes = theShapes;
         this.entities = theEntities;
-
-
     }
 }

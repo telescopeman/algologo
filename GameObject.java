@@ -110,6 +110,11 @@ public abstract class GameObject {
         return altered;
     }
 
+    public boolean hasID(ID i)
+    {
+        return getID() == i;
+    }
+
     public static Polygon adjust(Rectangle rect, int offsetX, int offsetY)
     {
         final Polygon POLY = rectangleToPolygon(rect);
