@@ -42,7 +42,6 @@ public abstract class PhysicsObject extends GameObject
         
     }
 
-
     public void setVelocityX(double v)
     {
         velX = v;

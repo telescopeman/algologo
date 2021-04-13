@@ -7,29 +7,26 @@ import java.awt.Graphics;
  * Write a description of class Player here.
  *
  * @author Caleb Copeland
- * @version 4/12/21
+ * @version 4/13/21
  * @since 4/8/21
  */
 public class Player extends LivingObject
 {
     private final Dimension PLAYER_SIZE = new Dimension(40,40);
     private final Color PLAYER_COLOR = Color.green;
+    private final int PLAYER_MAX_HP = 10;
 
     /**
      * Constructor for objects of class Player
      */
     public Player(int xInit, int yInit)
     {
-        super(xInit,yInit,ID.Player);
+        super(xInit, yInit, ID.Player, false, 10);
 
         damageSources = new ID[]{ID.Enemy};
         velJumpMultiplier = 0.3;
         baseJump = 6;
-        setMaxHealth(10);
-        fullHeal();
-
         setBounds(PLAYER_SIZE);
-        updateForm();
 
     }
 

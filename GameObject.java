@@ -51,7 +51,10 @@ public abstract class GameObject {
     public void setBounds(Shape sh)
     {
         shape = sh;
+        updateForm();
     }
+
+    protected abstract void updateForm();
 
     public void setBounds(Dimension dim)
     {

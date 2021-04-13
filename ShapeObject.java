@@ -25,8 +25,13 @@ public class ShapeObject extends GameObject{
     public void render(Graphics g, int offsetX, int offsetY)
     {
         g.setColor(style.color);
-        ((Graphics2D) g).setStroke(style.getStroke());
+        ((Graphics2D) g).setStroke(style.thickness);
         style.drawer.draw(g,adjust((Polygon) shape,offsetX,offsetY));
+    }
+
+    public void updateForm()
+    {
+        // do nothing
     }
 
     public boolean intersects(Rectangle rect)

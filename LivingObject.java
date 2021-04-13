@@ -1,12 +1,11 @@
-import java.util.Arrays;
-import java.util.List;
 import java.util.ArrayList;
 
 /**
  * An object that acts like a creature (player, enemy, etc)
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/12/21
+ * @version 4/13/21
+ * @since 4/8/21
  */
 public abstract class LivingObject extends PhysicsObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3, lastX, lastY;
@@ -21,10 +20,12 @@ public abstract class LivingObject extends PhysicsObject {
         savePos();
     }
 
-    public LivingObject(double x, double y, ID id, boolean canFly) {
+    public LivingObject(double x, double y, ID id, boolean canFly, int HP) {
         super(x, y, id);
         savePos();
         setFlightAbility(canFly);
+        setMaxHealth(HP);
+        fullHeal();
     }
 
     public void fall() {
@@ -107,7 +108,7 @@ public abstract class LivingObject extends PhysicsObject {
 
     public void fullHeal() { setHealth(maxHealth); }
 
-    public abstract void updateForm();
+
 
     public void land(GameObject surface) {
         setCurrentGround(surface);
@@ -191,7 +192,8 @@ public abstract class LivingObject extends PhysicsObject {
         if (getFlightAbility() || getCurrentGround() != null) {
             setGrounded(false);
             inchY(-3);
-            setVelocityY(-Math.abs(baseJump + Math.abs(getVelocityY() * velJumpMultiplier)));
+            setVelocityY(-Math.abs(
+                    baseJump + Math.abs(getVelocityY() * velJumpMultiplier)));
         }
     }
 
@@ -208,14 +210,11 @@ public abstract class LivingObject extends PhysicsObject {
     public void setFlightAbility(boolean f) { canFly = f; }
 
     public boolean isDamagedBy(GameObject obj) {
-        List<ID> list = Arrays.asList(damageSources);
         ArrayList<String> list2 = new ArrayList<String>();
-        for (ID id : list)
+        for (ID id : damageSources)
         {
             list2.add(id.toString());
-            //System.out.println(id.toString());
         }
-        //S=
         return list2.contains(obj.getID().toString());
     }
 

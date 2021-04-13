@@ -8,7 +8,7 @@ import java.io.Serial;
  * Runs the highest-level functions of the game.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/12/21
+ * @version 4/13/21
  * @since 4/8/21
  */
 
@@ -73,7 +73,7 @@ public class Game extends Canvas implements Runnable
     {
         while (!running) {
             Thread.onSpinWait();
-
+            // wait for things to actually be set up
         }
 
         long lastTime = System.nanoTime();
