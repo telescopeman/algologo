@@ -76,17 +76,24 @@ public abstract class LivingObject extends PhysicsObject {
      */
     public void bonk(SIDE side, GameObject object)
     {
-        final int BONK_LIMIT = 20;
+        final int BONK_LIMIT = 50;
+        final double BONK_POWER_X = 0.9;
+        final double BONK_POWER_Y = 0.8;
+
+        int x_motion = 0;
+        int y_motion = 0;
+
         if (side == SIDE.BOTTOM || side == SIDE.TOP)
         {
-            transformVelocity(0,-1);
+            transformVelocity(1,-BONK_POWER_Y);
+            y_motion = (int) Math.signum(getVelocityY());
         }
         else
         {
-            transformVelocity(-1,0);
-
+            transformVelocity(-BONK_POWER_X,1);
+            x_motion = (int) Math.signum(getVelocityX());
         }
-        inchToEscape((int) Math.signum(getVelocityX()), (int) Math.signum(getVelocityY()),object,BONK_LIMIT,true);
+        inchToEscape(x_motion, y_motion, object,BONK_LIMIT,true);
         //physics_process(STEPS);
         updateForm();
     }
@@ -107,10 +114,10 @@ public abstract class LivingObject extends PhysicsObject {
 
                         if (GeometryHelper.sideIntersects( (Rectangle) shape, side, tempObject))
                         {
-                            //System.out.println(side);
                             if (side == SIDE.BOTTOM) {
-                                land(tempObject);
-                                break;
+                                if (land(tempObject)) {
+                                    break;
+                                }
                             }
                             else {
                                 bonk(side, tempObject);
@@ -135,18 +142,25 @@ public abstract class LivingObject extends PhysicsObject {
 
     public abstract void die();
 
+
     public int getMaxHealth() { return maxHealth; }
     public void setMaxHealth(int n) { maxHealth = n; }
     public void fullHeal() { setHealth(maxHealth); }
 
 
 
-    private void land(GameObject surface) {
+    private boolean land(GameObject surface) {
         setCurrentGround(surface);
         setGrounded(true);
         setVelocityY(0);
-        inchToEscape(0,-1,surface,-1,true);
+        boolean canReach = inchToEscape(0,-1,surface,40,true);
+        if (!canReach)
+        {
+            recoverPos();
+            return false;
+        }
         updateForm();
+        return true;
     }
 
     /**
@@ -208,6 +222,7 @@ public abstract class LivingObject extends PhysicsObject {
             }
         }
     }
+
 
     public void loseContact() {
         setGrounded(false);

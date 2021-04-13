@@ -5,12 +5,13 @@ import java.awt.geom.Line2D;
 
 public class GeometryHelper {
 
-    private static final int SLIVER = 5;
+
 
 
 
 
     public static Rectangle getSide(Rectangle shape, SIDE side) {
+        final int SLIVER = 1;
         int right = shape.x + shape.width - SLIVER;
         int left = shape.x;
         int top = shape.y;

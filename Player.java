@@ -14,7 +14,7 @@ public class Player extends LivingObject
 {
     private final Dimension PLAYER_SIZE = new Dimension(40,40);
     private final Color PLAYER_COLOR = Color.green;
-    private final int PLAYER_MAX_HP = 10;
+
 
     /**
      * Constructor for objects of class Player
@@ -27,7 +27,6 @@ public class Player extends LivingObject
         velJumpMultiplier = 0.3;
         baseJump = 6;
         setBounds(PLAYER_SIZE);
-
     }
 
     public void updateForm()

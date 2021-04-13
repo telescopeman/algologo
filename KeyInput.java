@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 public class KeyInput extends KeyAdapter
 {
 
+    int h_key = 0;
 
     public void keyPressed(KeyEvent e)
     {

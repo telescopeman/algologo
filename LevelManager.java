@@ -11,8 +11,8 @@ public class LevelManager {
 
     public static void loadLevel(LEVELS lev)
     {
-        Handler.addObject(player);
-        Handler.addObject(new Camera(0,0));
+        Handler.addObject(player,0,-500);
+        Handler.addObject(new Camera());
         Handler.addObject(new DeathBarrier(1000));
         switch (lev)
         {
