@@ -14,7 +14,6 @@ public class LevelManager {
     {
         Handler.addObject(player);
         Handler.addObject(new Camera(0,0));
-        //noinspection SwitchStatementWithTooFewBranches
         switch (lev)
         {
             case BETA_LEVEL:
