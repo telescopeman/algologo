@@ -7,7 +7,7 @@ import java.awt.Polygon;
  */
 public class AlgoShape extends ShapeObject
 {
-    public AlgoShape(Term func, Style style,int xpos, int ypos)
+    public AlgoShape(Term func, Style style, int xpos, int ypos)
     {
         super(new Polygon(),style,xpos,xpos);
         final int highBoundX = style.bounds.width;
@@ -20,5 +20,6 @@ public class AlgoShape extends ShapeObject
                 ( (Polygon) shape ).addPoint(x + xpos, ypos - y);
             }
         }
+
     }
 }

@@ -15,6 +15,13 @@ public class ShapeObject extends GameObject{
         this.style = style;
     }
 
+    public ShapeObject(Shape shape, Style style, int xpos, int ypos, ID id)
+    {
+        super(xpos,ypos,id);
+        this.shape = shape;
+        this.style = style;
+    }
+
     public void render(Graphics g, int offsetX, int offsetY)
     {
         g.setColor(style.color);

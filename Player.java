@@ -22,7 +22,7 @@ public class Player extends LivingObject
     {
         super(xInit,yInit,ID.Player);
 
-        damageSources = new String[]{ID.Enemy.name()};
+        damageSources = new ID[]{ID.Enemy};
         velJumpMultiplier = 0.3;
         baseJump = 6;
         setMaxHealth(10);
@@ -62,7 +62,7 @@ public class Player extends LivingObject
     @Override
     public void die()
     {
-        Handler.removeObject(this);
+        Handler.doDeathAnimation(this);
     }
 
 

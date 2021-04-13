@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.BasicStroke;
 /**
- * Write a description of class Style here.
+ * Represents the style of a polygon shape to be drawn.
  *
  * @author Caleb Copeland
  * @version 4/12/21
@@ -13,7 +13,7 @@ public class Style
     public final Color color;
     public final Dimension bounds;
     public final DrawType drawer;
-    public final float thickness;
+    public float thickness = 3;
     
     /**
      * Constructor for objects of class Style
@@ -35,7 +35,6 @@ public class Style
     {
         // initialise instance variables
         color = Game.TERRAIN_COLOR;
-        this.thickness = 3;
         bounds = new Dimension(Game.WIDTH,Game.HEIGHT);
         drawer = DrawType.FILL;
     }
@@ -51,15 +50,20 @@ public class Style
         bounds = new Dimension(Game.WIDTH*4,Game.HEIGHT*4);
         this.drawer = drawer;
     }
+
+    public Style(DrawType drawer, Color col)
+    {
+        // initialise instance variables
+        color = col;
+        bounds = new Dimension(Game.WIDTH*4,Game.HEIGHT*4);
+        this.drawer = drawer;
+    }
     
-    /**
-     * Default Style
-     */
+
     public Style(DrawType drawer, Dimension dim) 
     {
         // initialise instance variables
         color = Color.white;
-        this.thickness = 3;
         bounds = dim;
         this.drawer = drawer;
     }

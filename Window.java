@@ -5,7 +5,8 @@ import java.io.Serial;
 /**
  * The game window.
  *
- * @author RealTutsGML
+ * @author RealTutsGML, Caleb Copeland
+ * @version 4/12/21
  * @since 4/7/21
  */
 public class Window extends Canvas
@@ -17,7 +18,6 @@ public class Window extends Canvas
     public Window(int width, int height, String title, Game game)
     {
         EasyFrame frame = new EasyFrame(title,new Dimension(width,height));
-        //frame.setSize();
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);

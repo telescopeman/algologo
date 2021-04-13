@@ -2,7 +2,8 @@
  * Represents a mathematical expression.
  *
  * @author Caleb Copeland
- * @version 4/8/21
+ * @version 4/12/21
+ * @since 4/8/21
  */
 public class MathExpression extends Term
 {

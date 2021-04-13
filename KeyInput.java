@@ -4,13 +4,11 @@ import java.awt.event.KeyEvent;
  * Write a description of class KeyInput here.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/8/21
+ * @version 4/12/21
  * @since 4/8/21
  */
 public class KeyInput extends KeyAdapter
 {
-    // instance variables - replace the example below with your own
-
 
     public void keyPressed(KeyEvent e)
     {
@@ -46,7 +44,6 @@ public class KeyInput extends KeyAdapter
             if (tempObject0.getID() == ID.Player)
             {
                 Player tempObject = (Player) tempObject0;
-
                 if (key == KeyEvent.VK_LEFT)
                 {
                     if (tempObject.getSoughtVelocityX() < 0)
@@ -63,6 +60,7 @@ public class KeyInput extends KeyAdapter
                 }
 
             }
-        }}
+        }
+    }
 
 }

@@ -13,6 +13,8 @@ public abstract class GameObject {
     protected double x, y;
     protected int damage = 0;
 
+    public final int INSTANT_KILL = 999;
+
     protected Shape shape;
 
     public GameObject(double x, double y, ID id)
@@ -81,12 +83,16 @@ public abstract class GameObject {
      */
     public int getDamage()
     {
+
         return damage;
     }
 
     public void setDamage(int dmg)
     {
-        damage = dmg;
+        if (dmg == -1)
+            damage = INSTANT_KILL;
+        else
+            damage = dmg;
     }
 
     public void setID(ID id) { this.id = id; }

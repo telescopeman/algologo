@@ -50,6 +50,18 @@ public enum DrawType
             return new Path2D.Float(poly.npoints).intersects(rect);
         }
     },
+    NONE
+            {
+                @Override public void draw(Graphics g, Polygon poly)
+                {
+                    // do nothing
+                }
+
+                @Override public boolean intersects(Polygon poly, Rectangle rect)
+                {
+                    return FILL.intersects(poly,rect);
+                }
+            },
     FILL_BELOW
     {
         @Override public void draw(Graphics g, Polygon poly) 
@@ -65,7 +77,6 @@ public enum DrawType
     DrawType() {
 }
 
-// Yes, enums *can* have abstract methods. This code compiles...
 public abstract void draw(Graphics g, Polygon poly);
 
 public abstract boolean intersects(Polygon poly, Rectangle rect);

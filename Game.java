@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.io.Serial;
 
 /**
  * Runs the highest-level functions of the game.
@@ -13,15 +14,17 @@ import java.awt.Color;
 
 public class Game extends Canvas implements Runnable
 {
+    @Serial
     private static final long serialVersionUID = -3944939127227443376L;
     
     public static final int WIDTH = 800;
     public static final int HEIGHT = WIDTH;
     public final Color BACKGROUND_COLOR = Color.black;
     public static final Color TERRAIN_COLOR = Color.white;
+
     
     private Thread thread;
-    private boolean running = false;
+    private volatile boolean running;
 
     private final HUD hud;
 
@@ -29,7 +32,7 @@ public class Game extends Canvas implements Runnable
     {
         thread = new Thread(this);
         thread.start();
-        running = true;
+
     }
     
      @SuppressWarnings("unused")
@@ -61,13 +64,18 @@ public class Game extends Canvas implements Runnable
         
         hud = new HUD();
         LevelManager.loadLevel(LevelManager.LEVELS.BETA_LEVEL);
-
+        running = true;
     }
     
 
 
     public void run()
     {
+        while (!running) {
+            Thread.onSpinWait();
+
+        }
+
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -98,7 +106,7 @@ public class Game extends Canvas implements Runnable
     private void tick()
     {
         Handler.tick();
-        hud.tick();
+        //hud.tick();
     }
     
     private void render()
@@ -114,11 +122,13 @@ public class Game extends Canvas implements Runnable
 
         Handler.render(g);
 
-        String debugDisplay = LevelManager.player.getVelocityX() + " spX, "
-                + LevelManager.player.getVelocityY() + "spY"
-                + LevelManager.player.getX() + " X, "
-                + LevelManager.player.getY() + "Y";
-        hud.render(g,debugDisplay);
+//        String debugDisplay = LevelManager.player.getVelocityX() + " spX, "
+//                + LevelManager.player.getVelocityY() + "spY"
+//                + LevelManager.player.getX() + " X, "
+//                + LevelManager.player.getY() + "Y";
+
+        //String debugDisplay = LevelManager.player.getHealth() + "HP";
+        //hud.render(g,debugDisplay);
         
         g.dispose();
         bs.show();

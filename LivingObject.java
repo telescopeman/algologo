@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * An object that acts like a creature (player, enemy, etc)
@@ -12,7 +13,7 @@ public abstract class LivingObject extends PhysicsObject {
     protected int health, maxHealth;
     protected boolean isOnGround = false, canFly = false;
     protected GameObject currentSurface;
-    protected String[] damageSources;
+    protected ID[] damageSources;
     protected final double slopeCutoffX = 20, slopeCutoffY = 3;
 
     public LivingObject(double x, double y, ID id) {
@@ -40,7 +41,9 @@ public abstract class LivingObject extends PhysicsObject {
     public void collision() {
         for (int i = 0; i < Handler.object.size(); i++) {
             GameObject tempObject = Handler.object.get(i);
+
             if (tempObject.intersects(this)) {
+                System.out.println(tempObject.getID().toString());
                 if (isDamagedBy(tempObject)) {
                     takeDamage(tempObject.getDamage());
                 }
@@ -205,9 +208,15 @@ public abstract class LivingObject extends PhysicsObject {
     public void setFlightAbility(boolean f) { canFly = f; }
 
     public boolean isDamagedBy(GameObject obj) {
-        List<String> list = Arrays.asList(damageSources);
-
-        return list.contains(obj.getID().toString());
+        List<ID> list = Arrays.asList(damageSources);
+        ArrayList<String> list2 = new ArrayList<String>();
+        for (ID id : list)
+        {
+            list2.add(id.toString());
+            //System.out.println(id.toString());
+        }
+        //S=
+        return list2.contains(obj.getID().toString());
     }
 
 

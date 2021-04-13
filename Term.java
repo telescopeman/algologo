@@ -1,17 +1,16 @@
 
 /**
- * Write a description of class Term here.
+ * Represents a single mathematical term.
  *
  * @author Caleb Copeland
  * @version 4/12/21
+ * @since 4/8/21
  */
 public class Term
 {
     private final Double myVal;
 
-    /**
-     * Constructor for objects of class Constant
-     */
+
     public Term(Double i)
     {
         myVal = i;
