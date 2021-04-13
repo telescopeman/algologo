@@ -6,8 +6,7 @@ public class LevelManager {
 
     public enum LEVELS
     {
-            BETA_LEVEL,
-            LEVEL_ONE
+            BETA_LEVEL, LEVEL_ONE
     }
 
     public static void loadLevel(LEVELS lev)

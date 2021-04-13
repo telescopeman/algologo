@@ -1,7 +1,7 @@
 import java.awt.Dimension;
 
 /**
- * @author Jon Skeet, Caleb Copeland
+ * @author Caleb Copeland
  */
 public enum AlgoShapeHelper
 {
@@ -45,7 +45,6 @@ public enum AlgoShapeHelper
     };
 
 
-// Yes, enums can have abstract methods. This code compiles...
 public abstract AlgoShape get(double[] factors, int x, int y);
 
 public abstract AlgoShape get(double[] factors, Dimension d, int x, int y);
