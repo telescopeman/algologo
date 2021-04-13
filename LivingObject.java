@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -39,24 +40,37 @@ public abstract class LivingObject extends PhysicsObject {
     }
 
 
+    /**
+     * Checks for contact.
+     */
     public void collision() {
         for (int i = 0; i < Handler.object.size(); i++) {
+            // find a way to avoid cycling through too many objects
             GameObject tempObject = Handler.object.get(i);
-
             if (tempObject.intersects(this)) {
-                System.out.println(tempObject.getID().toString());
-                if (isDamagedBy(tempObject)) {
+                if (isDamagedBy(tempObject)) { //rework this
                     takeDamage(tempObject.getDamage());
                 }
-                if (tempObject.getID() == ID.Platform) {
-                    land(tempObject);
-
+                // collision with platforms.
+                if (tempObject.hasID(ID.Platform)) {
+                    for (SIDE side : SIDE.values()) {
+                        System.out.println(side);
+                        if (GeometryHelper.sideIntersects( (Rectangle) shape, side, tempObject))
+                        {
+                            System.out.println("yes");
+                            if (side == SIDE.BOTTOM)
+                            {
+                                land(tempObject);
+                            }
+                            else {
+                                bonk(side, tempObject);
+                            }
+                        }
+                    }
                 }
+
             }
-
         }
-        updateForm();
-
     }
 
     public void setLastX(double n) {
@@ -116,6 +130,7 @@ public abstract class LivingObject extends PhysicsObject {
         setVelocityY(0);
         while (surface.intersects( this )) { inchY(-1); }
         inchY(1);
+        updateForm();
     }
 
     public void inchY(int n)
@@ -151,7 +166,6 @@ public abstract class LivingObject extends PhysicsObject {
 
 
     }
-
 
     public void loseContact() {
         setGrounded(false);
@@ -196,6 +210,7 @@ public abstract class LivingObject extends PhysicsObject {
                     baseJump + Math.abs(getVelocityY() * velJumpMultiplier)));
         }
     }
+
 
     /**
      * Checks if the object can fly.

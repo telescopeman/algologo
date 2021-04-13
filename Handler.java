@@ -6,7 +6,7 @@ import java.awt.Graphics;
  * Handles objects.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/12/21
+ * @version 4/13/21
  * @since 4/8/21
  */
 public class Handler
@@ -50,6 +50,7 @@ public class Handler
     public static void render(Graphics g)
     {
         for (GameObject tempObject : object) {
+            tempObject.applyStyle(g);
             tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
         }
     }

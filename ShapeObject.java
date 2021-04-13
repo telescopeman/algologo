@@ -13,6 +13,7 @@ public class ShapeObject extends GameObject{
         super(xpos,ypos,ID.Platform);
         this.shape = shape;
         this.style = style;
+        setColor(style.color);
     }
 
     public ShapeObject(Shape shape, Style style, int xpos, int ypos, ID id)
@@ -20,12 +21,17 @@ public class ShapeObject extends GameObject{
         super(xpos,ypos,id);
         this.shape = shape;
         this.style = style;
+        applyStyle(style);
+    }
+
+    private void applyStyle(Style s)
+    {
+        setColor(s.color);
+        setStroke(s.thickness);
     }
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
-        g.setColor(style.color);
-        ((Graphics2D) g).setStroke(style.thickness);
         style.drawer.draw(g,adjust((Polygon) shape,offsetX,offsetY));
     }
 
@@ -33,6 +39,8 @@ public class ShapeObject extends GameObject{
     {
         // do nothing
     }
+
+
 
     public boolean intersects(Rectangle rect)
     {

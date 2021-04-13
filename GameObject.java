@@ -1,8 +1,5 @@
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Graphics;
-import java.awt.Dimension;
-import java.awt.Polygon;
+import java.awt.*;
+
 /**
  * Any object in the game.
  * @author RealTutsGML, Caleb Copeland, Joop Eggen [rectangleToPolygon() only]
@@ -12,10 +9,11 @@ public abstract class GameObject {
     protected ID id;
     protected double x, y;
     protected int damage = 0;
-
     public final int INSTANT_KILL = 999;
 
     protected Shape shape;
+    private Color color = Game.TERRAIN_COLOR;
+    private BasicStroke stroke = new BasicStroke(1);
 
     public GameObject(double x, double y, ID id)
     {
@@ -23,6 +21,18 @@ public abstract class GameObject {
         setY(y);
         setID(id);
     }
+
+    public Color getColor() { return color; }
+
+    public void setColor(Color col) { color = col; }
+
+    public void applyColor(Graphics g) { g.setColor(getColor()); }
+
+    public BasicStroke getStroke() { return stroke; }
+
+    public void setStroke(BasicStroke stroke) { this.stroke = stroke; }
+
+    public void applyStroke(Graphics g) { ((Graphics2D) g).setStroke(getStroke()); }
 
     public abstract boolean intersects(Rectangle rect);
 
@@ -42,6 +52,12 @@ public abstract class GameObject {
     }
 
     public abstract void render(Graphics g, int offsetX, int offsetY);
+
+    public void applyStyle(Graphics g)
+    {
+        applyColor(g);
+        applyStroke(g);
+    }
 
     public Shape getBounds()
     {

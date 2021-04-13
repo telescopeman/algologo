@@ -43,6 +43,10 @@ public class Camera extends PhysicsObject
         // do nothing lmao
     }
 
+    public void updateForm()
+    {
+        // do nothing.
+    }
 
 
     public boolean intersects(Rectangle rect)

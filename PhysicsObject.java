@@ -7,7 +7,10 @@
  */
 public abstract class PhysicsObject extends GameObject
 {
-    protected double velX = 0, velY = 0,seekVelX = 0,seekVelY = 10,maxSpeedH = 8,maxSpeedV = 10,K = 0.5,K2 = 0.4; //gravity
+    protected double velX = 0, velY = 0,
+            seekVelX = 0,seekVelY = 10,
+            maxSpeedH = 8,maxSpeedV = 10,
+            K = 0.5,K2 = 0.4; //gravity
 
 
     public void tick()
@@ -26,20 +29,46 @@ public abstract class PhysicsObject extends GameObject
         x += velX;
         y += velY;
         
-        if (getVelocityX() != getSoughtVelocityX())
-        {
+        if (getVelocityX() != getSoughtVelocityX()) {
             double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
             velX += v*K;
         }
         
-        if (getVelocityY() != getSoughtVelocityY())
-        {
+        if (getVelocityY() != getSoughtVelocityY()) {
             double v = - Math.signum(getVelocityY() - getSoughtVelocityY()) * 1;
             velY += v*K2;
         }
-            
-        
-        
+    }
+
+    /**
+     * Actions to do when the object hits a wall.
+     * @param side The direction this object was going.
+     * @param object The surface that was hit.
+     */
+    public void bonk(SIDE side, GameObject object)
+    {
+        if (side == SIDE.BOTTOM || side == SIDE.TOP)
+        {
+            transformVelocity(0,-1);
+            transformSoughtVelocity(0,-1);
+        }
+        else
+        {
+            transformVelocity(-1,0);
+            transformSoughtVelocity(-1,0);
+        }
+    }
+
+    public void transformVelocity(int x_factor, int y_factor)
+    {
+        setVelocityX(velX * x_factor);
+        setVelocityY(velY * y_factor);
+    }
+
+    public void transformSoughtVelocity(int x_factor, int y_factor)
+    {
+        setSoughtVelocityX(seekVelX * x_factor);
+        setSoughtVelocityY(seekVelY * y_factor);
     }
 
     public void setVelocityX(double v)
@@ -82,5 +111,5 @@ public abstract class PhysicsObject extends GameObject
          seekVelY = n;
     }
 
-    
+
 }

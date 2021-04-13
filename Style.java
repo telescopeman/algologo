@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.BasicStroke;
 /**
  * Represents the style of a polygon shape to be drawn.
@@ -56,6 +57,7 @@ public class Style
         bounds = dim;
         this.drawer = drawer;
     }
+
 
 
 }

@@ -22,7 +22,7 @@ public class Player extends LivingObject
     public Player(int xInit, int yInit)
     {
         super(xInit, yInit, ID.Player, false, 10);
-
+        setColor(PLAYER_COLOR);
         damageSources = new ID[]{ID.Enemy};
         velJumpMultiplier = 0.3;
         baseJump = 6;
@@ -67,10 +67,8 @@ public class Player extends LivingObject
     public void render(Graphics g, int offsetX, int offsetY)
     {
         updateForm();
-        g.setColor(PLAYER_COLOR);
         assert(shape instanceof Rectangle);
         Rectangle rect = (Rectangle) shape;
-
         g.fillPolygon(adjust(rect,offsetX,offsetY));
     }
 
