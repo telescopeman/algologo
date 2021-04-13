@@ -46,23 +46,11 @@ public class Player extends LivingObject
         return false;
     }
 
-    public void tick()
-    {
-        updateForm();
-        collision();
-        checkContact();
-        updateForm();
-        doPhysics();
-
-    }
-
     @Override
     public void die()
     {
         Handler.doDeathAnimation(this);
     }
-
-
 
     public void render(Graphics g, int offsetX, int offsetY)
     {
