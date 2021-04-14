@@ -2,6 +2,8 @@ import java.awt.Shape;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Polygon;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 public class ShapeObject extends GameObject{
 
@@ -69,10 +71,21 @@ public class ShapeObject extends GameObject{
         return modify(0,0);
     }
 
-    public boolean intersects(Rectangle rect)
-
+    public boolean intersects(Shape rect)
     {
-        return style.drawer.intersects( modify(),rect);
+        if (rect instanceof Rectangle) {
+            return style.drawer.intersects( modify(), (Rectangle) rect);
+        }
+        else if (rect instanceof Ellipse2D.Double)
+        {
+            return getBounds().contains(new Point2D.Double(
+                    ((Ellipse2D) rect).getX(), ((Ellipse2D) rect).getY()));
+        }
+        else
+        {
+            throw new IllegalStateException("Unhandled shape type!");
+        }
+
     }
 
     @Override

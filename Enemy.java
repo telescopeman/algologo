@@ -1,19 +1,21 @@
 import java.awt.Rectangle;
 
 public class Enemy extends NPC {
-    private ID soughtObjects = ID.Player;
 
-    public Enemy(double x, double y, boolean canFly, int HP) {
+    public Enemy(double x, double y, boolean canFly, int HP, int damageDealt) {
         super(x, y, ID.Enemy, canFly, HP, new Rectangle(40,40));
-        damageSources = new ID[]{};
+        damageSources = new ID[]{ID.Bullet};
+        setDamage(damageDealt);
         maxSpeedH = 4;
+        //setBounds(INIT_PLAYER_SIZE);
     }
+
 
 
     @Override
     public Activity think() {
         for (GameObject object : scan(sense_range)) {
-            if (object.hasID(soughtObjects))
+            if (object.hasID(ID.Player))
             {
                 setFocusedObject(object);
                 return Activity.ATTACK;
@@ -41,4 +43,6 @@ public class Enemy extends NPC {
             setSoughtVelocityX( Math.signum(target.getX() - getX()) * maxSpeedH);
         }
     }
+
+
 }

@@ -33,6 +33,8 @@ public class KeyInput extends KeyAdapter
                     tempObject.setSoughtVelocityX(tempObject.maxSpeedH);
                 else if (key == KeyEvent.VK_UP)
                     tempObject.jump();
+                else if (key == KeyEvent.VK_Z)
+                    tempObject.shoot();
             }
         }
     }

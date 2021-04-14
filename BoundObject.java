@@ -1,5 +1,4 @@
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.Shape;
 
 /**
  * An object that is bound to another object.
@@ -10,18 +9,14 @@ import java.awt.Rectangle;
 public abstract class BoundObject extends GameObject {
 
     protected final GameObject linked_object;
-    private boolean enabled = false;
     private boolean isTimeBased = false;
     private long lastWakeupTime = 0, length = 0;
 
-    public void setEnabled(boolean bool)
-    {
-        enabled = bool;
-    }
 
     public BoundObject(GameObject object, boolean isTimeBased)
     {
         super(object.getX(), object.getY(), ID.UI);
+        setEnabled(false);
         this.isTimeBased = isTimeBased;
         linked_object = object;
     }
@@ -33,22 +28,16 @@ public abstract class BoundObject extends GameObject {
             setEnabled( Math.abs(System.currentTimeMillis() - lastWakeupTime) < length );
         }
 
-        if (enabled) {
+        if (getEnabled()) {
             updatePosition();
             updateForm();
         }
     }
 
-    @Override
-    public void render(Graphics g, int offsetX, int offsetY) {
-        if (enabled)
-        {
-            draw(g, offsetX, offsetY);
-        }
-    }
+
 
     @Override
-    public boolean intersects(Rectangle rect) {
+    public boolean intersects(Shape rect) {
         return false;
     }
 
@@ -58,7 +47,6 @@ public abstract class BoundObject extends GameObject {
         lastWakeupTime = System.currentTimeMillis();
         length = time;
     }
-    public abstract void draw(Graphics g, int offsetX, int offsetY);
 
     public void updatePosition()
     {

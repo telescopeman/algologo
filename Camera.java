@@ -49,10 +49,9 @@ public class Camera extends PhysicsObject
     }
 
 
-    public boolean intersects(Rectangle rect)
+    public boolean intersects(Shape rect)
     {
         return false;
-        // a camera is not a physical object so it can't collide with anything.
     }
 
     public void watch(LivingObject obj)

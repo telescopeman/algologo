@@ -6,7 +6,7 @@ import java.awt.Graphics;
  * Handles objects.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/13/21
+ * @version 4/14/21
  * @since 4/8/21
  */
 public class Handler
@@ -28,41 +28,47 @@ public class Handler
             removeObject(obj);
             deletionQueue.remove(obj);
         }
+        //deletionQueue.clear();
 
-        for (Iterator<GameObject> iterator = additionQueue.iterator(); iterator.hasNext();) {
-            GameObject obj = iterator.next();
+        for (Iterator<GameObject> iterator2 = additionQueue.iterator(); iterator2.hasNext();) {
+            GameObject obj = iterator2.next();
             addObject(obj);
             additionQueue.remove(obj);
         }
+        //additionQueue.clear();
 
-        for (GameObject tempObject : object) {
-            tempObject.tick();
+        for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext();) {
+            GameObject obj = iterator2.next();
+            if (obj.getEnabled()) {
+                obj.tick();
 
-            // camera motion
-            if (tempObject.getID() == ID.Player) {
-                camera.watch( (LivingObject) tempObject);
+                // camera motion
+                if (obj.getID() == ID.Player) {
+                    camera.watch((LivingObject) obj);
+                }
+            }
+        }
+    }
+
+    public static void render(Graphics g)
+    {
+        for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext();) {
+            GameObject tempObject = iterator2.next();
+            if (tempObject.getEnabled()) {
+                tempObject.applyStyle(g);
+                tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
             }
         }
     }
     
-    public static void render(Graphics g)
-    {
-        for (GameObject tempObject : object) {
-            tempObject.applyStyle(g);
-            tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
-        }
-    }
-    
     public static void addObject(GameObject obj) {
+        System.out.println("Adding new " + obj.getID().toString());
         if (obj.hasID(ID.Camera))
         {
             camera = (Camera) obj;
         }
         object.add(obj);
-        if (!obj.hasID(ID.UI)) {
-            addObject(new HUD(obj));
-        }
-        System.out.println("Added new object " + obj.getID().toString());
+
     }
     
     public static void addObject(GameObject obj, int x, int y)
@@ -100,7 +106,7 @@ public class Handler
 
     public static void doDeathAnimation(Player player)
     {
-        queueForDeletion(player);
+        //queueForDeletion(player);
         // note: this doesn't actually reset everything. maybe do that later.
         long time_initial = System.currentTimeMillis();
         int DEATH_WAIT_TIME = 800;
@@ -110,6 +116,6 @@ public class Handler
         }
         camera.setX(0);
         camera.setY(0);
-        queueForAddition(new Player(lastX,lastY));
+        //queueForAddition(new Player(lastX,lastY));
     }
 }

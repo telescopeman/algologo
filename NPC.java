@@ -1,4 +1,4 @@
-import java.awt.Shape;
+import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -18,9 +18,9 @@ public abstract class NPC extends LivingObject {
     }
 
 
-    public NPC(double x, double y, ID id, boolean canFly, int HP, Shape shape) {
+    public NPC(double x, double y, ID id, boolean canFly, int HP, Shape myShape) {
         super(x, y, id, canFly, HP);
-        setBounds(shape);
+        setBounds(myShape);
         timer = System.currentTimeMillis();
     }
 

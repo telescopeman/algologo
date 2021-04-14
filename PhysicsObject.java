@@ -1,3 +1,7 @@
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+
 /**
  * Write a description of class PhysicsObject here.
  *
@@ -15,6 +19,18 @@ public abstract class PhysicsObject extends GameObject
 
 
 
+    public void setTrajectory(double speed, double angle)
+    {
+        double x_vel = speed * Math.cos(angle);
+        double y_vel = speed * Math.sin(angle);
+        setVelocityY(y_vel);
+        setVelocityX(x_vel);
+    }
+
+    public void freezeX()
+    {
+        setSoughtVelocityX(getVelocityX());
+    }
 
     public void tick()
     {
@@ -31,6 +47,10 @@ public abstract class PhysicsObject extends GameObject
     {
         physics_process(1);
     }
+
+
+
+
 
     /**
      * @param subdivisions How divided-up it is.

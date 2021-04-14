@@ -13,7 +13,8 @@ public enum ID
     Platform,
     Camera,
     UI,
-    Item
+    Item,
+    Bullet;
 }
 
 

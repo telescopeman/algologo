@@ -39,7 +39,7 @@ public class LevelManager {
 
     private static Enemy getGenericEnemy()
     {
-        return new Enemy(0,0,false,5);
+        return new Enemy(0,0,false,5,2);
     }
 
     private static AlgoShape makeShape(String s, int x, int y, Style style)

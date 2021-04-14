@@ -25,7 +25,7 @@ public class HUD extends BoundObject
 
 
     @Override
-    public void draw(Graphics g, int offsetX, int offsetY) {
+    public void render(Graphics g, int offsetX, int offsetY) {
         g.setColor(HUD_COLOR);
         g.fillRect((int) getX() + offsetX,
                 (int) getY() - offsetY - PADDING, width, height);

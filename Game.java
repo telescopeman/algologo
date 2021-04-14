@@ -24,7 +24,8 @@ public class Game extends Canvas implements Runnable
 
     
     private Thread thread;
-    private volatile boolean running;
+    public volatile boolean running;
+
 
     public synchronized void start()
     {

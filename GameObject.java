@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 /**
  * Any object in the game.
@@ -10,9 +12,12 @@ public abstract class GameObject {
     protected double x, y;
     protected int damage = 0;
     public final int INSTANT_KILL = 999;
+    private boolean enabled = true;
+
+
 
     protected Shape shape;
-    private Color color = Game.TERRAIN_COLOR;
+    private Color color = Game.TERRAIN_COLOR, displayColor;
     private BasicStroke stroke = new BasicStroke(1);
 
     public GameObject(double x, double y, ID id)
@@ -20,13 +25,30 @@ public abstract class GameObject {
         setX(x);
         setY(y);
         setID(id);
+        displayColor = color;
     }
 
     public Color getColor() { return color; }
 
     public void setColor(Color col) { color = col; }
 
-    public void applyColor(Graphics g) { g.setColor(getColor()); }
+    public void setDisplayColor(Color col) { displayColor = col; }
+
+    public void applyColor(Graphics g) { g.setColor(displayColor); }
+
+    /**
+     * Returns a color slightly less vibrant than the one inputted. Does not change the original color.
+     * @since 4/14/21
+     * @return The color, reduced in vibrancy.
+     */
+    public static Color soften(Color c)
+    {
+        float r = c.getRed() / 255f;
+        float g = c.getGreen() / 255f;
+        float b = c.getBlue() / 255f;
+        float m = 0.9f;
+        return new Color(m*r,m*g,m*b);
+    }
 
     public BasicStroke getStroke() { return stroke; }
 
@@ -34,21 +56,64 @@ public abstract class GameObject {
 
     public void applyStroke(Graphics g) { ((Graphics2D) g).setStroke(getStroke()); }
 
-    public abstract boolean intersects(Rectangle rect);
-
     public boolean intersects(GameObject obj)
     {
         return intersects(obj.getBounds());
     }
 
+
+
     public boolean intersects(Shape rect)
     {
-        return intersects((Rectangle) rect);
+        updateForm();
+        if (rect instanceof Rectangle) {
+            return shape.intersects( (Rectangle) rect);
+        }
+        else if (rect instanceof Ellipse2D.Double)
+        {
+                return getBounds().contains(new Point2D.Double(
+                        ((Ellipse2D) rect).getX(), ((Ellipse2D) rect).getY()));
+        }
+        else
+        {
+            throw new IllegalStateException("Unhandled shape type!");
+        }
     }
 
     public abstract void tick();
 
-    public abstract void render(Graphics g, int offsetX, int offsetY);
+    public void setEnabled(boolean bool)
+    {
+        enabled = bool;
+    }
+
+    public boolean getEnabled()
+    {
+        return enabled;
+    }
+
+    public void render(Graphics g, int offsetX, int offsetY)
+    {
+        updateForm();
+        if (shape instanceof Rectangle)
+        {
+            Rectangle rect = (Rectangle) shape;
+            g.fillPolygon(adjust(rect, offsetX, offsetY));
+        }
+        else if (shape instanceof Polygon)
+        {
+            g.fillPolygon(adjust((Polygon) shape, offsetX, offsetY));
+        }
+        else if (shape instanceof Ellipse2D)
+        {
+            g.fillOval( (int)getX() + offsetX, (int) getY() + offsetY,
+                    (int)((Ellipse2D) shape).getWidth(),(int) ((Ellipse2D) shape).getHeight());
+        }
+        else
+        {
+            throw new IllegalStateException("Unhandled shape type!");
+        }
+    }
 
     public void applyStyle(Graphics g)
     {
@@ -147,4 +212,7 @@ public abstract class GameObject {
         final Polygon POLY = rectangleToPolygon(rect);
         return adjust(POLY,offsetX,offsetY);
     }
+
+
+
 }

@@ -1,6 +1,4 @@
-import java.awt.Rectangle;
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 
 public class DeathBarrier extends ShapeObject {
 
@@ -16,13 +14,13 @@ public class DeathBarrier extends ShapeObject {
         setDamage(-1); // instant kill
     }
 
-    @Override
-    public boolean intersects(Rectangle rect)
-    {
-        int BARRIER_WIDTH = 50;
-        return rect.y > y && rect.y < y + BARRIER_WIDTH;
-
-    }
+//    @Override
+//    public boolean intersects(Shape rect)
+//    {
+//        int BARRIER_WIDTH = 50;
+//        return rect.y > y && rect.y < y + BARRIER_WIDTH;
+//
+//    }
 
     /**
      * This render method ignores camera motion in the x direction.

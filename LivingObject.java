@@ -12,16 +12,17 @@ public abstract class LivingObject extends PhysicsObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3;
     private double lastX, lastY;
     private int health, maxHealth;
+    private long damageTimer = 0, hitstun_time = 500;
     protected boolean isOnGround = false, canFly = false;
     private GameObject currentSurface;
-    protected ID[] damageSources;
+    public ID[] damageSources;
     private final double slopeCutoffX = 20, slopeCutoffY = 3;
     private final HealthBar healthBar = new HealthBar(this);
 
 
     public LivingObject(double x, double y, ID id, boolean canFly, int HP) {
         super(x, y, id);
-
+        damageTimer = System.currentTimeMillis() - hitstun_time;
         savePos();
         setFlightAbility(canFly);
         setMaxHealth(HP);
@@ -139,6 +140,8 @@ public abstract class LivingObject extends PhysicsObject {
 
     public void die() {
         Handler.queueForDeletion(this);
+        Handler.queueForDeletion(healthBar);
+        //healthBar.wake(-1);
     }
 
 
@@ -147,7 +150,11 @@ public abstract class LivingObject extends PhysicsObject {
     public void fullHeal() { setHealth(maxHealth); }
 
 
-
+    /**
+     * Lands on the ground.
+     * @param surface The ground landed on.
+     * @return Whether it successfully landed or not. (A case where it failed would be something like an incorrect collision detection in an earlier part of the program.)
+     */
     private boolean land(GameObject surface) {
         setCurrentGround(surface);
         setGrounded(true);
@@ -164,9 +171,9 @@ public abstract class LivingObject extends PhysicsObject {
 
     /**
      *
-     * @param x_distance
-     * @param y_distance
-     * @param surface
+     * @param x_distance How fast to inch horizontally
+     * @param y_distance How fast to inch vertically
+     * @param surface The surface in question to be escaped/sought out.
      * @param maxTimes The maximum number of times it moves until it decides it's not possible.
      * @param polarity If true, it moves until it has escaped the surface. If false, it moves until it touches the surface.
      * @return
@@ -222,10 +229,7 @@ public abstract class LivingObject extends PhysicsObject {
         }
     }
 
-    public boolean intersects(Rectangle rect)
-    {
-        return getBounds().intersects(rect);
-    }
+
 
     public void loseContact() {
         setGrounded(false);
@@ -246,22 +250,22 @@ public abstract class LivingObject extends PhysicsObject {
         checkContact();
     }
 
-    public void render(Graphics g, int offsetX, int offsetY)
+    private boolean inHitStun()
     {
-        updateForm();
-        if (shape instanceof Rectangle)
-        {
-                Rectangle rect = (Rectangle) shape;
-                g.fillPolygon(adjust(rect, offsetX, offsetY));
-        }
-        else
-        {
-            throw new IllegalStateException("Unhandled shape type for LivingObject!");
-        }
+
+        return (System.currentTimeMillis() - damageTimer < hitstun_time);
     }
 
     public void updateForm()
     {
+        if(inHitStun()) {
+            setDisplayColor(soften(getColor()));
+        }
+        else
+        {
+            setDisplayColor(getColor());
+        }
+
         // note: the position of the Player is at the bottom-center of its sprite.
         if (shape instanceof Rectangle) {
             Rectangle rect = (Rectangle) shape;
@@ -289,7 +293,11 @@ public abstract class LivingObject extends PhysicsObject {
     }
 
     public void takeDamage(int n) {
-        setHealth(getHealth() - n);
+        if (!inHitStun()) {
+            setHealth(getHealth() - n);
+            damageTimer = System.currentTimeMillis();
+        }
+
     }
 
     /**
@@ -322,9 +330,13 @@ public abstract class LivingObject extends PhysicsObject {
         for (ID id : damageSources)
         {
             list2.add(id.toString());
+            //System.out.print(id.toString() + ", ");
         }
+        //System.out.println("");
         return list2.contains(obj.getID().toString());
     }
+
+
 
 
 }
