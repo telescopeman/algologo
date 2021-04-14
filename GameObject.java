@@ -69,7 +69,7 @@ public abstract class GameObject {
 
     protected abstract void updateForm();
 
-    public void setBounds(Dimension dim)
+    protected void setBounds(Dimension dim)
     {
         shape = new Rectangle(dim);
     }
@@ -92,6 +92,11 @@ public abstract class GameObject {
     public double getY()
     {
         return y;
+    }
+
+    public double getDistance(GameObject target)
+    {
+        return Math.sqrt( Math.pow(target.getX() - getX(), 2) + Math.pow(target.getY() - getY(), 2) );
     }
 
     /**

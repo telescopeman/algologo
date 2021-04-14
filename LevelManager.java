@@ -24,6 +24,8 @@ public class LevelManager {
                         new Style(DrawType.FILL_BELOW, new Dimension(Game.WIDTH,Game.HEIGHT)))); // triangle
                 Handler.addObject(new ShapeObject(GameObject.rectangleToPolygon(
                         new Rectangle(200,200))),0,-250);
+
+                Handler.addObject(getGenericEnemy(),500,-200);
                 break;
             default:
                 break;
@@ -33,6 +35,11 @@ public class LevelManager {
     private static AlgoShape makeShape(String s, int x, int y, DrawType drw)
     {
         return makeShape(s,x,y,new Style(drw));
+    }
+
+    private static Enemy getGenericEnemy()
+    {
+        return new Enemy(0,0,false,5);
     }
 
     private static AlgoShape makeShape(String s, int x, int y, Style style)

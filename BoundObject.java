@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * An object that is bound to another object.
@@ -64,8 +65,6 @@ public abstract class BoundObject extends GameObject {
         setX(linked_object.getX() + getOffsetX());
         setY(linked_object.getY() + getOffsetY());
     }
-
-
 
     public abstract double getOffsetX();
 

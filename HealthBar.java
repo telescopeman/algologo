@@ -4,13 +4,15 @@ import java.awt.Color;
 
 /**
  * @author Caleb Copeland, StackOverFlow User 1924249, KevLoughrey
+ * @since 4/14/21
+ * @version 4/14/21
  */
 public class HealthBar extends BoundObject{
 
 
     private final int BAR_HEIGHT = 10;
     private int hp, max_hp, width;
-    private LivingObject obj;
+    private final LivingObject obj;
 
     public HealthBar(LivingObject object)
     {
@@ -46,11 +48,4 @@ public class HealthBar extends BoundObject{
         max_hp = obj.getMaxHealth();
         System.out.println(hp + "/" + max_hp);
     }
-
-
-
-
-
-
-
 }

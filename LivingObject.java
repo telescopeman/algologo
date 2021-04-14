@@ -1,4 +1,4 @@
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -136,7 +136,10 @@ public abstract class LivingObject extends PhysicsObject {
         healthBar.wake(2000);
     }
 
-    public abstract void die();
+
+    public void die() {
+        Handler.queueForDeletion(this);
+    }
 
 
     public int getMaxHealth() { return maxHealth; }
@@ -219,6 +222,10 @@ public abstract class LivingObject extends PhysicsObject {
         }
     }
 
+    public boolean intersects(Rectangle rect)
+    {
+        return getBounds().intersects(rect);
+    }
 
     public void loseContact() {
         setGrounded(false);
@@ -239,6 +246,33 @@ public abstract class LivingObject extends PhysicsObject {
         checkContact();
     }
 
+    public void render(Graphics g, int offsetX, int offsetY)
+    {
+        updateForm();
+        if (shape instanceof Rectangle)
+        {
+                Rectangle rect = (Rectangle) shape;
+                g.fillPolygon(adjust(rect, offsetX, offsetY));
+        }
+        else
+        {
+            throw new IllegalStateException("Unhandled shape type for LivingObject!");
+        }
+    }
+
+    public void updateForm()
+    {
+        // note: the position of the Player is at the bottom-center of its sprite.
+        if (shape instanceof Rectangle) {
+            Rectangle rect = (Rectangle) shape;
+            rect.x = (int) getX() - getBounds().getBounds().width / 2;
+            rect.y = (int) getY() - getBounds().getBounds().height;
+        }
+        else
+        {
+            throw new IllegalStateException("Unhandled shape type for LivingObject!");
+        }
+    }
 
 
     public GameObject getCurrentGround() {
@@ -281,6 +315,7 @@ public abstract class LivingObject extends PhysicsObject {
      * Sets if the object can fly.
      */
     public void setFlightAbility(boolean f) { canFly = f; }
+
 
     public boolean isDamagedBy(GameObject obj) {
         ArrayList<String> list2 = new ArrayList<String>();
