@@ -12,6 +12,7 @@ public enum ID
     Enemy,
     Platform,
     Camera,
+    UI,
     Item
 }
 

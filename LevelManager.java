@@ -9,6 +9,7 @@ public class LevelManager {
 
     public enum LEVELS { BETA_LEVEL, LEVEL_ONE }
 
+    @SuppressWarnings("SwitchStatementWithTooFewBranches")
     public static void loadLevel(LEVELS lev)
     {
         Handler.addObject(player,0,-500);

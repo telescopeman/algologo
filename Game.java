@@ -26,8 +26,6 @@ public class Game extends Canvas implements Runnable
     private Thread thread;
     private volatile boolean running;
 
-    private final HUD hud;
-
     public synchronized void start()
     {
         thread = new Thread(this);
@@ -61,8 +59,6 @@ public class Game extends Canvas implements Runnable
         this.addKeyListener(new KeyInput());
         final String TITLE = "Algologo";
         new Window(WIDTH, HEIGHT, TITLE, this);
-        
-        hud = new HUD();
         LevelManager.loadLevel(LevelManager.LEVELS.BETA_LEVEL);
         running = true;
     }

@@ -4,8 +4,7 @@ import java.awt.Color;
 
 public class DeathBarrier extends ShapeObject {
 
-    private final int BARRIER_WIDTH = 50;
-    private int y;
+    private final int y;
 
     /**
      * @param y The y-position of the death barrier.
@@ -20,6 +19,7 @@ public class DeathBarrier extends ShapeObject {
     @Override
     public boolean intersects(Rectangle rect)
     {
+        int BARRIER_WIDTH = 50;
         return rect.y > y && rect.y < y + BARRIER_WIDTH;
 
     }

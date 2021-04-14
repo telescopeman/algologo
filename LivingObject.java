@@ -11,14 +11,10 @@ import java.util.ArrayList;
 public abstract class LivingObject extends PhysicsObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3, lastX, lastY;
     protected int health, maxHealth;
-    protected boolean isOnGround = false, canFly = false, justBonked = false;;
+    protected boolean isOnGround = false, canFly = false, justBonked = false;
     protected GameObject currentSurface;
     protected ID[] damageSources;
     protected final double slopeCutoffX = 20, slopeCutoffY = 3;
-    /**
-     * How many steps physics processing should be divided up into.
-     */
-    private final int STEPS = 8;
 
 
     public LivingObject(double x, double y, ID id) {
@@ -231,6 +227,10 @@ public abstract class LivingObject extends PhysicsObject {
 
     public void tick() {
         updateForm();
+        /**
+         * How many steps physics processing should be divided up into.
+         */
+        int STEPS = 8;
         for(int i = 0; i < STEPS; i++) {
             physics_process(STEPS);
             collision();

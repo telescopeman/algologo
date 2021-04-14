@@ -63,4 +63,9 @@ public class ShapeObject extends GameObject{
         return style.drawer.intersects( (Polygon) shape,rect);
     }
 
+    @Override
+    public void tick() {
+        //do nothing
+    }
+
 }

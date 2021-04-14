@@ -24,8 +24,8 @@ public class Player extends LivingObject
         super(xInit, yInit, ID.Player, false, 10);
         setColor(PLAYER_COLOR);
         damageSources = new ID[]{ID.Enemy};
-        velJumpMultiplier = 0.3;
-        baseJump = 6;
+        velJumpMultiplier = 1;
+        baseJump = 9;
         setBounds(PLAYER_SIZE);
     }
 

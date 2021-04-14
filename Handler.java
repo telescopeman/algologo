@@ -13,13 +13,11 @@ public class Handler
 {
     public static LinkedList<GameObject> object = new LinkedList<>();
 
-    private static LinkedList<GameObject> deletionQueue = new LinkedList<>();
+    private static final LinkedList<GameObject> deletionQueue = new LinkedList<>();
 
-    private static LinkedList<GameObject> additionQueue = new LinkedList<>();
+    private static final LinkedList<GameObject> additionQueue = new LinkedList<>();
     
     private static Camera camera;
-
-    private static int DEATH_WAIT_TIME = 800;
 
     private static int lastX = 0,lastY = 0;
 
@@ -56,11 +54,14 @@ public class Handler
     }
     
     public static void addObject(GameObject obj) {
-        if (obj.getID() == ID.Camera)
+        if (obj.hasID(ID.Camera))
         {
             camera = (Camera) obj;
         }
         object.add(obj);
+        if (!obj.hasID(ID.UI)) {
+            addObject(new HUD(obj));
+        }
     }
     
     public static void addObject(GameObject obj, int x, int y)
@@ -101,6 +102,7 @@ public class Handler
         queueForDeletion(player);
         // note: this doesn't actually reset everything. maybe do that later.
         long time_initial = System.currentTimeMillis();
+        int DEATH_WAIT_TIME = 800;
         while (System.currentTimeMillis() < time_initial + DEATH_WAIT_TIME)
         {
             // do nothing lol
