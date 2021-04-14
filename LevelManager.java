@@ -1,4 +1,5 @@
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Rectangle;
 
 /**
  * Manages the objects in each level.
@@ -21,8 +22,8 @@ public class LevelManager {
                 Handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); // flat plane
                 Handler.addObject(makeShape("x/5",-600,0,
                         new Style(DrawType.FILL_BELOW, new Dimension(Game.WIDTH,Game.HEIGHT)))); // triangle
-                Handler.addObject(new ShapeObject( (Shape) ShapeObject.rectangleToPolygon(
-                        new Rectangle(200,200))),300,-50);
+                Handler.addObject(new ShapeObject(GameObject.rectangleToPolygon(
+                        new Rectangle(200,200))),0,-250);
                 break;
             default:
                 break;

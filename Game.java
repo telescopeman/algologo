@@ -117,14 +117,6 @@ public class Game extends Canvas implements Runnable
         g.fillRect(0,0,WIDTH,HEIGHT);
 
         Handler.render(g);
-
-//        String debugDisplay = LevelManager.player.getVelocityX() + " spX, "
-//                + LevelManager.player.getVelocityY() + "spY"
-//                + LevelManager.player.getX() + " X, "
-//                + LevelManager.player.getY() + "Y";
-
-        //String debugDisplay = LevelManager.player.getHealth() + "HP";
-        //hud.render(g,debugDisplay);
         
         g.dispose();
         bs.show();

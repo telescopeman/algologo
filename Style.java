@@ -1,12 +1,11 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.BasicStroke;
 /**
  * Represents the style of a polygon shape to be drawn.
  *
  * @author Caleb Copeland
- * @version 4/13/21
+ * @version 4/14/21
  * @since 4/8/21
  */
 public class Style
@@ -26,7 +25,6 @@ public class Style
         this.thickness = new BasicStroke(thickness);
         bounds = b;
         this.drawer = drawer;
-        
     }
     
     /**

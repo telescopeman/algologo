@@ -10,7 +10,8 @@ public abstract class PhysicsObject extends GameObject
     protected double velX = 0, velY = 0,
             seekVelX = 0,seekVelY = 10,
             maxSpeedH = 8,maxSpeedV = 10,
-            K = 0.5,K2 = 0.4;
+            K = 0.5,K2 = 0.4,
+            diffCutoff = 0.05;
 
 
 
@@ -38,6 +39,15 @@ public abstract class PhysicsObject extends GameObject
     {
         x += velX / subdivisions;
         y += velY / subdivisions;
+
+        if (Math.abs(getVelocityX() - getSoughtVelocityX()) < diffCutoff)
+        {
+            setVelocityX(getSoughtVelocityX());
+        }
+        if (Math.abs(getVelocityY() - getSoughtVelocityY()) < diffCutoff)
+        {
+            setVelocityY(getSoughtVelocityY());
+        }
 
         if (getVelocityX() != getSoughtVelocityX()) {
             double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;

@@ -6,50 +6,43 @@ import java.awt.Rectangle;
  * Heads-up-Display displaying info about objects.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/13/21
+ * @version 4/14/21
  * @since 4/12/21
  */
-public class HUD extends GameObject
+public class HUD extends BoundObject
 {
     public static final Color HUD_COLOR = Color.gray, HUD_TEXT_COLOR = Color.white;
     private final int width = 100, height = 20;
-    private final GameObject linked_object;
+    private final int PADDING = 40;
     private String display = "dummy";
 
     public HUD(GameObject object)
     {
-        super(object.getX(), object.getY(), ID.UI);
-        linked_object= object;
+        super(object,false);
     }
 
 
-    @Override
-    public boolean intersects(Rectangle rect) {
-        return false;
-    }
+
 
     @Override
-    public void tick() {
-        updateForm();
-    }
-
-    @Override
-    public void render(Graphics g, int offsetX, int offsetY) {
+    public void draw(Graphics g, int offsetX, int offsetY) {
         g.setColor(HUD_COLOR);
-        g.fillRect((int) getX() + offsetX,(int) getY() + offsetY, width, height);
+        g.fillRect((int) getX() + offsetX,
+                (int) getY() - offsetY - PADDING, width, height);
         g.setColor(HUD_TEXT_COLOR);
         g.drawString(display,
                 (int) getX() + offsetX,
-                (int) getY() + offsetY + height/2);
+                (int) getY() + offsetY + height/2 - PADDING);
     }
 
     @Override
-    protected void updateForm() {
-        setX(linked_object.getX());
-        setY(linked_object.getY() - 2* linked_object.getBounds().getBounds().getHeight());
-        display = "";
-        display += convertPositionToString();
+    public void updateForm() {
+        display = linked_object.getID().toString()  + " " + convertPositionToString();
     }
+
+    public double getOffsetX() { return 0; }
+
+    public double getOffsetY() { return  2 * linked_object.getBounds().getBounds().getHeight(); }
 
     private String convertPositionToString()
     {

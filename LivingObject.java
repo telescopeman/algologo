@@ -5,29 +5,28 @@ import java.util.ArrayList;
  * An object that acts like a creature (player, enemy, etc)
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/13/21
+ * @version 4/14/21
  * @since 4/8/21
  */
 public abstract class LivingObject extends PhysicsObject {
-    protected double baseJump = 6, velJumpMultiplier = 0.3, lastX, lastY;
-    protected int health, maxHealth;
-    protected boolean isOnGround = false, canFly = false, justBonked = false;
-    protected GameObject currentSurface;
+    protected double baseJump = 6, velJumpMultiplier = 0.3;
+    private double lastX, lastY;
+    private int health, maxHealth;
+    protected boolean isOnGround = false, canFly = false;
+    private GameObject currentSurface;
     protected ID[] damageSources;
-    protected final double slopeCutoffX = 20, slopeCutoffY = 3;
+    private final double slopeCutoffX = 20, slopeCutoffY = 3;
+    private final HealthBar healthBar = new HealthBar(this);
 
-
-    public LivingObject(double x, double y, ID id) {
-        super(x, y, id);
-        savePos();
-    }
 
     public LivingObject(double x, double y, ID id, boolean canFly, int HP) {
         super(x, y, id);
+
         savePos();
         setFlightAbility(canFly);
         setMaxHealth(HP);
         fullHeal();
+        Handler.addObject(healthBar);
     }
 
     public void setLastX(double n) {
@@ -134,6 +133,7 @@ public abstract class LivingObject extends PhysicsObject {
         {
             die();
         }
+        healthBar.wake(2000);
     }
 
     public abstract void die();

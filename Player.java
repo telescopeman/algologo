@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Write a description of class Player here.
+ * Represents the player.
  *
  * @author Caleb Copeland
  * @version 4/13/21

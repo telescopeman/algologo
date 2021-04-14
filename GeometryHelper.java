@@ -1,14 +1,9 @@
-import java.awt.Shape;
 import java.awt.Rectangle;
-import java.awt.Polygon;
-import java.awt.geom.Line2D;
 
+/**
+ * Helps with geometry functions.
+ */
 public class GeometryHelper {
-
-
-
-
-
 
     public static Rectangle getSide(Rectangle shape, SIDE side) {
         final int SLIVER = 1;

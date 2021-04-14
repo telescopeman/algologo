@@ -62,6 +62,7 @@ public class Handler
         if (!obj.hasID(ID.UI)) {
             addObject(new HUD(obj));
         }
+        System.out.println("Added new object " + obj.getID().toString());
     }
     
     public static void addObject(GameObject obj, int x, int y)
