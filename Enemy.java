@@ -13,8 +13,8 @@ public class Enemy extends NPC {
 
 
     @Override
-    public Activity think() {
-        for (GameObject object : scan(sense_range)) {
+    public Activity think(double range) {
+        for (GameObject object : scan(range)) {
             if (object.hasID(ID.Player))
             {
                 setFocusedObject(object);
@@ -27,7 +27,7 @@ public class Enemy extends NPC {
 
     @Override
     public void idle() {
-
+        setSoughtVelocityX(0);
     }
 
     @Override
@@ -44,5 +44,19 @@ public class Enemy extends NPC {
         }
     }
 
-
+    @Override
+    public void onDealDamage(int damage, LivingObject victim) {
+        SIDE go;
+        if (getVelocityX() > 0) {
+            go = SIDE.RIGHT;
+        }
+        else
+        {
+            go = SIDE.LEFT;
+        }
+        endActivity();
+        bonk(go,victim,damage);
+        jump();
+        setFocusedObject(null);
+    }
 }

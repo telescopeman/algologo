@@ -26,14 +26,14 @@ public class Handler
         for (Iterator<GameObject> iterator = deletionQueue.iterator(); iterator.hasNext();) {
             GameObject obj = iterator.next();
             removeObject(obj);
-            deletionQueue.remove(obj);
+            iterator.remove();
         }
         //deletionQueue.clear();
 
         for (Iterator<GameObject> iterator2 = additionQueue.iterator(); iterator2.hasNext();) {
             GameObject obj = iterator2.next();
             addObject(obj);
-            additionQueue.remove(obj);
+            iterator2.remove();
         }
         //additionQueue.clear();
 
@@ -106,8 +106,6 @@ public class Handler
 
     public static void doDeathAnimation(Player player)
     {
-        //queueForDeletion(player);
-        // note: this doesn't actually reset everything. maybe do that later.
         long time_initial = System.currentTimeMillis();
         int DEATH_WAIT_TIME = 800;
         while (System.currentTimeMillis() < time_initial + DEATH_WAIT_TIME)
@@ -116,6 +114,6 @@ public class Handler
         }
         camera.setX(0);
         camera.setY(0);
-        //queueForAddition(new Player(lastX,lastY));
+        queueForAddition(new Player(lastX,lastY));
     }
 }

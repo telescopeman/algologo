@@ -3,7 +3,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Polygon;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 
 public class ShapeObject extends GameObject{
 
@@ -12,15 +11,15 @@ public class ShapeObject extends GameObject{
     public ShapeObject(Shape shape, Style style, int xpos, int ypos)
     {
         super(xpos,ypos,ID.Platform);
-        setBounds(shape);
         this.style = style;
+        setBounds(process(shape));
         setColor(style.color);
     }
 
     public ShapeObject(Shape shape, int xpos, int ypos)
     {
         super(xpos,ypos,ID.Platform);
-        setBounds(shape);
+        setBounds(process(shape));
         this.style = new Style();
         setColor(style.color);
     }
@@ -28,16 +27,17 @@ public class ShapeObject extends GameObject{
     public ShapeObject(Shape shape)
     {
         super(0,0,ID.Platform);
-        setBounds(shape);
         this.style = new Style();
+        setBounds(process(shape));
+
         setColor(style.color);
     }
 
     public ShapeObject(Shape shape, Style style, int xpos, int ypos, ID id)
     {
         super(xpos,ypos,id);
-        setBounds(shape);
         this.style = style;
+        setBounds(process(shape));
         applyStyle(style);
     }
 
@@ -47,46 +47,53 @@ public class ShapeObject extends GameObject{
         setStroke(s.thickness);
     }
 
-    public void render(Graphics g, int offsetX, int offsetY)
-    {
-        applyColor(g);
-        applyStroke(g);
-        style.drawer.draw(g,modify(offsetX,offsetY));
-    }
+
 
     public void updateForm()
     {
-        // do nothing
+        shape = adjust((Polygon) shape,
+                 (int) getX(), (int) getY());
     }
 
 
-    private Polygon modify(int offsetX, int offsetY)
-    {
-        return adjust((Polygon) shape,
-                offsetX + (int) getX(),offsetY + (int) getY());
-    }
 
-    private Polygon modify()
-    {
-        return modify(0,0);
-    }
 
-    public boolean intersects(Shape rect)
+
+
+
+    private Polygon process(Shape s)
     {
-        if (rect instanceof Rectangle) {
-            return style.drawer.intersects( modify(), (Rectangle) rect);
-        }
-        else if (rect instanceof Ellipse2D.Double)
+        switch (style.drawer)
         {
-            return getBounds().contains(new Point2D.Double(
-                    ((Ellipse2D) rect).getX(), ((Ellipse2D) rect).getY()));
-        }
-        else
-        {
-            throw new IllegalStateException("Unhandled shape type!");
-        }
+            case FILL:
+                return (Polygon) s;
 
+            case FILL_BELOW:
+                return extendBelow((Polygon) s);
+
+            case OUTLINE_CLOSED:
+                Polygon p = (Polygon) s;
+                p.addPoint(p.xpoints[0],p.ypoints[0]);
+                return p;
+
+            default:
+                return new Polygon();
+        }
     }
+
+    private static Polygon extendBelow(Polygon p)
+    {
+        final int down = 2000;
+        Polygon p2 = new Polygon();
+        p2.addPoint(p.xpoints[0],down);
+        for(int i = 0; i < p.npoints;i++)
+        {
+            p2.addPoint(p.xpoints[i],p.ypoints[i]);
+        }
+        p2.addPoint(p.xpoints[p.npoints],down);
+        return p2;
+    }
+
 
     @Override
     public void tick() {

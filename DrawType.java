@@ -21,6 +21,7 @@ public enum DrawType
 
         @Override public boolean intersects(Polygon poly, Rectangle rect)
         {
+
             return poly.intersects(rect);
         }
     },
@@ -70,6 +71,7 @@ public enum DrawType
     }
     @Override public boolean intersects(Polygon poly, Rectangle rect) 
     {
+
         return extendBelow(poly).intersects(rect);
     }
 };

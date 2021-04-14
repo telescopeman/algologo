@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -8,123 +7,23 @@ import java.util.ArrayList;
  * @version 4/14/21
  * @since 4/8/21
  */
-public abstract class LivingObject extends PhysicsObject {
+public abstract class LivingObject extends CollidingObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3;
-    private double lastX, lastY;
     private int health, maxHealth;
     private long damageTimer = 0, hitstun_time = 500;
-    protected boolean isOnGround = false, canFly = false;
-    private GameObject currentSurface;
+    protected boolean canFly = false;
+
     public ID[] damageSources;
-    private final double slopeCutoffX = 20, slopeCutoffY = 3;
+
     private final HealthBar healthBar = new HealthBar(this);
 
-
-    public LivingObject(double x, double y, ID id, boolean canFly, int HP) {
-        super(x, y, id);
+    public LivingObject(double x, double y, ID id, boolean canFly, int HP,boolean canLand) {
+        super(x, y, id,canLand);
         damageTimer = System.currentTimeMillis() - hitstun_time;
-        savePos();
         setFlightAbility(canFly);
         setMaxHealth(HP);
         fullHeal();
         Handler.addObject(healthBar);
-    }
-
-    public void setLastX(double n) {
-        lastX = n;
-    }
-    public void setLastY(double n) {
-        lastY = n;
-    }
-    public void saveY()
-    {
-        setLastY(getY());
-    }
-    public void saveX()
-    {
-        setLastX(getX());
-    }
-    public void savePos()
-    {
-        saveY();
-        saveX();
-    }
-    public double getLastY() { return lastY; }
-    public double getLastX() { return lastX; }
-    public void recoverX() { setX(getLastX()); }
-    public void recoverY() { setY(getLastY()); }
-    public void recoverPos() { recoverX(); recoverY(); }
-
-    public void fall() {
-        if (isGrounded()) {
-            savePos();
-            setSoughtVelocityY(0);
-        } else {
-            // sets sought velocity to terminal velocity
-            setSoughtVelocityY(maxSpeedV);
-        }
-    }
-
-    /**
-     * Actions to do when the object hits a wall.
-     * @param side The direction this object was going.
-     * @param object The surface that was hit.
-     */
-    public void bonk(SIDE side, GameObject object)
-    {
-        final int BONK_LIMIT = 50;
-        final double BONK_POWER_X = 0.9;
-        final double BONK_POWER_Y = 0.8;
-
-        int x_motion = 0;
-        int y_motion = 0;
-
-        if (side == SIDE.BOTTOM || side == SIDE.TOP)
-        {
-            transformVelocity(1,-BONK_POWER_Y);
-            y_motion = (int) Math.signum(getVelocityY());
-        }
-        else
-        {
-            transformVelocity(-BONK_POWER_X,1);
-            x_motion = (int) Math.signum(getVelocityX());
-        }
-        inchToEscape(x_motion, y_motion, object,BONK_LIMIT,true);
-        //physics_process(STEPS);
-        updateForm();
-    }
-
-    /**
-     * Checks for contact.
-     */
-    public void collision() {
-        for (int i = 0; i < Handler.object.size(); i++) {
-            // find a way to avoid cycling through too many objects
-            GameObject tempObject = Handler.object.get(i);
-            if (tempObject.intersects(this)) {
-                if (isDamagedBy(tempObject)) { //rework this
-                    takeDamage(tempObject.getDamage());
-                }
-                if (tempObject.hasID(ID.Platform)) {
-                    for (SIDE side : SIDE.values()) {
-
-                        if (GeometryHelper.sideIntersects( (Rectangle) shape, side, tempObject))
-                        {
-                            if (side == SIDE.BOTTOM) {
-                                if (land(tempObject)) {
-                                    break;
-                                }
-                            }
-                            else {
-                                bonk(side, tempObject);
-                            }
-                        }
-
-                    }
-                }
-
-            }
-        }
     }
 
     public int getHealth() { return health; }
@@ -132,16 +31,15 @@ public abstract class LivingObject extends PhysicsObject {
         health = n;
         if (n <= 0)
         {
-            die();
+            despawn();
         }
         healthBar.wake(2000);
     }
 
 
-    public void die() {
-        Handler.queueForDeletion(this);
+    public void despawn() {
         Handler.queueForDeletion(healthBar);
-        //healthBar.wake(-1);
+        super.despawn();
     }
 
 
@@ -149,113 +47,13 @@ public abstract class LivingObject extends PhysicsObject {
     public void setMaxHealth(int n) { maxHealth = n; }
     public void fullHeal() { setHealth(maxHealth); }
 
-
-    /**
-     * Lands on the ground.
-     * @param surface The ground landed on.
-     * @return Whether it successfully landed or not. (A case where it failed would be something like an incorrect collision detection in an earlier part of the program.)
-     */
-    private boolean land(GameObject surface) {
-        setCurrentGround(surface);
-        setGrounded(true);
-        setVelocityY(0);
-        boolean canReach = inchToEscape(0,-1,surface,40,true);
-        if (!canReach)
-        {
-            recoverPos();
-            return false;
-        }
-        updateForm();
-        return true;
-    }
-
-    /**
-     *
-     * @param x_distance How fast to inch horizontally
-     * @param y_distance How fast to inch vertically
-     * @param surface The surface in question to be escaped/sought out.
-     * @param maxTimes The maximum number of times it moves until it decides it's not possible.
-     * @param polarity If true, it moves until it has escaped the surface. If false, it moves until it touches the surface.
-     * @return
-     */
-    public boolean inchToEscape(int x_distance, int y_distance, GameObject surface, int maxTimes, boolean polarity)
-    {
-        savePos();
-        boolean maxExists = maxTimes > 0;
-        int i = 0;
-        while ((polarity == surface.intersects( this )) && (i < maxTimes || !maxExists)) {
-            translate(x_distance, y_distance);
-            updateForm();
-            i++;
-        }
-        if (!maxExists || i < maxTimes) {
-            savePos();
-            return true;
-        }
-        else
-        {
-            recoverPos();
-            return false;
-        }
-    }
-
-    /**
-     * Literally just moves the object by some coordinates.
-     * @param x_distance
-     * @param y_distance
-     */
-    public void translate(int x_distance, int y_distance)
-    {
-        setX(getX() + x_distance);
-        setY(getY() + y_distance);
-    }
-
-    public void checkContact() {
-        if (currentSurface != null) {
-            if (currentSurface.intersects( this )) {
-                setGrounded(true);
-
-            } else if (Math.abs(getY() - getLastY()) < slopeCutoffY && Math.abs(getX() - getLastX()) < slopeCutoffX) {
-                boolean reached = inchToEscape(0,1,currentSurface,50,false);
-                if (reached) {
-                    setGrounded(true);
-                }
-                else {
-                    loseContact();
-                }
-            } else {
-                loseContact();
-            }
-        }
-    }
-
-
-
-    public void loseContact() {
-        setGrounded(false);
-        currentSurface = null;
-    }
-
-    public void tick() {
-        updateForm();
-        /**
-         * How many steps physics processing should be divided up into.
-         */
-        int STEPS = 8;
-        for(int i = 0; i < STEPS; i++) {
-            physics_process(STEPS);
-            collision();
-        }
-        fall();
-        checkContact();
-    }
-
     private boolean inHitStun()
     {
 
         return (System.currentTimeMillis() - damageTimer < hitstun_time);
     }
 
+    @Override
     public void updateForm()
     {
         if(inHitStun()) {
@@ -266,36 +64,15 @@ public abstract class LivingObject extends PhysicsObject {
             setDisplayColor(getColor());
         }
 
-        // note: the position of the Player is at the bottom-center of its sprite.
-        if (shape instanceof Rectangle) {
-            Rectangle rect = (Rectangle) shape;
-            rect.x = (int) getX() - getBounds().getBounds().width / 2;
-            rect.y = (int) getY() - getBounds().getBounds().height;
-        }
-        else
-        {
-            throw new IllegalStateException("Unhandled shape type for LivingObject!");
-        }
+        super.updateForm();
     }
 
 
-    public GameObject getCurrentGround() {
-        return currentSurface;
-    }
-    public void setCurrentGround(GameObject sur) {
-        currentSurface = sur;
-    }
-    public boolean isGrounded() {
-        return isOnGround;
-    }
-    public void setGrounded(boolean d) {
-        isOnGround = d;
-    }
-
-    public void takeDamage(int n) {
+    public void takeDamage(int n, GameObject obj) {
         if (!inHitStun()) {
             setHealth(getHealth() - n);
             damageTimer = System.currentTimeMillis();
+            obj.onDealDamage(n,this);
         }
 
     }
@@ -324,8 +101,20 @@ public abstract class LivingObject extends PhysicsObject {
      */
     public void setFlightAbility(boolean f) { canFly = f; }
 
+    @Override
+    public void onCollision(GameObject tempObject)
+    {
+        if (isDamagedBy(tempObject)) { //rework this
+            takeDamage(tempObject.getDamage(),tempObject);
+        }
+        super.onCollision(tempObject);
+    }
 
     public boolean isDamagedBy(GameObject obj) {
+        if (damageSources == null)
+        {
+            return false;
+        }
         ArrayList<String> list2 = new ArrayList<String>();
         for (ID id : damageSources)
         {
@@ -335,8 +124,4 @@ public abstract class LivingObject extends PhysicsObject {
         //System.out.println("");
         return list2.contains(obj.getID().toString());
     }
-
-
-
-
 }

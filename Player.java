@@ -17,7 +17,7 @@ public class Player extends LivingObject {
      */
     public Player(int xInit, int yInit)
     {
-        super(xInit, yInit, ID.Player, false, 10);
+        super(xInit, yInit, ID.Player, false, 10,true);
         setColor(INIT_PLAYER_COLOR);
         setDamage(3);
         damageSources = new ID[]{ID.Enemy};
@@ -28,8 +28,9 @@ public class Player extends LivingObject {
 
 
     @Override
-    public void die()
+    public void despawn()
     {
+        super.despawn();
         Handler.doDeathAnimation(this);
     }
 
@@ -40,7 +41,8 @@ public class Player extends LivingObject {
                 new Bullet(getX(), getY() - getBounds().getBounds().getHeight() / 2,
                         10,ID.Enemy,
                         Math.signum(getVelocityX() + 0.01)*5 + getVelocityX(),
-                        0,getDamage()));
+                        0,getDamage())
+        );
     }
 
 }

@@ -8,7 +8,7 @@ public abstract class NPC extends LivingObject {
 
     private Activity currentActivity = Activity.IDLE;
     private GameObject focusedObject;
-    public double sense_range = 400;
+    private double sense_range = 400;
     private long timer;
 
 
@@ -19,7 +19,7 @@ public abstract class NPC extends LivingObject {
 
 
     public NPC(double x, double y, ID id, boolean canFly, int HP, Shape myShape) {
-        super(x, y, id, canFly, HP);
+        super(x, y, id, canFly, HP,true);
         setBounds(myShape);
         timer = System.currentTimeMillis();
     }
@@ -43,7 +43,7 @@ public abstract class NPC extends LivingObject {
     public void tick() {
         super.tick();
         if(System.currentTimeMillis() - timer > 1000) {
-            currentActivity = think();
+            currentActivity = think(sense_range);
             timer += 1000;
         }
         act();
@@ -53,25 +53,31 @@ public abstract class NPC extends LivingObject {
         switch (currentActivity) {
             case IDLE -> idle();
             case ATTACK -> attack(focusedObject);
-            default -> think();
+            default -> think(sense_range);
         }
     }
-    public abstract Activity think();
+    public abstract Activity think(double range);
 
     public abstract void idle();
 
     public abstract void attack(GameObject target);
 
+    public void endActivity()
+    {
+        currentActivity = Activity.IDLE;
+        timer = System.currentTimeMillis();
+    }
+
     /**
      * If an NPC takes damage, immediately reconsider the current action.
      * @param dmg Amount of damage to take.
      */
-    public void takeDamage(int dmg)
+    public void takeDamage(int dmg, GameObject obj)
     {
-        super.takeDamage(dmg);
+        super.takeDamage(dmg,obj);
         if (currentActivity == Activity.IDLE)
         {
-            think();
+            think(sense_range * dmg * 2);
         }
     }
 
