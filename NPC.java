@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Shape;
 import java.util.LinkedList;
 
 /**
@@ -70,15 +70,16 @@ public abstract class NPC extends LivingObject {
 
     /**
      * If an NPC takes damage, immediately reconsider the current action.
-     * @param dmg Amount of damage to take.
+     * @param damage_amount Amount of damage taken.
      */
-    public void takeDamage(int dmg, GameObject obj)
+    public void onDamaged(int damage_amount, GameObject damage_source)
     {
-        super.takeDamage(dmg,obj);
         if (currentActivity == Activity.IDLE)
         {
-            think(sense_range * dmg * 2);
+            think(sense_range * damage_amount * 2);
         }
     }
+
+
 
 }

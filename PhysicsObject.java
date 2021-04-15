@@ -1,24 +1,29 @@
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-
 /**
  * Write a description of class PhysicsObject here.
  *
  * @author Caleb Copeland
  * @since 4/9/21
- * @version 4/14/21
+ * @version 4/15/21
  */
 public abstract class PhysicsObject extends GameObject
 {
     protected double velX = 0, velY = 0,
             seekVelX = 0,seekVelY = 10,
             maxSpeedH = 8,maxSpeedV = 10,
-            K = 0.5,K2 = 0.4,
+            K = 0.5, K2 = 0.4,
             diffCutoff = 0.05;
+    private double horizontal_resistance = 1;
 
+    public void setHorizontalResistance(double r)
+    {
+        horizontal_resistance = r;
+    }
 
-
+    /**
+     * Sets the velocity according to a speed and angle.
+     * @param speed The magnitude of the new combined velocity.
+     * @param angle The angle in degrees, relative to the horizontal to the right.
+     */
     public void setTrajectory(double speed, double angle)
     {
         double x_vel = speed * Math.cos(angle);
@@ -57,8 +62,8 @@ public abstract class PhysicsObject extends GameObject
      */
     public void physics_process(int subdivisions)
     {
-        x += velX / subdivisions;
-        y += velY / subdivisions;
+        setX(getX() + velX / subdivisions);
+        setY(getY() + velY / subdivisions);
 
         if (Math.abs(getVelocityX() - getSoughtVelocityX()) < diffCutoff)
         {
@@ -71,7 +76,7 @@ public abstract class PhysicsObject extends GameObject
 
         if (getVelocityX() != getSoughtVelocityX()) {
             double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
-            velX += v*K/subdivisions;
+            velX += v*(K / horizontal_resistance)/subdivisions;
         }
 
         if (getVelocityY() != getSoughtVelocityY()) {

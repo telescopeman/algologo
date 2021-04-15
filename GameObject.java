@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 
 /**
  * Any object in the game.
@@ -10,10 +9,12 @@ import java.awt.geom.Point2D;
 public abstract class GameObject {
 
     protected ID id;
-    protected double x, y;
-    protected int damage = 0;
-    public final int INSTANT_KILL = 999;
+    private double x, y;
+    private int damage = 0;
+    private final int INSTANT_KILL = 999;
     private boolean enabled = true, despawns = false;
+    private boolean isLockedX = false, isLockedY =false;
+    private double surface_friction = 1;
 
 
     protected Shape shape;
@@ -40,6 +41,10 @@ public abstract class GameObject {
         despawns = d;
     }
 
+    public void onLandedOn(CollidingObject object)
+    {
+        object.setHorizontalResistance(surface_friction);
+    }
 
     public void setDisplayColor(Color col) {
         displayColor = col;
@@ -79,6 +84,15 @@ public abstract class GameObject {
         return intersects(obj.getBounds());
     }
 
+    public void setLockedX(boolean setting)
+    {
+        isLockedX = setting;
+    }
+
+    public void setLockedY(boolean setting)
+    {
+        isLockedY = setting;
+    }
 
     public boolean intersects(Shape rect) {
         updateForm();
@@ -110,7 +124,12 @@ public abstract class GameObject {
     }
 
     public void despawn() {
+        onDespawned();
         Handler.queueForDeletion(this);
+    }
+
+    public void onDespawned() {
+        // do nothing
     }
 
     public void render(Graphics g, int offsetX, int offsetY) {
@@ -120,16 +139,13 @@ public abstract class GameObject {
                 Math.abs(getX() + offsetX) > Game.WIDTH)) {
             despawn();
         }
-
-
-        if (shape instanceof Rectangle) {
-            Rectangle rect = (Rectangle) shape;
+        if (getBounds() instanceof Rectangle rect) {
             g.fillPolygon(adjust(rect, offsetX, offsetY));
-        } else if (shape instanceof Polygon) {
-            g.fillPolygon(adjust((Polygon) shape, offsetX, offsetY));
-        } else if (shape instanceof Ellipse2D) {
+        } else if (getBounds()  instanceof Polygon) {
+            g.fillPolygon(adjust((Polygon) getBounds() , offsetX, offsetY));
+        } else if (getBounds()  instanceof Ellipse2D) {
             g.fillOval((int) getX() + offsetX, (int) getY() + offsetY,
-                    (int) ((Ellipse2D) shape).getWidth(), (int) ((Ellipse2D) shape).getHeight());
+                    (int) ((Ellipse2D) getBounds() ).getWidth(), (int) ((Ellipse2D) getBounds() ).getHeight());
         } else {
             throw new IllegalStateException("Unhandled shape type!");
         }
@@ -153,16 +169,21 @@ public abstract class GameObject {
 
     public void updateForm()
     {
-        // note: the position of the Player is at the bottom-center of its sprite.
-        if (shape instanceof Rectangle) {
-            Rectangle rect = (Rectangle) shape;
+        // note: the position of the rectangle object is at the bottom-center of its sprite.
+        if (getBounds() instanceof Rectangle rect) {
             rect.x = (int) getX() - getBounds().getBounds().width / 2;
             rect.y = (int) getY() - getBounds().getBounds().height;
         }
-        else if (shape instanceof Ellipse2D.Double)
+        else if (getBounds() instanceof Ellipse2D.Double)
         {
             ((Ellipse2D.Double) shape).x = getX();
             ((Ellipse2D.Double) shape).y = getY();
+        }
+        else if (getBounds() instanceof Polygon)
+        {
+            Polygon poly = (Polygon) getBounds();
+
+            // do nothing?
         }
         else
         {
@@ -175,7 +196,11 @@ public abstract class GameObject {
     }
 
     public void setX(double x) {
-        this.x = x;
+
+        if (!isLockedX)
+        {
+            this.x = x;
+        }
     }
 
     public double getX() {
@@ -183,7 +208,11 @@ public abstract class GameObject {
     }
 
     public void setY(double y) {
-        this.y = y;
+
+        if (!isLockedY)
+        {
+            this.y = y;
+        }
     }
 
     public double getY() {

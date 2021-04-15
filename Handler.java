@@ -44,7 +44,7 @@ public class Handler
 
                 // camera motion
                 if (obj.getID() == ID.Player) {
-                    camera.watch((LivingObject) obj);
+                    camera.watch((LivingObject) obj,true);
                 }
             }
         }

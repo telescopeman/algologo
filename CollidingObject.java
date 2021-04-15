@@ -1,15 +1,17 @@
-import java.awt.*;
+import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 
 /**
  * @since 4/14/21
- * @version 4/14/21
+ * @version 4/15/21
+ * @author Caleb Copeland
  */
 public class CollidingObject extends PhysicsObject {
     private final double slopeCutoffX = 20, slopeCutoffY = 3;
     private GameObject currentSurface;
     private boolean isOnGround = false, canLand;
     private double lastX, lastY;
+
 
     public CollidingObject(double x, double y, ID id, boolean canLand) {
         super(x, y, id);
@@ -48,6 +50,8 @@ public class CollidingObject extends PhysicsObject {
         updateForm();
         return true;
     }
+
+
 
     public void tick() {
         updateForm();
@@ -128,13 +132,13 @@ public class CollidingObject extends PhysicsObject {
     }
 
     /**
-     *
+     * Inches along until it either escapes or touches a surface.
      * @param x_distance How fast to inch horizontally
      * @param y_distance How fast to inch vertically
      * @param surface The surface in question to be escaped/sought out.
      * @param maxTimes The maximum number of times it moves until it decides it's not possible.
      * @param polarity If true, it moves until it has escaped the surface. If false, it moves until it touches the surface.
-     * @return
+     * @return Whether the object was able to escape/reach the surface by the end of its attempts.
      */
     public boolean inchToEscape(int x_distance, int y_distance, GameObject surface, int maxTimes, boolean polarity)
     {
@@ -190,6 +194,7 @@ public class CollidingObject extends PhysicsObject {
     public void loseContact() {
         setGrounded(false);
         currentSurface = null;
+        setHorizontalResistance(1);
     }
 
     public void collision() {
@@ -197,19 +202,17 @@ public class CollidingObject extends PhysicsObject {
             // find a way to avoid cycling through too many objects
             GameObject tempObject = Handler.object.get(i);
             if (tempObject.intersects(this)) {
-                onCollision(tempObject);
-
+                if (tempObject.hasID(ID.Platform)) {
+                    platformSpecificCollision(tempObject);
+                }
+                otherCollisionTests(tempObject);
             }
         }
     }
 
-
-
-    public void onCollision(GameObject tempObject)
+    public void otherCollisionTests(GameObject tempObject)
     {
-        if (tempObject.hasID(ID.Platform)) {
-            platformSpecificCollision(tempObject);
-        }
+        // do nothing
     }
 
     private void platformSpecificCollision(GameObject tempObject)
@@ -219,6 +222,7 @@ public class CollidingObject extends PhysicsObject {
                 if (GeometryHelper.sideIntersects((Rectangle) shape, side, tempObject)) {
                     if (side == SIDE.BOTTOM && canLand) {
                         if (land(tempObject)) {
+                            tempObject.onLandedOn(this);
                             break;
                         }
                     } else {
@@ -227,9 +231,8 @@ public class CollidingObject extends PhysicsObject {
                 }
             }
         }
-        else if (shape instanceof Ellipse2D.Double)
+        else if (shape instanceof Ellipse2D.Double ellipse)
         {
-            Ellipse2D.Double ellipse = (Ellipse2D.Double) shape;
             if (tempObject.getBounds().contains(
                     ellipse.getCenterX(), ellipse.getMaxY()))
             {
@@ -258,11 +261,7 @@ public class CollidingObject extends PhysicsObject {
 
     }
 
-    public void savePos()
-    {
-        saveY();
-        saveX();
-    }
+    public void savePos() { saveY(); saveX(); }
     public double getLastY() { return lastY; }
     public double getLastX() { return lastX; }
     public void recoverX() { setX(getLastX()); }

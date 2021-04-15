@@ -11,7 +11,7 @@ public class Camera extends PhysicsObject
 {
     
     /**
-     * Makes a camera at a certain position.
+     * Constructs a camera at a certain position.
      */
     public Camera(double x, double y)
     {
@@ -54,10 +54,12 @@ public class Camera extends PhysicsObject
         return false;
     }
 
-    public void watch(LivingObject obj)
+    public boolean watch(LivingObject obj, boolean shouldMove)
     {
         final double followSpeedX = 1;
         final double followSpeedY = 0.1;
+
+        boolean moved = false;
 
         final double baseX = 2;
         final double baseY = 10;
@@ -73,8 +75,10 @@ public class Camera extends PhysicsObject
         
         if (tooRight || tooLeft)
         {
+            moved = true;
             final double v = Math.signum(obj.getX()-getX() - Game.WIDTH/2.0);
-            setSoughtVelocityX(v * (Math.abs(obj.getVelocityX()*followSpeedX) + baseX));
+            if (shouldMove)
+                setSoughtVelocityX(v * (Math.abs(obj.getVelocityX()*followSpeedX) + baseX));
         }
         else
         {
@@ -83,13 +87,16 @@ public class Camera extends PhysicsObject
 
         if (tooHigh || tooLow)
         {
+            moved = true;
             final int v = (int) Math.signum(obj.getY() - getY() - Game.HEIGHT / 2.0);
-            setSoughtVelocityY(v * (Math.abs(obj.getVelocityY()*followSpeedY) + baseY));
+            if (shouldMove)
+                setSoughtVelocityY(v * (Math.abs(obj.getVelocityY()*followSpeedY) + baseY));
         }
         else
         {
             setSoughtVelocityY(0);
         }
+        return moved;
     }
 
 }

@@ -4,14 +4,15 @@ import java.util.ArrayList;
  * An object that acts like a creature (player, enemy, etc)
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/14/21
+ * @version 4/15/21
  * @since 4/8/21
  */
 public abstract class LivingObject extends CollidingObject {
     protected double baseJump = 6, velJumpMultiplier = 0.3;
-    private int health, maxHealth;
-    private long damageTimer = 0, hitstun_time = 500;
-    protected boolean canFly = false;
+    private int health, maxHealth, num_bullets = 0;
+    private int max_bullets = 3;
+    private final CooldownTimer hitstun_timer = new CooldownTimer(500);
+    private boolean canFly = false;
 
     public ID[] damageSources;
 
@@ -19,10 +20,9 @@ public abstract class LivingObject extends CollidingObject {
 
     public LivingObject(double x, double y, ID id, boolean canFly, int HP,boolean canLand) {
         super(x, y, id,canLand);
-        damageTimer = System.currentTimeMillis() - hitstun_time;
+        hitstun_timer.wake();
         setFlightAbility(canFly);
         setMaxHealth(HP);
-        fullHeal();
         Handler.addObject(healthBar);
     }
 
@@ -36,27 +36,19 @@ public abstract class LivingObject extends CollidingObject {
         healthBar.wake(2000);
     }
 
-
-    public void despawn() {
+    public void onDespawned()
+    {
         Handler.queueForDeletion(healthBar);
-        super.despawn();
     }
-
 
     public int getMaxHealth() { return maxHealth; }
-    public void setMaxHealth(int n) { maxHealth = n; }
-    public void fullHeal() { setHealth(maxHealth); }
+    public void setMaxHealth(int n) { maxHealth = n; setHealth(n);}
 
-    private boolean inHitStun()
-    {
-
-        return (System.currentTimeMillis() - damageTimer < hitstun_time);
-    }
 
     @Override
     public void updateForm()
     {
-        if(inHitStun()) {
+        if(hitstun_timer.isExpired()) {
             setDisplayColor(soften(getColor()));
         }
         else
@@ -68,13 +60,19 @@ public abstract class LivingObject extends CollidingObject {
     }
 
 
-    public void takeDamage(int n, GameObject obj) {
-        if (!inHitStun()) {
-            setHealth(getHealth() - n);
-            damageTimer = System.currentTimeMillis();
-            obj.onDealDamage(n,this);
-        }
 
+    private void takeDamage(int n, GameObject obj) {
+        if (hitstun_timer.isExpired()) {
+            setHealth(getHealth() - n);
+            hitstun_timer.wake();
+            obj.onDealDamage(n,this);
+            onDamaged(n,obj);
+        }
+    }
+
+    public void onDamaged(int amount, GameObject obj)
+    {
+        // do nothing.
     }
 
     /**
@@ -101,15 +99,21 @@ public abstract class LivingObject extends CollidingObject {
      */
     public void setFlightAbility(boolean f) { canFly = f; }
 
+    /**
+     * Checks for damage.
+     * @param tempObject Object to be collided with.
+     */
     @Override
-    public void onCollision(GameObject tempObject)
+    public void otherCollisionTests(GameObject tempObject)
     {
         if (isDamagedBy(tempObject)) { //rework this
             takeDamage(tempObject.getDamage(),tempObject);
         }
-        super.onCollision(tempObject);
     }
 
+    /**
+     * Tests to see if this object should be damaged by a GameObject.
+     */
     public boolean isDamagedBy(GameObject obj) {
         if (damageSources == null)
         {
@@ -119,9 +123,33 @@ public abstract class LivingObject extends CollidingObject {
         for (ID id : damageSources)
         {
             list2.add(id.toString());
-            //System.out.print(id.toString() + ", ");
         }
-        //System.out.println("");
         return list2.contains(obj.getID().toString());
     }
+
+    /**
+     * Removes a bullet.
+     * @param bullet
+     */
+    public void free_bullet(Bullet bullet)
+    {
+        num_bullets--;
+    }
+
+    public void shoot()
+    {
+        System.out.println(num_bullets);
+        if (num_bullets < max_bullets) {
+            num_bullets++;
+            Handler.queueForAddition(
+                    new Bullet(getX(), getY() - getBounds().getBounds().getHeight() / 2,
+                            10, ID.Enemy,
+                            Math.signum(getVelocityX() + 0.01) * 5 + getVelocityX(),
+                            0, getDamage(), this)
+            );
+        }
+    }
+
+
+
 }

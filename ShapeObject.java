@@ -1,8 +1,5 @@
 import java.awt.Shape;
-import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.Polygon;
-import java.awt.geom.Ellipse2D;
 
 public class ShapeObject extends GameObject{
 
@@ -12,15 +9,7 @@ public class ShapeObject extends GameObject{
     {
         super(xpos,ypos,ID.Platform);
         this.style = style;
-        setBounds(process(shape));
-        setColor(style.color);
-    }
-
-    public ShapeObject(Shape shape, int xpos, int ypos)
-    {
-        super(xpos,ypos,ID.Platform);
-        setBounds(process(shape));
-        this.style = new Style();
+        setBounds(shape);
         setColor(style.color);
     }
 
@@ -28,8 +17,7 @@ public class ShapeObject extends GameObject{
     {
         super(0,0,ID.Platform);
         this.style = new Style();
-        setBounds(process(shape));
-
+        setBounds(shape);
         setColor(style.color);
     }
 
@@ -37,27 +25,22 @@ public class ShapeObject extends GameObject{
     {
         super(xpos,ypos,id);
         this.style = style;
-        setBounds(process(shape));
+        setBounds(shape);
         applyStyle(style);
     }
+
 
     private void applyStyle(Style s)
     {
         setColor(s.color);
         setStroke(s.thickness);
+        setDisplayColor(s.color);
     }
 
-
-
-    public void updateForm()
+    public Shape getBounds()
     {
-        shape = adjust((Polygon) shape,
-                 (int) getX(), (int) getY());
+        return process(shape);
     }
-
-
-
-
 
 
 
@@ -86,11 +69,13 @@ public class ShapeObject extends GameObject{
         final int down = 2000;
         Polygon p2 = new Polygon();
         p2.addPoint(p.xpoints[0],down);
-        for(int i = 0; i < p.npoints;i++)
+        int i = 0;
+        while(i < p.npoints)
         {
             p2.addPoint(p.xpoints[i],p.ypoints[i]);
+            i++;
         }
-        p2.addPoint(p.xpoints[p.npoints],down);
+        p2.addPoint(p.xpoints[i],down);
         return p2;
     }
 

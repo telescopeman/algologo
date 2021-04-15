@@ -15,13 +15,13 @@ public class LevelManager {
     {
         Handler.addObject(player,0,-500);
         Handler.addObject(new Camera());
-        Handler.addObject(new DeathBarrier(1000));
+        Handler.addObject(new DeathBarrier(500));
         switch (lev)
         {
             case BETA_LEVEL:
                 Handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); // flat plane
                 Handler.addObject(makeShape("x/5",-600,0,
-                        new Style(DrawType.FILL_BELOW, new Dimension(Game.WIDTH,Game.HEIGHT)))); // triangle
+                        new Style(DrawType.FILL_BELOW))); // triangle
                 Handler.addObject(new ShapeObject(GameObject.rectangleToPolygon(
                         new Rectangle(200,200))),0,-250);
 

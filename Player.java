@@ -27,22 +27,15 @@ public class Player extends LivingObject {
     }
 
 
+
     @Override
-    public void despawn()
+    public void onDespawned()
     {
-        super.despawn();
+        super.onDespawned();
         Handler.doDeathAnimation(this);
     }
 
 
-    public void shoot()
-    {
-        Handler.queueForAddition(
-                new Bullet(getX(), getY() - getBounds().getBounds().getHeight() / 2,
-                        10,ID.Enemy,
-                        Math.signum(getVelocityX() + 0.01)*5 + getVelocityX(),
-                        0,getDamage())
-        );
-    }
+
 
 }

@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  * Heads-up-Display displaying info about objects.
