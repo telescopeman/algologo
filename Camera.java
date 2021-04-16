@@ -17,7 +17,7 @@ public class Camera extends Entity
      */
     public Camera(Entity target)
     {
-        super(0,0,0,false,ID.Camera);
+        super(new Vector3D(),false,ID.Camera);
         this.target = target;
     }
 

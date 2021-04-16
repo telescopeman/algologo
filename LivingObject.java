@@ -16,17 +16,17 @@ public abstract class LivingObject extends CollidingObject {
 
     public ID[] damageSources;
 
-    private final HealthBar healthBar = new HealthBar(this);
+    //private final HealthBar healthBar = new HealthBar(this);
 
     public LivingObject(double x, double y, ID id, boolean canFly, int HP,boolean canLand) {
         super(x, y, id,canLand);
         hitstun_timer.wake();
         setFlightAbility(canFly);
         setMaxHealth(HP);
-        Handler.addObject(healthBar);
     }
 
     public int getHealth() { return health; }
+
     public void setHealth(int n) {
         health = n;
         if (n <= 0)
@@ -36,10 +36,7 @@ public abstract class LivingObject extends CollidingObject {
         healthBar.wake(2000);
     }
 
-    public void onDespawned()
-    {
-        Handler.queueForDeletion(healthBar);
-    }
+
 
     public int getMaxHealth() { return maxHealth; }
     public void setMaxHealth(int n) { maxHealth = n; setHealth(n);}
