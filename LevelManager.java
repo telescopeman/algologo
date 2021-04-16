@@ -13,23 +13,23 @@ public class LevelManager {
     @SuppressWarnings("SwitchStatementWithTooFewBranches")
     public static void loadLevel(LEVELS lev)
     {
-        Handler.addObject(player,0,-500);
-        Handler.addObject(new Camera());
-        Handler.addObject(new DeathBarrier(500));
-        switch (lev)
-        {
-            case BETA_LEVEL:
-                Handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); // flat plane
-                Handler.addObject(makeShape("x/5",-600,0,
-                        new Style(DrawType.FILL_BELOW))); // triangle
-                Handler.addObject(new ShapeObject(GameObject.rectangleToPolygon(
-                        new Rectangle(200,200))),0,-250);
-
-                Handler.addObject(getGenericEnemy(),500,-200);
-                break;
-            default:
-                break;
-        }
+//        //Handler.addObject(player,0,-500);
+//        //Handler.addObject(new Camera());
+//        Handler.addObject(new DeathBarrier(500));
+//        switch (lev)
+//        {
+//            case BETA_LEVEL:
+//                Handler.addObject(makeShape("1+1",0,0, DrawType.FILL_BELOW)); // flat plane
+//                Handler.addObject(makeShape("x/5",-600,0,
+//                        new Style(DrawType.FILL_BELOW))); // triangle
+//                Handler.addObject(new ShapeObject(GameObject.rectangleToPolygon(
+//                        new Rectangle(200,200))),0,-250);
+//
+//                Handler.addObject(getGenericEnemy(),500,-200);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     private static AlgoShape makeShape(String s, int x, int y, DrawType drw)

@@ -1,27 +1,21 @@
+
 /**
  * Any object in the game.
  * @since 4/16/21
  * @version 4/16/21
- * @author RealTutsGML, Caleb Copeland, Joop Eggen [rectangleToPolygon() only]
+ * @author Caleb Copeland
  */
 public abstract class Entity {
 
-    protected ID id;
-    private double x, y, z;
-    private double velocityX, velocityY, velocityZ;
+    private ID id;
+    private Vector3D position;
+    private Vector3D velocity = new Vector3D(), acceleration = new Vector3D(),angle = new Vector3D();
     private boolean enabled = true, temporary = false;
-    private boolean isLockedX = false, isLockedY = false, isLockedZ = false;
-    
 
-    public Entity(double x, double y, ID id) {
-        setX(x);
-        setY(y);
-        setID(id);
-    }
-
-    public void setDespawns(boolean d)
-    {
-        despawns = d;
+    public Entity(Vector3D position, boolean temporary, ID id) {
+        this.position = position;
+        this.temporary = temporary;
+        this.id = id;
     }
 
     public abstract void tick();
@@ -41,48 +35,14 @@ public abstract class Entity {
 
     public abstract void onDespawn();
 
-    public void setX(double x) {
-        if (!isLockedX)
-        {
-            this.x = x;
-        }
+    public Vector3D getPosition() {
+        return this.position;
     }
 
-    public double getX() {
-        return x;
-    }
-
-    public void setY(double y) {
-        if (!isLockedY)
-        {
-            this.y = y;
-        }
-    }
-
-    public double getY() {
-        return y;
-    }
-    
-     public void setZ(double z) {
-
-        if (!isLockedY)
-        {
-            this.z = z;
-        }
-    }
-
-    public double getZ() {
-        return z;
-    }
-
-    public double getDistanceTo(GameObject target) {
-        return Math.sqrt(Math.pow(target.getX() - getX(), 2) 
-            + Math.pow(target.getY() - getY(), 2) 
-         + Math.pow(target.getZ() - getZ(), 2));
-    }
-
-    public void setID(ID id) {
-        this.id = id;
+    public double getDistanceTo(Entity target) {
+        return Math.sqrt(Math.pow(target.getPosition().x - position.x, 2)
+                + Math.pow(target.getPosition().y - position.y, 2)
+                + Math.pow(target.getPosition().z - position.z, 2));
     }
 
     public ID getID() {
@@ -92,79 +52,14 @@ public abstract class Entity {
     public boolean hasID(ID i) {
         return getID() == i;
     }
-    
-    /**
-     * @param subdivisions How divided-up it is.
-     */
-    public void physics_process(int subdivisions)
-    {
-        setX(getX() + velX / subdivisions);
-        setY(getY() + velY / subdivisions);
 
-        if (Math.abs(getVelocityX() - getSoughtVelocityX()) < diffCutoff)
-        {
-            setVelocityX(getSoughtVelocityX());
+    public void physics_process()
+    {
+        final double DIVISIONS = 4;
+
+        for (int i = 0; i < DIVISIONS; i++) {
+            velocity = velocity.add(acceleration.multiply(1 / DIVISIONS));
+            position = position.add(velocity.multiply(1 / DIVISIONS));
         }
-        if (Math.abs(getVelocityY() - getSoughtVelocityY()) < diffCutoff)
-        {
-            setVelocityY(getSoughtVelocityY());
-        }
-
-        if (getVelocityX() != getSoughtVelocityX()) {
-            double v = - Math.signum(getVelocityX() - getSoughtVelocityX()) * 1;
-            velX += v*(K / horizontal_resistance)/subdivisions;
-        }
-
-        if (getVelocityY() != getSoughtVelocityY()) {
-            double v = - Math.signum(getVelocityY() - getSoughtVelocityY()) * 1;
-            velY += v*K2/subdivisions;
-        }
-    }
-
-    public void transformVelocity(double x_factor, double y_factor)
-    {
-        setVelocityX(velX * x_factor);
-        setVelocityY(velY * y_factor);
-    }
-
-
-    public void setVelocityX(double v)
-    {
-        velX = v;
-    }
-    
-    public void setVelocityY(double v)
-    {
-        velY = v;
-    }
-    
-    public double getVelocityX()
-    {
-        return velX;
-    }
-    
-    public double getVelocityY()
-    {
-        return velY;
-    }
-    
-    public double getSoughtVelocityX()
-    {
-        return seekVelX;
-    }
-    
-    public double getSoughtVelocityY()
-    {
-        return seekVelY;
-    }
-    
-    public void setSoughtVelocityX(double n)
-    {
-         seekVelX = n;
-    }
-    
-    public void setSoughtVelocityY(double n)
-    {
-         seekVelY = n;
     }
 }

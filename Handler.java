@@ -11,41 +11,34 @@ import java.awt.Graphics;
  */
 public class Handler
 {
-    public static LinkedList<GameObject> object = new LinkedList<>();
+    public static LinkedList<Entity> object = new LinkedList<>();
 
-    private static final LinkedList<GameObject> deletionQueue = new LinkedList<>();
+    private static final LinkedList<Entity> deletionQueue = new LinkedList<>();
 
-    private static final LinkedList<GameObject> additionQueue = new LinkedList<>();
-    
-    private static Camera camera;
+    private static final LinkedList<Entity> additionQueue = new LinkedList<>();
 
     private static int lastX = 0,lastY = 0;
 
     public static void tick()
     {
-        for (Iterator<GameObject> iterator = deletionQueue.iterator(); iterator.hasNext();) {
-            GameObject obj = iterator.next();
+        for (Iterator<Entity> iterator = deletionQueue.iterator(); iterator.hasNext();) {
+            Entity obj = iterator.next();
             removeObject(obj);
             iterator.remove();
         }
         //deletionQueue.clear();
 
-        for (Iterator<GameObject> iterator2 = additionQueue.iterator(); iterator2.hasNext();) {
-            GameObject obj = iterator2.next();
+        for (Iterator<Entity> iterator2 = additionQueue.iterator(); iterator2.hasNext();) {
+            Entity obj = iterator2.next();
             addObject(obj);
             iterator2.remove();
         }
         //additionQueue.clear();
 
-        for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext();) {
-            GameObject obj = iterator2.next();
+        for (Iterator<Entity> iterator2 = object.iterator(); iterator2.hasNext();) {
+            Entity obj = iterator2.next();
             if (obj.getEnabled()) {
                 obj.tick();
-
-                // camera motion
-                if (obj.getID() == ID.Player) {
-                    camera.watch((LivingObject) obj,true);
-                }
             }
         }
     }
@@ -61,45 +54,30 @@ public class Handler
         }
     }
     
-    public static void addObject(GameObject obj) {
+    public static void addObject(Entity obj) {
         System.out.println("Adding new " + obj.getID().toString());
-        if (obj.hasID(ID.Camera))
-        {
-            camera = (Camera) obj;
-        }
+
         object.add(obj);
 
     }
-    
-    public static void addObject(GameObject obj, int x, int y)
-    {
-        if (obj.getID() == ID.Player)
-        {
-               lastX = x;
-               lastY = y;
-        }
-        addObject(obj);
-        obj.setX(x);
-        obj.setY(y);
-    }
 
-    public static void addObjects(GameObject[] objects)
+    public static void addObjects(Entity[] objects)
     {
-        for (GameObject obj : objects)
+        for (Entity obj : objects)
         {
             addObject(obj);
         }
     }
     
-    public static void removeObject(GameObject obj) { object.remove(obj); }
+    public static void removeObject(Entity obj) { object.remove(obj); }
 
 
-    public static void queueForDeletion(GameObject obj)
+    public static void queueForDeletion(Entity obj)
     {
         deletionQueue.add(obj);
     }
 
-    public static void queueForAddition(GameObject obj)
+    public static void queueForAddition(Entity obj)
     {
         additionQueue.add(obj);
     }
@@ -112,8 +90,8 @@ public class Handler
         {
             // do nothing lol
         }
-        camera.setX(0);
-        camera.setY(0);
-        queueForAddition(new Player(lastX,lastY));
+        //camera.setX(0);
+        //camera.setY(0);
+        //queueForAddition(new Player(lastX,lastY));
     }
 }
