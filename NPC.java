@@ -5,7 +5,6 @@ import java.util.LinkedList;
  * @author Caleb Copeland, RealTutsGML [tick() method only]
  */
 public abstract class NPC extends LivingObject {
-
     private Activity currentActivity = Activity.IDLE;
     private GameObject focusedObject;
     private double sense_range = 400;
@@ -51,11 +50,21 @@ public abstract class NPC extends LivingObject {
 
     public void act() {
         switch (currentActivity) {
-            case IDLE -> idle();
-            case ATTACK -> attack(focusedObject);
-            default -> think(sense_range);
+            case IDLE:
+                idle();
+                break;
+            
+            case ATTACK:
+                attack(focusedObject);
+                break;
+            
+            default:
+                think(sense_range);
+                break;
+            
         }
     }
+    
     public abstract Activity think(double range);
 
     public abstract void idle();
