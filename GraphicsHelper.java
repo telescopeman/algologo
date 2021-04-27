@@ -53,19 +53,32 @@ public class GraphicsHelper {
         return poly;
     }
 
+    private Polygon adjust(Sequence sequence)
+    {
+        Polygon poly = new Polygon();
+        for (int i = 0; i < sequence.get_num_points(); i++)
+        {
+            poly.addPoint(
+                    adjustX(sequence.get(i).getX()),
+                    adjustY(sequence.get(i).getY())
+            );
+        }
+        return poly;
+    }
+
     public void drawPolygon(Polygon myShape) {
         graphics.drawPolygon(adjust(myShape));
     }
 
 
-    public void drawPolygon(Path2D myShape) {
+    public void drawPolygon(Sequence myShape) {
         //myShape.getPathIterator()
-        graphics.drawPolygon(adjust((Polygon) myShape.createTransformedShape(new AffineTransform())));
+        graphics.drawPolygon(adjust(myShape));
     }
 
-    public void fillPolygon(Path2D myShape) {
+    public void fillPolygon(Sequence myShape) {
         Polygon poly = new Polygon();
-        graphics.fillPolygon(adjust((Polygon) myShape.createTransformedShape(new AffineTransform())));
+        graphics.fillPolygon(adjust(myShape));
     }
 
     public void fillRect(int x, int y, int width, int height) {

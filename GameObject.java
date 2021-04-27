@@ -81,8 +81,7 @@ public abstract class GameObject {
 
     }
 
-    public void render(GraphicsHelper g)
-    {
+    public void render(GraphicsHelper g) throws CloneNotSupportedException {
         g.setColor(color);
         for (RenderJob job : renderRoutine)
         {
@@ -97,16 +96,13 @@ public abstract class GameObject {
                     g.fillPolygon(myShape);
                     break;
                 case FILL_BELOW:
-                    int left = (int) myShape.getBounds().getMinX();
-                    int right = (int) myShape.getBounds().getMaxX();
-                    int top = (int) myShape.getBounds().getMinY();
-                    int bottom = (int) myShape.getBounds().getMaxY();
-                    Path2D poly = (Path2D) ((Path2D)myShape).clone();
-                    //poly.addPoint(left,bottom);
-                    //poly.addPoint(left,Window.getMaxY());
-                    //poly.addPoint(right,Window.getMaxY());
-                    poly.lineTo(right, Window.getMaxY());
-                    poly.lineTo(left, Window.getMaxY());
+                    int left = (int) myShape.toPolygon().getBounds().getMinX();
+                    int right = (int) myShape.toPolygon().getBounds().getMaxX();
+                    int top = (int) myShape.toPolygon().getBounds().getMinY();
+                    int bottom = (int) myShape.toPolygon().getBounds().getMaxY();
+                    Sequence poly = (Sequence) ((Sequence)myShape).clone();
+                    poly.addPoint(Window.getMaxX(), Window.getMinY());
+                    //poly.addPoint(left, Window.getMinY() + bottom);
                     g.fillPolygon(poly);
                     break;
             }

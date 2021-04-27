@@ -59,7 +59,7 @@ public class Game extends Canvas implements Runnable
         running = true;
         setUpDisplay();
         Handler.queueForAddition(
-                new AlgoShape(MathExpression.parse("x^3")));
+                new AlgoShape(MathExpression.parse("x^0.5")));
     }
 
     public static void setUpDisplay()
@@ -98,8 +98,13 @@ public class Game extends Canvas implements Runnable
                 delta--;
             }
 
-            if(running)
-                render();
+            if(running) {
+                try {
+                    render();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
             frames++;
 
             if(System.currentTimeMillis() - timer > 1000){
@@ -116,8 +121,7 @@ public class Game extends Canvas implements Runnable
         //hud.tick();
     }
     
-    private void render()
-    {
+    private void render() throws CloneNotSupportedException {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null){
             this.createBufferStrategy(3);

@@ -27,17 +27,13 @@ public class AlgoShape extends GameObject
         color = Color.green;
         myShape = new Sequence();
 
-        double x = Window.getMinX();
-        myShape.moveTo(x,(int) func.get(x));
-        while (x <= Window.getMaxX()) {
-            int y = (int) func.get(x);
+        for (double x = Window.getMinX(); x <= Window.getMaxX(); x+= scale) {
+            double y = func.get(x);
             System.out.println(y);
-            //y < Window.getMaxY() && y > Window.getMinY()
             if (true)
             {
-                (myShape).lineTo(x, - y);
+                (myShape).addPoint(x, - y);
             }
-            x += scale;
         }
     }
 }

@@ -55,8 +55,7 @@ public class Handler
         }
     }
 
-    public static void render(GraphicsHelper g)
-    {
+    public static void render(GraphicsHelper g) throws CloneNotSupportedException {
         if (needsNewRender) {
             Collections.sort(object, new Priority());
             g.setColor(BACKGROUND_COLOR);
