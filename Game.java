@@ -1,14 +1,12 @@
-import java.awt.Canvas;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.Graphics;
-import java.awt.Color;
 import java.io.Serial;
 
 /**
  * Runs the highest-level functions of the game.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/13/21
+ * @version 4/27/21
  * @since 4/8/21
  */
 
@@ -17,8 +15,7 @@ public class Game extends Canvas implements Runnable
     @Serial
     private static final long serialVersionUID = -3944939127227443376L;
     
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = WIDTH;
+    public static Dimension window_size = new Dimension(800,800);
     public final Color BACKGROUND_COLOR = Color.black;
     public static final Color TERRAIN_COLOR = Color.white;
 
