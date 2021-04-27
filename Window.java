@@ -12,6 +12,8 @@ import java.io.Serial;
  */
 public class Window extends Canvas
 {
+
+    public static final String TITLE = "Algologo";
     private static JFrame frame;
     private static int minX, maxX, minY, maxY;
 
@@ -39,7 +41,7 @@ public class Window extends Canvas
         this.minY = minY;
         this.maxX = maxX;
         this.maxY = maxY;
-        frame = new JFrame(Game.TITLE);
+        frame = new JFrame(TITLE);
         frame.setSize(800,800);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(true);

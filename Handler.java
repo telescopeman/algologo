@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -57,6 +58,7 @@ public class Handler
     public static void render(GraphicsHelper g)
     {
         if (needsNewRender) {
+            Collections.sort(object, new Priority());
             g.setColor(BACKGROUND_COLOR);
             g.fillRect(Window.getMinX(),Window.getMinY(), Window.getMaxX(), Window.getMaxY());
             for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext(); ) {

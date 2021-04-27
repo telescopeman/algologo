@@ -15,18 +15,13 @@ public class Game extends Canvas implements Runnable
 {
     @Serial
     private static final long serialVersionUID = -3944939127227443376L;
-    
-    public static Dimension window_size = new Dimension(800,800);
 
     public static final Color TERRAIN_COLOR = Color.green;
     public static final boolean debugging = true;
-    public static Rectangle bounds = new Rectangle(-10,-10,10,10);
 
-    public static final String TITLE = "Algologo";
     
     private Thread thread;
     public volatile boolean running;
-
 
     public synchronized void start()
     {
@@ -63,6 +58,8 @@ public class Game extends Canvas implements Runnable
         new Window(-10,10,-10,10, this);
         running = true;
         setUpDisplay();
+        Handler.queueForAddition(
+                new AlgoShape(MathExpression.parse("x^3")));
     }
 
     public static void setUpDisplay()

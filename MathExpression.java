@@ -5,7 +5,7 @@
  * @version 4/12/21
  * @since 4/8/21
  */
-public class MathExpression extends Term
+public class MathExpression implements Term
 {
     private final Operator myOperator;
     private final Term term1;
@@ -16,7 +16,6 @@ public class MathExpression extends Term
      */
     public MathExpression(Term t1, Operator op, Term t2)
     {
-        super(null);
         myOperator = op;
         term1=t1;
         term2=t2;
@@ -27,10 +26,9 @@ public class MathExpression extends Term
      */
     public MathExpression(Double t1, Operator op, Double t2)
     {
-        super(null);
         myOperator = op;
-        term1= new Term(t1);
-        term2= new Term(t2);
+        term1= new Constant(t1);
+        term2= new Constant(t2);
     }
     
     /**
@@ -38,9 +36,8 @@ public class MathExpression extends Term
      */
     public MathExpression(Double t1, Operator op, Term t2)
     {
-        super(null);
         myOperator = op;
-        term1= new Term(t1);
+        term1= new Constant(t1);
         term2= t2;
     }
     
@@ -49,10 +46,9 @@ public class MathExpression extends Term
      */
     public MathExpression(Term t1, Operator op, Double t2)
     {
-        super(1.0);
         myOperator = op;
         term1= t1;
-        term2= new Term(t2);
+        term2= new Constant(t2);
     }
     
     
@@ -94,17 +90,17 @@ public class MathExpression extends Term
                 }
             }
             if(str.charAt(0) == 'x') {
-                t1 = new Term(null);
+                t1 = new Variable();
             }
             else {
-                t1 = new Term(Double.valueOf(str.substring(0,operator_index)));
+                t1 = new Constant(Double.valueOf(str.substring(0,operator_index)));
             }
 
             if(str.charAt(operator_index+1) == 'x') {
-                t2 = new Term(null);
+                t2 = new Variable();
             }
             else {
-                t2 = new Term(Double.valueOf(str.substring(operator_index+1)));
+                t2 = new Constant(Double.valueOf(str.substring(operator_index+1)));
             }
 
         }

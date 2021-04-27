@@ -1,41 +1,15 @@
 
 /**
- * Represents a single mathematical term.
+ * Represents a mathematical 'thing.'
  *
  * @author Caleb Copeland
- * @version 4/12/21
+ * @version 4/27/21
  * @since 4/8/21
  */
-public class Term
+public interface Term
 {
-    private final Double myVal;
 
-
-    public Term(Double i)
-    {
-        myVal = i;
-    }
+    public abstract String toString();
     
-    
-
-    public String toString()
-    {
-        if (myVal == null)
-        {
-            return "x";
-        }
-        else
-        {
-            return String.valueOf(myVal);
-        }
-    }
-    
-    public double get(double x)
-    {
-        if (myVal == null)
-        {
-            return x;
-        }
-        return myVal;
-    }
+    public abstract double get(double x);
 }

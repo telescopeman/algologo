@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Path2D;
 
 /**
  * Any object in the game.
@@ -6,10 +7,11 @@ import java.awt.*;
  * @author RealTutsGML, Caleb Copeland, Joop Eggen [rectangleToPolygon() only]
  */
 public abstract class GameObject {
-    private Color color = Game.TERRAIN_COLOR;
+    protected Color color = Game.TERRAIN_COLOR;
     private BasicStroke stroke = new BasicStroke(1);
-    protected Polygon myShape;
+    protected Sequence myShape;
     protected Collider collider;
+    protected int priority = 0;
     private boolean needsRender = false;
 
     private RenderJob[] renderRoutine;
@@ -17,6 +19,11 @@ public abstract class GameObject {
     public GameObject(RenderJob[] renderRoutine)
     {
         this.renderRoutine = renderRoutine;
+    }
+
+    public GameObject()
+    {
+        this.renderRoutine = new RenderJob[]{RenderJob.FILL_SHAPE};
     }
 
     public Color getColor() {
@@ -76,6 +83,7 @@ public abstract class GameObject {
 
     public void render(GraphicsHelper g)
     {
+        g.setColor(color);
         for (RenderJob job : renderRoutine)
         {
             switch(job)
@@ -90,10 +98,16 @@ public abstract class GameObject {
                     break;
                 case FILL_BELOW:
                     int left = (int) myShape.getBounds().getMinX();
-                    int width = (int) myShape.getBounds().getMaxX() - left;
+                    int right = (int) myShape.getBounds().getMaxX();
                     int top = (int) myShape.getBounds().getMinY();
-                    int height = (int) Window.getMaxY();
-                    g.fillRect(left,top,width,height);
+                    int bottom = (int) myShape.getBounds().getMaxY();
+                    Path2D poly = (Path2D) ((Path2D)myShape).clone();
+                    //poly.addPoint(left,bottom);
+                    //poly.addPoint(left,Window.getMaxY());
+                    //poly.addPoint(right,Window.getMaxY());
+                    poly.lineTo(right, Window.getMaxY());
+                    poly.lineTo(left, Window.getMaxY());
+                    g.fillPolygon(poly);
                     break;
             }
         }
@@ -128,4 +142,8 @@ public abstract class GameObject {
     }
 
 
+    public int getPriority()
+    {
+        return priority;
+    }
 }

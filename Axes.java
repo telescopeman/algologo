@@ -2,11 +2,14 @@ import java.awt.*;
 
 public class Axes extends GameObject {
     public Axes() {
+
         super(null);
+        priority = 999;
     }
 
     private final int divisions = 5;
     private final int markerSize = 30;
+
 
     @Override
     public void render(GraphicsHelper g) {

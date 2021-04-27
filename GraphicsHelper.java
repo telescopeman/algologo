@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 
 public class GraphicsHelper {
     private Graphics graphics;
@@ -24,7 +26,7 @@ public class GraphicsHelper {
                 Window.getDimension().width / 2
                         + (x * Window.getDimension().width)
                         / Math.abs(Window.getMaxX() - Window.getMinX()));
-        Game.printDebug(x + " --> " + adjusted);
+        //Game.printDebug(x + " --> " + adjusted);
         return adjusted;
     }
 
@@ -34,7 +36,7 @@ public class GraphicsHelper {
                 Window.getDimension().height / 2
                         + (y * Window.getDimension().height)
                         / Math.abs(Window.getMaxY() - Window.getMinY()));
-        Game.printDebug(y + " --> " + adjusted);
+        //Game.printDebug(y + " --> " + adjusted);
         return adjusted;
     }
 
@@ -55,8 +57,15 @@ public class GraphicsHelper {
         graphics.drawPolygon(adjust(myShape));
     }
 
-    public void fillPolygon(Polygon myShape) {
-        graphics.fillPolygon(adjust(myShape));
+
+    public void drawPolygon(Path2D myShape) {
+        //myShape.getPathIterator()
+        graphics.drawPolygon(adjust((Polygon) myShape.createTransformedShape(new AffineTransform())));
+    }
+
+    public void fillPolygon(Path2D myShape) {
+        Polygon poly = new Polygon();
+        graphics.fillPolygon(adjust((Polygon) myShape.createTransformedShape(new AffineTransform())));
     }
 
     public void fillRect(int x, int y, int width, int height) {
