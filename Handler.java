@@ -1,87 +1,78 @@
+import java.awt.*;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.awt.Graphics;
 
 /**
  * Handles objects.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/14/21
+ * @version 4/27/21
  * @since 4/8/21
  */
 public class Handler
 {
+    private static final Color BACKGROUND_COLOR = Color.white;
     public static LinkedList<GameObject> object = new LinkedList<>();
 
-    private static final LinkedList<GameObject> deletionQueue = new LinkedList<>();
-
-    private static final LinkedList<GameObject> additionQueue = new LinkedList<>();
-    
-    private static Camera camera;
-
+    private static final LinkedList<GameObject> deletionQueue = new LinkedList<>(), additionQueue = new LinkedList<>();
+    private static boolean needsNewRender = true;
     private static int lastX = 0,lastY = 0;
 
-    public static void tick()
+    public static void loadQueuedObjects()
     {
         for (Iterator<GameObject> iterator = deletionQueue.iterator(); iterator.hasNext();) {
             GameObject obj = iterator.next();
             removeObject(obj);
             iterator.remove();
+            needsNewRender = true;
         }
-        //deletionQueue.clear();
-
+    }
+    public static void removeQueuedObjects()
+    {
         for (Iterator<GameObject> iterator2 = additionQueue.iterator(); iterator2.hasNext();) {
             GameObject obj = iterator2.next();
             addObject(obj);
             iterator2.remove();
+            needsNewRender = true;
         }
-        //additionQueue.clear();
+    }
+
+    public static void tick()
+    {
+        loadQueuedObjects();
+
+        removeQueuedObjects();
+
 
         for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext();) {
             GameObject obj = iterator2.next();
-            if (obj.getEnabled()) {
-                obj.tick();
-
-                // camera motion
-                if (obj.getID() == ID.Player) {
-                    camera.watch((LivingObject) obj,true);
-                }
+            obj.tick();
+            if (obj.getNeedsRender())
+            {
+                needsNewRender = true;
             }
         }
     }
 
-    public static void render(Graphics g)
+    public static void render(GraphicsHelper g)
     {
-        for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext();) {
-            GameObject tempObject = iterator2.next();
-            if (tempObject.getEnabled()) {
-                tempObject.applyStyle(g);
-                tempObject.render(g, -(int) camera.getX(), -(int) camera.getY());
+        if (needsNewRender) {
+            g.setColor(BACKGROUND_COLOR);
+            g.fillRect(Window.getMinX(),Window.getMinY(), Window.getMaxX(), Window.getMaxY());
+            for (Iterator<GameObject> iterator2 = object.iterator(); iterator2.hasNext(); ) {
+                GameObject tempObject = iterator2.next();
+                tempObject.render(g);
             }
+            needsNewRender = false;
         }
     }
+
     
     public static void addObject(GameObject obj) {
-        System.out.println("Adding new " + obj.getID().toString());
-        if (obj.hasID(ID.Camera))
-        {
-            camera = (Camera) obj;
-        }
+        //System.out.println("Adding new " + obj.getID().toString());
         object.add(obj);
+    }
 
-    }
-    
-    public static void addObject(GameObject obj, int x, int y)
-    {
-        if (obj.getID() == ID.Player)
-        {
-               lastX = x;
-               lastY = y;
-        }
-        addObject(obj);
-        obj.setX(x);
-        obj.setY(y);
-    }
 
     public static void addObjects(GameObject[] objects)
     {
@@ -112,8 +103,6 @@ public class Handler
         {
             // do nothing lol
         }
-        camera.setX(0);
-        camera.setY(0);
-        queueForAddition(new Player(lastX,lastY));
+        //queueForAddition(new Player(lastX,lastY));
     }
 }

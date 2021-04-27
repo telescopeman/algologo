@@ -1,28 +1,69 @@
-import java.awt.Dimension;
-import java.awt.Canvas;
+
+import javax.swing.JFrame;
+import java.awt.*;
 import java.io.Serial;
 
 /**
  * The game window.
  *
  * @author RealTutsGML, Caleb Copeland
- * @version 4/12/21
+ * @version 4/27/21
  * @since 4/7/21
  */
 public class Window extends Canvas
 {
+    private static JFrame frame;
+    private static int minX, maxX, minY, maxY;
+
+    public static int getMaxX() {
+        return maxX;
+    }
+
+    public static int getMaxY() {
+        return maxY;
+    }
+
+    public static int getMinX() {
+        return minX;
+    }
+    public static int getMinY()
+    {
+        return minY;
+    }
 
     @Serial
     private static final long serialVersionUID = 185258291L;
-    
-    public Window(int width, int height, String title, Game game)
+    public Window(int minX, int maxX, int minY, int maxY, Game game)
     {
-        EasyFrame frame = new EasyFrame(title,new Dimension(width,height));
+        this.minX = minX;
+        this.minY = minY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        frame = new JFrame(Game.TITLE);
+        frame.setSize(800,800);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.add(game);
         frame.setVisible(true);
         game.start();
     }
+
+
+
+
+    private static void setFrame(int x1,int y1,int x2,int y2)
+    {
+        minX = x1;
+        minY = y1;
+        maxX = x2;
+        maxY = y2;
+    }
+
+    public static Dimension getDimension()
+    {
+        return frame.getSize();
+    }
+
+
 }

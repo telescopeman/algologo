@@ -3,7 +3,7 @@ import java.awt.geom.Ellipse2D;
 
 /**
  * @since 4/14/21
- * @version 4/15/21
+ * @version 4/27/21
  * @author Caleb Copeland
  */
 public class CollidingObject extends PhysicsObject {
@@ -13,8 +13,8 @@ public class CollidingObject extends PhysicsObject {
     private double lastX, lastY;
 
 
-    public CollidingObject(double x, double y, ID id, boolean canLand) {
-        super(x, y, id);
+    public CollidingObject(RenderJob[] jobs, double x, double y, ID id, boolean canLand) {
+        super(jobs, x, y);
         savePos();
         this.canLand = canLand;
     }
@@ -47,14 +47,13 @@ public class CollidingObject extends PhysicsObject {
             recoverPos();
             return false;
         }
-        updateForm();
         return true;
     }
 
 
 
     public void tick() {
-        updateForm();
+        //updateForm();
         /**
          * How many steps physics processing should be divided up into.
          */
@@ -93,7 +92,7 @@ public class CollidingObject extends PhysicsObject {
         }
         inchToEscape(x_motion, y_motion, object,BONK_LIMIT,true);
         //physics_process(STEPS);
-        updateForm();
+        //updateForm();
     }
 
     /**
@@ -145,9 +144,9 @@ public class CollidingObject extends PhysicsObject {
         savePos();
         boolean maxExists = maxTimes > 0;
         int i = 0;
-        while ((polarity == surface.intersects( this )) && (i < maxTimes || !maxExists)) {
+        while ((polarity == surface.getCollider().collidesWith( this.getCollider() )) && (i < maxTimes || !maxExists)) {
             translate(x_distance, y_distance);
-            updateForm();
+            //updateForm();
             i++;
         }
         if (!maxExists || i < maxTimes) {
@@ -174,7 +173,7 @@ public class CollidingObject extends PhysicsObject {
 
     public void checkContact() {
         if (currentSurface != null) {
-            if (currentSurface.intersects( this )) {
+            if (currentSurface.getCollider().collidesWith( this.getCollider() )) {
                 setGrounded(true);
 
             } else if (Math.abs(getY() - getLastY()) < slopeCutoffY && Math.abs(getX() - getLastX()) < slopeCutoffX) {
@@ -201,65 +200,64 @@ public class CollidingObject extends PhysicsObject {
         for (int i = 0; i < Handler.object.size(); i++) {
             // find a way to avoid cycling through too many objects
             GameObject tempObject = Handler.object.get(i);
-            if (tempObject.intersects(this)) {
-                if (tempObject.hasID(ID.Platform)) {
-                    platformSpecificCollision(tempObject);
+            if (tempObject.getCollider().collidesWith(this.getCollider())) {
+                    tempObject.onCollided(this);
                 }
                 otherCollisionTests(tempObject);
             }
         }
-    }
+
 
     public void otherCollisionTests(GameObject tempObject)
     {
         // do nothing
     }
 
-    private void platformSpecificCollision(GameObject tempObject)
-    {
-        if (shape instanceof Rectangle) {
-            for (SIDE side : SIDE.values()) {
-                if (GeometryHelper.sideIntersects((Rectangle) shape, side, tempObject)) {
-                    if (side == SIDE.BOTTOM && canLand) {
-                        if (land(tempObject)) {
-                            tempObject.onLandedOn(this);
-                            break;
-                        }
-                    } else {
-                        bonk(side, tempObject);
-                    }
-                }
-            }
-        }
-        else if (shape instanceof Ellipse2D.Double ellipse)
-        {
-            if (tempObject.getBounds().contains(
-                    ellipse.getCenterX(), ellipse.getMaxY()))
-            {
-                bonk(SIDE.BOTTOM,tempObject);
-            }
-            if (tempObject.getBounds().contains(
-                    ellipse.getCenterX(), ellipse.getMinY()))
-            {
-                bonk(SIDE.TOP,tempObject);
-            }
-            if (tempObject.getBounds().contains(
-                    ellipse.getMaxX(), ellipse.getCenterY()))
-            {
-                bonk(SIDE.RIGHT,tempObject);
-            }
-            if (tempObject.getBounds().contains(
-                    ellipse.getMinX(), ellipse.getCenterY()))
-            {
-                bonk(SIDE.LEFT,tempObject);
-            }
-        }
-        else
-        {
-            throw new IllegalStateException("Unhandled shape type!");
-        }
-
-    }
+//    private void platformSpecificCollision(GameObject tempObject)
+//    {
+//        if (myShape instanceof Rectangle) {
+//            for (SIDE side : SIDE.values()) {
+//                if (GeometryHelper.sideIntersects((Rectangle) shape, side, tempObject)) {
+//                    if (side == SIDE.BOTTOM && canLand) {
+//                        if (land(tempObject)) {
+//                            tempObject.onLandedOn(this);
+//                            break;
+//                        }
+//                    } else {
+//                        bonk(side, tempObject);
+//                    }
+//                }
+//            }
+//        }
+//        else if (shape instanceof Ellipse2D.Double ellipse)
+//        {
+//            if (tempObject.getBounds().contains(
+//                    ellipse.getCenterX(), ellipse.getMaxY()))
+//            {
+//                bonk(SIDE.BOTTOM,tempObject);
+//            }
+//            if (tempObject.getBounds().contains(
+//                    ellipse.getCenterX(), ellipse.getMinY()))
+//            {
+//                bonk(SIDE.TOP,tempObject);
+//            }
+//            if (tempObject.getBounds().contains(
+//                    ellipse.getMaxX(), ellipse.getCenterY()))
+//            {
+//                bonk(SIDE.RIGHT,tempObject);
+//            }
+//            if (tempObject.getBounds().contains(
+//                    ellipse.getMinX(), ellipse.getCenterY()))
+//            {
+//                bonk(SIDE.LEFT,tempObject);
+//            }
+//        }
+//        else
+//        {
+//            throw new IllegalStateException("Unhandled shape type!");
+//        }
+//
+//    }
 
     public void savePos() { saveY(); saveX(); }
     public double getLastY() { return lastY; }

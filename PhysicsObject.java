@@ -5,7 +5,7 @@
  * @since 4/9/21
  * @version 4/15/21
  */
-public abstract class PhysicsObject extends GameObject
+public abstract class PhysicsObject extends DynamicObject
 {
     protected double velX = 0, velY = 0,
             seekVelX = 0,seekVelY = 10,
@@ -43,9 +43,9 @@ public abstract class PhysicsObject extends GameObject
     }
     
 
-    public PhysicsObject(double x, double y, ID id)
+    public PhysicsObject(RenderJob[] jobs, double x, double y)
     {
-        super(x,y,id);
+        super(jobs, x,y);
     }
 
     public void physics_process()

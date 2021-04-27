@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.io.Serial;
 
@@ -16,9 +17,12 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = -3944939127227443376L;
     
     public static Dimension window_size = new Dimension(800,800);
-    public final Color BACKGROUND_COLOR = Color.black;
-    public static final Color TERRAIN_COLOR = Color.white;
 
+    public static final Color TERRAIN_COLOR = Color.green;
+    public static final boolean debugging = true;
+    public static Rectangle bounds = new Rectangle(-10,-10,10,10);
+
+    public static final String TITLE = "Algologo";
     
     private Thread thread;
     public volatile boolean running;
@@ -55,13 +59,25 @@ public class Game extends Canvas implements Runnable
     public Game()
     {
         this.addKeyListener(new KeyInput());
-        final String TITLE = "Algologo";
-        new Window(WIDTH, HEIGHT, TITLE, this);
-        LevelManager.loadLevel(LevelManager.LEVELS.BETA_LEVEL);
-        running = true;
-    }
-    
 
+        new Window(-10,10,-10,10, this);
+        running = true;
+        setUpDisplay();
+    }
+
+    public static void setUpDisplay()
+    {
+        // load axes
+        Handler.queueForAddition(new Axes());
+    }
+
+    public static void printDebug(String str)
+    {
+        if (debugging)
+        {
+            System.out.println(str);
+        }
+    }
 
     public void run()
     {
@@ -111,11 +127,10 @@ public class Game extends Canvas implements Runnable
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.setColor(BACKGROUND_COLOR);
-        g.fillRect(0,0,WIDTH,HEIGHT);
 
-        Handler.render(g);
-        
+        //g.translate(Window.getDimension().width,Window.getDimension().height);
+        GraphicsHelper helper = new GraphicsHelper(g);
+        Handler.render(helper);
         g.dispose();
         bs.show();
     }

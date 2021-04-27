@@ -10,41 +10,41 @@ import java.awt.Color;
 public class HealthBar extends BoundObject{
 
 
-    private final int BAR_HEIGHT = 10;
-    private double hp, max_hp;
-    private int width;
-    private final LivingObject obj;
-
-    public HealthBar(LivingObject object)
-    {
-        super(object,true);
-        obj = object;
-    }
-
-
-    @Override
-    public double getOffsetX() {
-        return - ((float)width / 2);
-    }
-
-    @Override
-    public double getOffsetY() {
-        return - linked_object.getBounds().getBounds().getHeight() - BAR_HEIGHT * 2;
-    }
-
-    @Override
-    public void render(Graphics g, int offsetX, int offsetY) {
-        updateForm();
-        g.setColor(Color.red);
-        g.fillRect((int) getX() + offsetX, (int) getY() + offsetY, width, BAR_HEIGHT);
-        g.setColor(Color.green);
-        g.fillRect((int) getX() + offsetX, (int) getY() + offsetY, (int) (width * (hp / max_hp)), BAR_HEIGHT);
-    }
-
-    public void updateForm()
-    {
-        width = (int) linked_object.getBounds().getBounds().getWidth();
-        hp = obj.getHealth();
-        max_hp = obj.getMaxHealth();
-    }
+//    private final int BAR_HEIGHT = 10;
+//    private double hp, max_hp;
+//    private int width;
+//    private final LivingObject obj;
+//
+//    public HealthBar(LivingObject object)
+//    {
+//        super(object,true);
+//        obj = object;
+//    }
+//
+//
+//    @Override
+//    public double getOffsetX() {
+//        return - ((float)width / 2);
+//    }
+//
+//    @Override
+//    public double getOffsetY() {
+//        return - linked_object.getCollider().shape.getBounds().getBounds().getHeight() - BAR_HEIGHT * 2;
+//    }
+//
+//    @Override
+//    public void render(Graphics g) {
+//        updateForm();
+//        g.setColor(Color.red);
+//        g.fillRect((int) getX(), (int) getY(), width, BAR_HEIGHT);
+//        g.setColor(Color.green);
+//        g.fillRect((int) getX(), (int) getY(), (int) (width * (hp / max_hp)), BAR_HEIGHT);
+//    }
+//
+//    public void updateForm()
+//    {
+//        width = (int) linked_object.getCollider().shape.getBounds().getBounds().getWidth();
+//        hp = obj.getHealth();
+//        max_hp = obj.getMaxHealth();
+//    }
 }

@@ -1,25 +1,23 @@
-import java.awt.Polygon;
+import java.awt.*;
 
 /**
  * @author Caleb Copeland, "Ozymandias"
  * @version 4/12/21
  * @since 4/7/21
  */
-public class AlgoShape extends ShapeObject
+public class AlgoShape extends GameObject
 {
-    public AlgoShape(Term func, Style style, int xpos, int ypos)
-    {
-        super(new Polygon(),style,xpos,xpos);
-        final int highBoundX = style.bounds.width;
-        final int highBoundY = style.bounds.height;
 
-        for (int x = 0; x <= highBoundX; x++) {
+    public AlgoShape(Term func, RenderJob[] styles)
+    {
+        super(styles);
+        for (int x = Window.getMinX(); x <= Window.getMaxX(); x++) {
             int y = (int) func.get(x);
-            if (y < highBoundY)
+            if (y < Window.getMaxY() && y > Window.getMinY())
             {
-                ( (Polygon) shape ).addPoint(x + xpos, ypos - y);
+                myShape.addPoint(x, - y);
             }
         }
-
     }
+
 }

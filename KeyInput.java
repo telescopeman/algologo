@@ -14,57 +14,57 @@ public class KeyInput extends KeyAdapter
 
     public void keyPressed(KeyEvent e)
     {
-        int key = e.getKeyCode();
-        //System.out.println("a");
-
-        for(int i = 0; i < Handler.object.size(); i++)
-        {
-            GameObject tempObject0 = Handler.object.get(i);
-
-            if (tempObject0.getID() == ID.Player)
-            {
-                assert(tempObject0 instanceof Player);
-                Player tempObject = (Player) tempObject0;
-                if (key == KeyEvent.VK_LEFT)
-                {
-                    tempObject.setSoughtVelocityX(- tempObject.maxSpeedH);
-                }
-                else if (key == KeyEvent.VK_RIGHT)
-                    tempObject.setSoughtVelocityX(tempObject.maxSpeedH);
-                else if (key == KeyEvent.VK_UP)
-                    tempObject.jump();
-                else if (key == KeyEvent.VK_Z)
-                    tempObject.shoot();
-            }
-        }
+//        int key = e.getKeyCode();
+//        //System.out.println("a");
+//
+//        for(int i = 0; i < Handler.object.size(); i++)
+//        {
+//            GameObject tempObject0 = Handler.object.get(i);
+//
+//            if (tempObject0.getID() == ID.Player)
+//            {
+//                assert(tempObject0 instanceof Player);
+//                Player tempObject = (Player) tempObject0;
+//                if (key == KeyEvent.VK_LEFT)
+//                {
+//                    tempObject.setSoughtVelocityX(- tempObject.maxSpeedH);
+//                }
+//                else if (key == KeyEvent.VK_RIGHT)
+//                    tempObject.setSoughtVelocityX(tempObject.maxSpeedH);
+//                else if (key == KeyEvent.VK_UP)
+//                    tempObject.jump();
+//                else if (key == KeyEvent.VK_Z)
+//                    tempObject.shoot();
+//            }
+//        }
     }
 
     public void keyReleased(KeyEvent e)
     {
-        int key = e.getKeyCode();
-        for(int i = 0; i < Handler.object.size(); i++)
-        {
-            GameObject tempObject0 = Handler.object.get(i);
-            if (tempObject0.getID() == ID.Player)
-            {
-                Player tempObject = (Player) tempObject0;
-                if (key == KeyEvent.VK_LEFT)
-                {
-                    if (tempObject.getSoughtVelocityX() < 0)
-                    {
-                        tempObject.setSoughtVelocityX(0);
-                    }
-                }
-                else if (key == KeyEvent.VK_RIGHT)
-                {
-                    if (tempObject.getSoughtVelocityX() > 0)
-                    {
-                        tempObject.setSoughtVelocityX(0);
-                    }
-                }
-
-            }
-        }
+//        int key = e.getKeyCode();
+//        for(int i = 0; i < Handler.object.size(); i++)
+//        {
+//            GameObject tempObject0 = Handler.object.get(i);
+//            if (tempObject0.getID() == ID.Player)
+//            {
+//                Player tempObject = (Player) tempObject0;
+//                if (key == KeyEvent.VK_LEFT)
+//                {
+//                    if (tempObject.getSoughtVelocityX() < 0)
+//                    {
+//                        tempObject.setSoughtVelocityX(0);
+//                    }
+//                }
+//                else if (key == KeyEvent.VK_RIGHT)
+//                {
+//                    if (tempObject.getSoughtVelocityX() > 0)
+//                    {
+//                        tempObject.setSoughtVelocityX(0);
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
 }
