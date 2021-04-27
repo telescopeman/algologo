@@ -1,9 +1,11 @@
-public abstract class IconObject extends Entity {
-    private SimpleShape icon;
+public abstract class IconObject extends ModeledEntity {
+    private Icon icon;
 
-    public IconObject(Vector3D position, SimpleShape icon, boolean temporary, ID id)
+    public IconObject(Vector3D position, boolean temporary, Icon icon, ID id)
     {
         super(position, temporary, id);
         this.icon = icon;
     }
+
+
 }

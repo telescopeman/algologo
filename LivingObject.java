@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @version 4/15/21
  * @since 4/8/21
  */
-public abstract class LivingObject extends CollidingObject {
+public abstract class LivingObject extends ModeledEntity {
     protected double baseJump = 6, velJumpMultiplier = 0.3;
     private int health, maxHealth, num_bullets = 0;
     private int max_bullets = 3;

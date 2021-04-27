@@ -1,4 +1,5 @@
-import java.awt.*;
+import javafx.scene.*;
+
 
 /**
  * The game camera.
@@ -7,7 +8,7 @@ import java.awt.*;
  * @since 4/8/21
  * @version 4/16/21
  */
-public class Camera extends Entity
+public class Camera
 {
 
     private Entity target;
@@ -17,7 +18,7 @@ public class Camera extends Entity
      */
     public Camera(Entity target)
     {
-        super(new Vector3D(),false,ID.Camera);
+        super();
         this.target = target;
     }
 
@@ -66,10 +67,5 @@ public class Camera extends Entity
 //            setSoughtVelocityY(0);
         }
 
-    @Override
-    public void onDespawn() {
-        // do nothing
-    }
-}
 
 }
