@@ -2,12 +2,11 @@ import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
 
 public class Sequence implements Cloneable {
 
     private int num_points = 0;
+    private Polygon poly;
 
     private ArrayList<Point2D> points;
 
@@ -15,6 +14,7 @@ public class Sequence implements Cloneable {
     {
         points = new ArrayList<Point2D>();
     }
+
 
     public int get_num_points()
     {
