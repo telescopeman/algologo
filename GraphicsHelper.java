@@ -55,6 +55,10 @@ public class GraphicsHelper {
 
     private Polygon adjust(Sequence sequence)
     {
+        if (sequence == null)
+        {
+            return null;
+        }
         Polygon poly = new Polygon();
         for (int i = 0; i < sequence.get_num_points(); i++)
         {
@@ -72,7 +76,6 @@ public class GraphicsHelper {
 
 
     public void drawPolygon(Sequence myShape) {
-        //myShape.getPathIterator()
         graphics.drawPolygon(adjust(myShape));
     }
 

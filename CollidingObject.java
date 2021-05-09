@@ -1,9 +1,7 @@
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
 
 /**
  * @since 4/14/21
- * @version 4/27/21
+ * @version 5/8/21
  * @author Caleb Copeland
  */
 public class CollidingObject extends PhysicsObject {
@@ -19,6 +17,11 @@ public class CollidingObject extends PhysicsObject {
         this.canLand = canLand;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
     public GameObject getCurrentGround() {
         return currentSurface;
     }
@@ -31,6 +34,8 @@ public class CollidingObject extends PhysicsObject {
     public void setGrounded(boolean d) {
         isOnGround = d;
     }
+
+
 
     /**
      * Lands on the ground.
@@ -91,8 +96,6 @@ public class CollidingObject extends PhysicsObject {
             x_motion = (int) Math.signum(getVelocityX());
         }
         inchToEscape(x_motion, y_motion, object,BONK_LIMIT,true);
-        //physics_process(STEPS);
-        //updateForm();
     }
 
     /**

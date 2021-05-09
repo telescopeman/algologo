@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.io.Serial;
 
@@ -55,11 +54,15 @@ public class Game extends Canvas implements Runnable
     {
         this.addKeyListener(new KeyInput());
 
-        new Window(-10,10,-10,10, this);
+        new Window(-100,100,-100,100, this);
         running = true;
         setUpDisplay();
         Handler.queueForAddition(
                 new AlgoShape(MathExpression.parse("x^0.5")));
+        Handler.queueForAddition(new Spawner(
+                new SimpleParticle(10,10,Color.GRAY),
+                        new Rectangle(-3,3,2,3),5000
+                        ));
     }
 
     public static void setUpDisplay()

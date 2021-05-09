@@ -5,11 +5,11 @@
  * @since 4/9/21
  * @version 4/15/21
  */
-public abstract class PhysicsObject extends DynamicObject
+public class PhysicsObject extends DynamicObject implements Cloneable
 {
     protected double velX = 0, velY = 0,
-            seekVelX = 0,seekVelY = 10,
-            maxSpeedH = 8,maxSpeedV = 10,
+            seekVelX = 0,seekVelY = 5,
+            maxSpeedH = 8,maxSpeedV = 5,
             K = 0.5, K2 = 0.4,
             diffCutoff = 0.05;
     private double horizontal_resistance = 1;
@@ -17,6 +17,17 @@ public abstract class PhysicsObject extends DynamicObject
     public void setHorizontalResistance(double r)
     {
         horizontal_resistance = r;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        DynamicObject dynamicObject = (DynamicObject) super.clone();
+        PhysicsObject obj = new PhysicsObject(dynamicObject.getRenderRoutine(),dynamicObject.getX(),dynamicObject.getY());
+        obj.setVelocityX(velX);
+        obj.setVelocityY(velY);
+        obj.setSoughtVelocityX(getSoughtVelocityX());
+        obj.setSoughtVelocityY(getSoughtVelocityY());
+        return obj;
     }
 
     /**
@@ -54,6 +65,17 @@ public abstract class PhysicsObject extends DynamicObject
     }
 
 
+    public boolean getNeedsRender()
+    {
+        if (velX == 0 && velY == 0 && getSoughtVelocityX() == 0 && getSoughtVelocityY() == 0 && !super.getNeedsRender())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
 
 

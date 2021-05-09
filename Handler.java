@@ -65,6 +65,7 @@ public class Handler
                 tempObject.render(g);
             }
             needsNewRender = false;
+            //System.out.println("go");
         }
     }
 

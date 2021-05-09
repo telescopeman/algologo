@@ -6,6 +6,7 @@ public class CooldownTimer {
     public CooldownTimer(long length)
     {
         timer_length = length;
+        last_time = System.currentTimeMillis();
     }
 
     public boolean isExpired()

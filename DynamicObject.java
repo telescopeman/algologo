@@ -1,4 +1,4 @@
-public abstract class DynamicObject extends GameObject {
+public class DynamicObject extends GameObject implements Cloneable {
 
     private double x, y;
 
@@ -8,13 +8,20 @@ public abstract class DynamicObject extends GameObject {
         this.x = x;
         this.y = y;
     }
+    protected Object clone() throws CloneNotSupportedException {
+        RenderJob[] myRenderRoutine = ((GameObject) super.clone()).getRenderRoutine();
+        DynamicObject obj = new DynamicObject(myRenderRoutine,x,y);
+        return obj;
+    }
 
-    public abstract void tick();
+    @Override
+    public void render(GraphicsHelper g) throws CloneNotSupportedException {
+        render_helper(g,myShape.offset(getX(),getY()));
+    }
 
     public void setX(double x) {
-
         this.x = x;
-
+        needsRender = true;
     }
 
     public double getX() {
@@ -22,9 +29,8 @@ public abstract class DynamicObject extends GameObject {
     }
 
     public void setY(double y) {
-
-            this.y = y;
-
+        this.y = y;
+        needsRender = true;
     }
 
     public double getY() {

@@ -1,18 +1,17 @@
 import java.awt.*;
-import java.awt.geom.Path2D;
 
 /**
  * Any object in the game.
- * @version 4/27/21
+ * @version 5/8/21
  * @author RealTutsGML, Caleb Copeland, Joop Eggen [rectangleToPolygon() only]
  */
-public abstract class GameObject {
+public class GameObject implements Cloneable{
     protected Color color = Game.TERRAIN_COLOR;
     private BasicStroke stroke = new BasicStroke(1);
     protected Sequence myShape;
     protected Collider collider;
     protected int priority = 0;
-    private boolean needsRender = false;
+    protected boolean needsRender = true;
 
     private RenderJob[] renderRoutine;
 
@@ -26,9 +25,21 @@ public abstract class GameObject {
         this.renderRoutine = new RenderJob[]{RenderJob.FILL_SHAPE};
     }
 
+    public RenderJob[] getRenderRoutine()
+    {
+        return renderRoutine;
+    }
+
     public Color getColor() {
         return color;
     }
+
+    protected Object clone() throws CloneNotSupportedException
+    {
+        GameObject obj = new GameObject(renderRoutine);
+        return obj;
+    }
+
 
     public void setColor(Color col) {
         color = col;
@@ -82,6 +93,10 @@ public abstract class GameObject {
     }
 
     public void render(GraphicsHelper g) throws CloneNotSupportedException {
+        render_helper(g, myShape);
+    }
+
+    protected void render_helper(GraphicsHelper g, Sequence seq) throws CloneNotSupportedException {
         g.setColor(color);
         for (RenderJob job : renderRoutine)
         {
@@ -89,25 +104,28 @@ public abstract class GameObject {
             {
                 case DRAW_OUTLINE:
                 {
-                    g.drawPolygon(myShape);
+                    g.drawPolygon(seq);
                     break;
                 }
                 case FILL_SHAPE:
-                    g.fillPolygon(myShape);
+                {
+                    g.fillPolygon(seq);
                     break;
+                }
                 case FILL_BELOW:
-                    int left = (int) myShape.toPolygon().getBounds().getMinX();
-                    int right = (int) myShape.toPolygon().getBounds().getMaxX();
-                    int top = (int) myShape.toPolygon().getBounds().getMinY();
-                    int bottom = (int) myShape.toPolygon().getBounds().getMaxY();
-                    Sequence poly = (Sequence) ((Sequence)myShape).clone();
+                    int left = (int) seq.getBounds().getMinX();
+                    int right = (int) seq.getBounds().getMaxX();
+                    int top = (int) seq.getBounds().getMinY();
+                    int bottom = (int) seq.getBounds().getMaxY();
+                    Sequence poly = seq.clone();
                     poly.addPoint(Window.getMaxX(), Window.getMinY());
-                    //poly.addPoint(left, Window.getMinY() + bottom);
                     g.fillPolygon(poly);
                     break;
             }
         }
     }
+
+
 
     public void onDealDamage(int damage, LivingObject victim) {};
 
